@@ -1,13 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
-import CssBaseline from "@material-ui/core/CssBaseline";
+// import AppBar from "@material-ui/core/AppBar";
+// import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 import UndoIcon from "@material-ui/icons/Undo";
 import RedoIcon from "@material-ui/icons/Redo";
 import EditBar from "./EditBar";
+import Navigation from "./Navigation"
 
 const drawerWidth = 300;
 
@@ -15,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
+  // appBar: {
+  //   zIndex: theme.zIndex.drawer + 1,
+  // },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -41,14 +42,15 @@ export default function UI() {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
+      {/* <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
             Photo Editor
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
+      <Navigation />
       {/*Tool*/}
       <Drawer
         className={classes.drawer}
