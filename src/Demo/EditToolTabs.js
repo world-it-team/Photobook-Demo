@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Icon from "./Icon";
-import AddIcon from "@material-ui/icons/Add";
+import Typography from "@material-ui/core/Typography";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -19,11 +18,7 @@ function TabPanel(props) {
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box p={3}>{children}</Box>}
     </div>
   );
 }
@@ -46,46 +41,45 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: "flex",
-    width: 250,
+    height: 224,
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
+    width: 80,
   },
-  imageTab: {
-    width: 100,
-  },
-  addImg: {
-    position: "absolute",
-  },
+  tab:{
+      left:-40
+  }
 }));
 
-export default function EditBar() {
+const data = [
+  { icon: "photo", desc: "Photo", key: "1" },
+  { icon: "text", desc: "Text", key: "2" },
+  { icon: "color", desc: "Color", key: "3" },
+  { icon: "cut", desc: "Cut", key: "4" },
+  { icon: "zoom", desc: "Zoom", key: "5" },
+  { icon: "layout", desc: "Layout", key: "6" },
+];
+
+function loadImage(event) {
+    let outputImg = document.getElementById("output");
+    outputImg.src = URL.createObjectURL(event.target.files[0]);
+  }
+
+
+export default function EditToolTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
- 
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const data = [
-    { icon: "photo", desc: "Photo", key: "1" },
-    { icon: "text", desc: "Text", key: "2" },
-    { icon: "color", desc: "Color", key: "3" },
-    { icon: "cut", desc: "Cut", key: "4" },
-    { icon: "zoom", desc: "Zoom", key: "5" },
-    { icon: "layout", desc: "Layout", key: "6" },
-  ];
-
-  function loadImage(event) {
-    let outputImg = document.getElementById("output");
-    outputImg.src = URL.createObjectURL(event.target.files[0]);
-  }
-
   return (
     <div className={classes.root}>
       <Tabs
         orientation="vertical"
+        variant="scrollable"
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
@@ -94,15 +88,14 @@ export default function EditBar() {
         {data.map((item) => {
           return (
             <Tab
-              label={item.desc}
-              icon={<Icon {...item} {...a11yProps(item.key)} />}
-            ></Tab>
+              label={<Typography>{item.desc}</Typography>}
+              icon={<Icon {...item} />}
+              className={classes.tab}
+            />
           );
         })}
       </Tabs>
-
-      <TabPanel value={value} index={0} className={classes.imageTab}>
-        <Typography>Add Image</Typography>
+      <TabPanel value={value} index={0}>
         <input type="file" id="inputImg" onChange={loadImage} />
         <img id="output" width={100} height={100} onDragStart={(e) => {}} />
       </TabPanel>
@@ -120,6 +113,9 @@ export default function EditBar() {
       </TabPanel>
       <TabPanel value={value} index={5}>
         Item Six
+      </TabPanel>
+      <TabPanel value={value} index={6}>
+        Item Seven
       </TabPanel>
     </div>
   );
