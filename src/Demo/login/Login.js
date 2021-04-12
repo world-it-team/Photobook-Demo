@@ -21,6 +21,7 @@ const Login = () => {
         signInSuccessWithAuthResult: () => {
           const user = fromFirebase();
           setUser(user);
+          window.location.reload()
         },
       },
     };

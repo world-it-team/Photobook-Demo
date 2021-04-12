@@ -182,6 +182,7 @@ function Navigation(props) {
     const handleLogout = () => {
         logout(firebase).then(() => {
             setAnchorEl(null);
+            window.location.reload()
         });
     };
 
