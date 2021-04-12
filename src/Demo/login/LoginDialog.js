@@ -7,7 +7,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import { Close } from "@material-ui/icons";
 import Login from "./Login";
-import { isLoggedIn, getUser } from "../utils/Auth";
+import { isLoggedIn, getUser } from "../../utils/Auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,16 +58,15 @@ function LoginDialog(props) {
             root: classes.DialogContent,
           }}
         >
-          {!isLoggedIn() ? (
+          {isLoggedIn() ? (
             <div>
               <Typography
                 className={classes.loginTitle}
                 component="h2"
                 variant="h5"
               >
-                Đăng nhập với
-            </Typography>
-              <Login />
+                Chào mừng {getUser().displayName}
+              </Typography>
             </div>
 
           ) : (
@@ -77,8 +76,9 @@ function LoginDialog(props) {
                 component="h2"
                 variant="h5"
               >
-                Chào mừng {getUser().displayName}
-              </Typography>
+                Đăng nhập với
+          </Typography>
+              <Login />
             </div>
           )}
         </DialogContent>

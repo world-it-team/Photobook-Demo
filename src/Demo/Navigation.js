@@ -19,7 +19,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 import { getUser, logout, isLoggedIn } from "../utils/Auth";
 import getFirebase from "../utils/firebase";
-import LoginDialog from "./LoginDialog";
+import LoginDialog from "./login/LoginDialog";
 
 const drawerWidth = 200;
 const firebase = getFirebase();
@@ -214,12 +214,10 @@ function Navigation(props) {
                                 onClose={handleAvatarClose}
                             >
                                 <StyledMenuItem onClick={handleLogout}>
-                                    <a className={classes.link} href="/">
-                                        <ListItemIcon>
-                                            <ExitToAppIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Thoát" />
-                                    </a>
+                                    <ListItemIcon>
+                                        <ExitToAppIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Thoát" />
                                 </StyledMenuItem>
                             </StyledMenu>
                         </React.Fragment>
