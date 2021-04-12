@@ -6,6 +6,7 @@ import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import Icon from "./Icon";
 import Typography from "@material-ui/core/Typography";
+import Photo from "./tabPanel/Photo"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -29,13 +30,6 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`,
-  };
-}
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -47,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
     borderRight: `1px solid ${theme.palette.divider}`,
     width: 80,
   },
-  tab:{
-      left:-40
+  tab: {
+    left: -40
   }
 }));
 
@@ -60,11 +54,6 @@ const data = [
   { icon: "zoom", desc: "Zoom", key: "5" },
   { icon: "layout", desc: "Layout", key: "6" },
 ];
-
-function loadImage(event) {
-    let outputImg = document.getElementById("output");
-    outputImg.src = URL.createObjectURL(event.target.files[0]);
-  }
 
 
 export default function EditToolTabs() {
@@ -96,8 +85,7 @@ export default function EditToolTabs() {
         })}
       </Tabs>
       <TabPanel value={value} index={0}>
-        <input type="file" id="inputImg" onChange={loadImage} />
-        <img id="output" width={100} height={100} onDragStart={(e) => {}} />
+        <Photo />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two

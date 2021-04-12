@@ -12,9 +12,18 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+
 export default function getFirebase() {
     if (typeof window !== 'undefined') {
         return firebase;
+    }
+
+    return null;
+}
+
+export function getStorage() {
+    if (typeof window !== 'undefined') {
+        return firebase.storage();
     }
 
     return null;

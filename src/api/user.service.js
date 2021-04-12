@@ -5,7 +5,6 @@ import getFirebase, { getCollectionByName } from "../utils/firebase";
 
 const firebase = getFirebase();
 const userInfoCollection = getCollectionByName("userInfo");
-// const courseCollection = getCollectionByName("courses");
 
 export function loadingUserInfo() {
     var docRef = userInfoCollection.doc(getUser().uid);
@@ -21,41 +20,6 @@ export function loadingUserInfo() {
         }
     });
 }
-
-// Save data after login
-// export function handlerAfterLoggedIn() {
-//     const user = fromFirebase();
-
-//     // Save userData to cache
-//     setUser(user);
-
-//     courseCollection
-//         .get()
-//         .then((querySnapshot) => {
-//             const allCourses = [];
-
-//             querySnapshot.forEach((doc) => {
-//                 allCourses.push({
-//                     ...doc.data(),
-//                     id: doc.id
-//                 });
-//             });
-
-//             user.allCourses = allCourses;
-//             // Update courses to user
-//             setUser(user);
-//         })
-// }
-
-// export function addOrUpdateUserInfo(userInfo) {
-//     var user = fromFirebase();
-
-//     user.displayName = userInfo.displayName || "";
-
-//     return userInfoCollection
-//         .doc(user.uid)
-//         .set(Object.assign({}, user));
-// }
 
 export function fromFirebase() {
     const user = new User();
