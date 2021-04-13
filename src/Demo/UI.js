@@ -1,15 +1,24 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import EditToolTabs from "./EditToolTabs";
-import Navigation from "./Navigation";
+import Konva from "konva";
+
+
+
 const drawerWidth = 500;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    display: 'flex',
+  },
+  appBar: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
   },
   drawer: {
     width: drawerWidth,
@@ -21,20 +30,33 @@ const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
+    position:"relative",
   },
+  canvas:{
+    boxShadow:"0 0 5px grey",
+    marginLeft:65,
+    marginTop:100
+  }
 }));
 
-export default function UI() {
-  const classes = useStyles();
 
+
+
+export default function PermanentDrawerLeft() {
+  const classes = useStyles();
+  React.useEffect(() => {
+    addCanvas()
+  },[])
   return (
     <div className={classes.root}>
       <CssBaseline />
-
-      <Navigation />
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h6" noWrap>
+              Editor Tool
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -43,41 +65,26 @@ export default function UI() {
         }}
         anchor="left"
       >
-        <div className={classes.toolbar} />
+        {/* <div className={classes.toolbar} /> */}
         <EditToolTabs />
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-      </main>
+      <div className={classes.content}>
+          <div id="canvas" className={classes.canvas}></div>
+      </div>
     </div>
   );
+}
+
+
+function addCanvas(){
+  let stage = new Konva.Stage({
+    container: 'canvas',
+    width: 640,
+    height: 480,
+  
+  });
+  let layer = new Konva.Layer({
+   
+  });
+
 }
