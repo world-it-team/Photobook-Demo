@@ -7,7 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import EditToolTabs from "./EditToolTabs";
 import Konva from "konva";
-
+import Navigation from "./Navigation";
 
 
 const drawerWidth = 500;
@@ -33,9 +33,10 @@ const useStyles = makeStyles((theme) => ({
     position:"relative",
   },
   canvas:{
+    position:"absolute",
     boxShadow:"0 0 5px grey",
-    marginLeft:65,
-    marginTop:100
+    right:70,
+    top:100
   }
 }));
 
@@ -50,13 +51,7 @@ export default function PermanentDrawerLeft() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-              Editor Tool
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <Navigation/>
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -65,7 +60,7 @@ export default function PermanentDrawerLeft() {
         }}
         anchor="left"
       >
-        {/* <div className={classes.toolbar} /> */}
+        <div className={classes.toolbar} />
         <EditToolTabs />
       </Drawer>
       <div className={classes.content}>
