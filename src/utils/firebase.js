@@ -12,6 +12,13 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+if (window.location.hostname === 'localhost') {
+    firebase.firestore().settings({
+        host: "localhost:8080",
+        ssl: false
+    });
+}
+
 
 export default function getFirebase() {
     if (typeof window !== 'undefined') {
