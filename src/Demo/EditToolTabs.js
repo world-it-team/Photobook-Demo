@@ -6,7 +6,7 @@ import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import Icon from "./Icon";
 import Typography from "@material-ui/core/Typography";
-import Photo from "./tabPanel/Photo"
+import Photo from "./tabPanel/Photo";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,8 +42,29 @@ const useStyles = makeStyles((theme) => ({
     width: 80,
   },
   tab: {
-    left: -40
-  }
+    left: -40,
+  },
+  bgWrapper: {
+    width: 100,
+    height: 100,
+    position: "relative",
+    margin: 5,
+  },
+  bgImg: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    border: "2px solid black",
+    borderRadius: "10%",
+  },
+  bgContainer: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    maxWidth: 250,
+    textAlign: "center",
+  },
 }));
 
 const data = [
@@ -54,11 +75,18 @@ const data = [
   { icon: "zoom", desc: "Zoom", key: "5" },
   { icon: "layout", desc: "Layout", key: "6" },
 ];
-
-
-export default function EditToolTabs() {
+const bg = [
+  { src: require("../image/bg1.jpg") },
+  { src: require("../image/bg2.jpg") },
+  { src: require("../image/bg3.jpg") },
+  { src: require("../image/bg4.jpg") },
+];
+console.log(bg);
+export default function EditToolTabs(onChangeBg) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+ 
+  
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -100,10 +128,20 @@ export default function EditToolTabs() {
         Item Five
       </TabPanel>
       <TabPanel value={value} index={5}>
-        Item Six
-      </TabPanel>
-      <TabPanel value={value} index={6}>
-        Item Seven
+        <div className={classes.bgContainer}>
+          {bg.map((item, index) => {
+            return (
+             
+                <div className={classes.bgWrapper} onClick={onChangeBg}>
+                  <img
+                    key={index}
+                    src={item.src.default}
+                    className={classes.bgImg}
+                  ></img>
+                </div>   
+            );
+          })}
+        </div>
       </TabPanel>
     </div>
   );
