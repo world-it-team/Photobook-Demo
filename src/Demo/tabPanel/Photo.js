@@ -26,7 +26,7 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-export default function Photo() {
+export default function Photo({ onChangeImg }) {
     const classes = useStyles();
     const [login, setLogin] = useState(false);
     const [image, setImage] = useState(null);
@@ -89,7 +89,7 @@ export default function Photo() {
             <GridList cols={3}>
                 {imgUrl && imgUrl.map((img) => (
                     <GridListTile className={classes.gridListTile} >
-                        <img className={classes.img} src={img.url} alt={img.name} />
+                        <img className={classes.img} src={img.url} alt={img.name} onClick={e => onChangeImg(e)} />
                     </GridListTile>
                 ))}
             </GridList>

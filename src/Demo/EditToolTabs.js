@@ -84,7 +84,7 @@ const bg = [
   { src: require("../image/bg4.jpg") },
 ];
 console.log(bg);
-export default function EditToolTabs({onChangeBg}) {
+export default function EditToolTabs({ onChangeBg, onChangeImg }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -92,7 +92,7 @@ export default function EditToolTabs({onChangeBg}) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  
+
 
   return (
     <div className={classes.root}>
@@ -115,7 +115,7 @@ export default function EditToolTabs({onChangeBg}) {
         })}
       </Tabs>
       <TabPanel value={value} index={0}>
-        <Photo />
+        <Photo onChangeImg={onChangeImg} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
@@ -133,15 +133,15 @@ export default function EditToolTabs({onChangeBg}) {
         <div className={classes.bgContainer}>
           {bg.map((item, index) => {
             return (
-             
-                <div className={classes.bgWrapper} >
-                  <img
-                    key={index}
-                    src={item.src.default}
-                    className={classes.bgImg}
-                    onClick={e => onChangeBg(e)}
-                  ></img>
-                </div>   
+
+              <div className={classes.bgWrapper} >
+                <img
+                  key={index}
+                  src={item.src.default}
+                  className={classes.bgImg}
+                  onClick={e => onChangeBg(e)}
+                ></img>
+              </div>
             );
           })}
         </div>
