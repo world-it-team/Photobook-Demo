@@ -4,7 +4,7 @@ import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import EditToolTabs from "./EditToolTabs";
 import Navigation from "./Navigation";
-import { Stage, Layer, Rect } from "react-konva"
+import { Stage, Layer, Rect, Image } from "react-konva"
 import useImage from "use-image"
 
 
@@ -52,7 +52,7 @@ export default function UI() {
 
   const UrlImage = () => {
     const [image] = useImage(imgUrl);
-    return <Rect fillPatternImage={image} x={0} y={0} width={400} height={400} />;
+    return <Image image={image} width={400} height={400} />
   };
 
   function changeBg(event) {
