@@ -2,12 +2,11 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import EditToolTabs from "./EditToolTabs";
-import Konva from "konva";
 import Navigation from "./Navigation";
+import {Stage,Layer,Rect} from "react-konva"
+import useImage from "use-image"
+
 
 const drawerWidth = 500;
 
@@ -40,19 +39,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UI() {
-  const [background, setBackground] = React.useState(``);
-  const [canvas, setCanvas] = React.useState(null);
+
   const classes = useStyles();
+  const [bgUrl, setBgUrl] = React.useState('')
+  console.log(bgUrl);
 
-  console.log(background);
-
-  React.useEffect(() => {
-    addCanvas(background);
-  }, []);
+  const BgImage = ()=> {
+    const [image] = useImage(bgUrl);
+    return <Rect fillPatternImage={image} x={0} y={0} width={640} height={480} />;
+  };
 
   function changeBg(event) {
-    setBackground(event.target.src);
+    setBgUrl(event.target.src);
+    event.preventDefault();
   }
+ 
 
   return (
     <div className={classes.root}>
@@ -67,30 +68,16 @@ export default function UI() {
         anchor="left"
       >
         <div className={classes.toolbar} />
-        <EditToolTabs onChangeBg={changeBg} />
+        <EditToolTabs onChangeBg ={changeBg} />
       </Drawer>
       <div className={classes.content}>
-        <div id="canvas" className={classes.canvas}></div>
+          <Stage width ={640} height={480} className={classes.canvas}>
+            <Layer>
+              <BgImage/>
+            </Layer>
+          </Stage>
       </div>
     </div>
   );
 }
 
-function addCanvas(url) {
-  let stage = new Konva.Stage({
-    container: "canvas",
-    width: 640,
-    height: 480,
-  });
-  let layer = new Konva.Layer();
-  let bg = new Konva.Rect({
-    width: stage.width(),
-    height: stage.height(),
-  });
-  var imageObj = new Image();
-  imageObj.onload = function () {
-    bg.fillPatternImage(imageObj);
-    bg.draw();
-  };
-  imageObj.src = url;
-}

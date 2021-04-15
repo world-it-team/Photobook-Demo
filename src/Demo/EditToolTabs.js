@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Photo from "./tabPanel/Photo";
 import ZoomPhoto from "./tabPanel/ZoomPhoto";
 
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -84,15 +85,15 @@ const bg = [
   { src: require("../image/bg4.jpg") },
 ];
 console.log(bg);
-export default function EditToolTabs(onChangeBg) {
+export default function EditToolTabs({onChangeBg}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
- 
-  
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  
 
   return (
     <div className={classes.root}>
@@ -134,11 +135,12 @@ export default function EditToolTabs(onChangeBg) {
           {bg.map((item, index) => {
             return (
              
-                <div className={classes.bgWrapper} onClick={onChangeBg}>
+                <div className={classes.bgWrapper} >
                   <img
                     key={index}
                     src={item.src.default}
                     className={classes.bgImg}
+                    onClick={e => onChangeBg(e)}
                   ></img>
                 </div>   
             );
