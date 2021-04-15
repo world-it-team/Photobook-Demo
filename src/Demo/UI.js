@@ -52,7 +52,7 @@ export default function UI() {
 
   const UrlImage = () => {
     const [image] = useImage(imgUrl);
-    return <Image image={image} width={400} height={400} />
+    return <Image image={image} width={500} height={500} />
   };
 
   function changeBg(event) {

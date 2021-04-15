@@ -1,226 +1,142 @@
-import React, { useCallback, useState } from "react";
+import React, { useState, useCallback } from 'react'
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import Button from "@material-ui/core/Button";
-import Cropper from "react-easy-crop";
-import Dialog from "@material-ui/core/Dialog";
-import Typography from "@material-ui/core/Typography";
-import Slide from "@material-ui/core/Slide";
-import Slider from "@material-ui/core/Slider";
+import Cropper from 'react-easy-crop'
+import Slider from '@material-ui/core/Slider'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import ImgDialog from './ImgDialog'
+import getCroppedImg from './cropImage'
 
-import getCroppedImg from "./cropImage";
-
-import naruto from "../../image/bg3.jpg"
-import naruto1 from "../../image/bg2.jpg"
-import naruto2 from "../../image/bg1.jpg"
-
-
-const listImg = [
-  {
-    src: naruto,
-    alt: "naruto"
-  },
-  {
-    src: naruto1,
-    alt: "sasuke"
-  },
-  {
-    src: naruto2,
-    alt: "itadori"
-  }
-];
+const dogImg =
+  'https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000'
 
 const useStyles = makeStyles(() =>
   createStyles({
-    root: {
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "space-around",
-      overflow: "hidden",
-      paddingTop: "20px",
-      paddingBottom: "20px"
-    },
-    gridList: {
-      width: "600px",
-      height: "auto"
-    },
-    gridListTile: {
-      border: "1px solid #000000"
-    },
-    img: {
-      width: "100%",
-      height: "100%",
-      objectFit: "contain",
-      cursor: "pointer"
-    },
     cropContainer: {
-      position: "relative",
-      width: "100%",
-      height: "70vh",
-      background: "#333"
+      position: 'relative',
+      width: '100%',
+      height: 200,
+      background: '#333',
+     
+    },
+    cropButton: {
+      flexShrink: 0,
+      marginLeft: 16,
     },
     controls: {
       padding: 16,
-      display: "flex"
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'stretch',
+
     },
     sliderContainer: {
-      display: "flex",
-      flex: "1",
-      alignItems: "center"
+      display: 'flex',
+      flex: '1',
+      alignItems: 'center',
     },
+
     slider: {
-      margin: "auto 20px"
+      padding: '22px 0px',
+      marginLeft: 32,
     },
-    buttonContainer: {
-      margin: "20px auto"
-    },
-    button: {
-      margin: "0 50px",
-      width: "110px"
-    }
   })
 );
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slider direction="up" ref={ref} {...props} />;
 });
 
-export default function ZoomPhoto() {
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [rotation, setRotation] = useState(0);
-  const [zoom, setZoom] = useState(1);
-  const [editImg, setEditImg] = useState();
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-
-  const handleClose = () => {
-    setOpen(false);
-    setZoom(1);
-    setRotation(0);
-    setCrop({ x: 0, y: 0 });
-  };
+export default function ZoomPhoto({data}) {
+  console.log(data)
+  const classes = useStyles()
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [rotation, setRotation] = useState(0)
+  const [zoom, setZoom] = useState(1)
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+  const [croppedImage, setCroppedImage] = useState(null)
 
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-    setCroppedAreaPixels(croppedAreaPixels);
-  }, []);
+    setCroppedAreaPixels(croppedAreaPixels)
+  }, [])
 
-  const saveImage = useCallback(async () => {
+  const showCroppedImage = useCallback(async () => {
     try {
       const croppedImage = await getCroppedImg(
-        editImg,
+        dogImg,
         croppedAreaPixels,
         rotation
-      );
-      listImg.forEach((e) => {
-        if (e.src === editImg) e.src = croppedImage;
-      });
-      handleClose();
+      )
+      console.log('donee', { croppedImage })
+      setCroppedImage(croppedImage)
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
-  }, [editImg, croppedAreaPixels, rotation]);
+  }, [croppedAreaPixels, rotation])
+
+  const onClose = useCallback(() => {
+    setCroppedImage(null)
+  }, [])
 
   return (
-    <div className={classes.root}>
-      <GridList cellHeight={200} cols={3} className={classes.gridList}>
-        {listImg.map((img) => (
-          <GridListTile className={classes.gridListTile}>
-            <img
-              className={classes.img}
-              src={img.src}
-              alt={img.alt}
-              onClick={() => {
-                setEditImg(img.src);
-                setOpen(true);
-              }}
-            />
-          </GridListTile>
-        ))}
-      </GridList>
-
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
-        <div className={classes.cropContainer}>
-          <Cropper
-            image={editImg}
-            crop={crop}
-            rotation={rotation}
-            zoom={zoom}
-            minZoom={0.5}
-            maxZoom={3}
-            aspect={3 / 3}
-            zoomWithScroll={false}
-            restrictPosition={false}
-            onCropChange={setCrop}
-            onRotationChange={setRotation}
-            onCropComplete={onCropComplete}
-            onZoomChange={setZoom}
+    <div>
+      <div className={classes.cropContainer}>
+        <Cropper
+          image={dogImg}
+          crop={crop}
+          rotation={rotation}
+          zoom={zoom}
+          aspect={4 / 3}
+          onCropChange={setCrop}
+          onRotationChange={setRotation}
+          onCropComplete={onCropComplete}
+          onZoomChange={setZoom}
+        />
+      </div>
+      <div className={classes.controls}>
+        <div className={classes.sliderContainer}>
+          <Typography
+            variant="overline"
+            classes={{ root: classes.sliderLabel }}
+          >
+            Zoom
+          </Typography>
+          <Slider
+            value={zoom}
+            min={1}
+            max={3}
+            step={0.1}
+            aria-labelledby="Zoom"
+            classes={{ root: classes.slider }}
+            onChange={(e, zoom) => setZoom(zoom)}
           />
         </div>
-        <div className={classes.controls}>
-          <div className={classes.sliderContainer}>
-            <Typography
-              variant="overline"
-              classes={{ root: classes.sliderLabel }}
-            >
-              {" "}
-              Zoom{" "}
-            </Typography>
-            <Slider
-              value={zoom}
-              min={0.5}
-              max={3}
-              step={0.1}
-              aria-labelledby="Zoom"
-              className={classes.slider}
-              onChange={(e, zoom) => setZoom(zoom)}
-            />
-          </div>
-          <div className={classes.sliderContainer}>
-            <Typography
-              variant="overline"
-              classes={{ root: classes.sliderLabel }}
-            >
-              {" "}
-              Rotation{" "}
-            </Typography>
-            <Slider
-              value={rotation}
-              min={0}
-              max={360}
-              step={1}
-              aria-labelledby="Rotation"
-              className={classes.slider}
-              onChange={(e, rotation) => setRotation(rotation)}
-            />
-          </div>
-        </div>
-        <div className={classes.buttonContainer}>
-          <Button
-            onClick={saveImage}
-            variant="contained"
-            color="primary"
-            className={classes.button}
+        <div className={classes.sliderContainer}>
+          <Typography
+            variant="overline"
+            classes={{ root: classes.sliderLabel }}
           >
-            {" "}
-            保存{" "}
-          </Button>
-          <Button
-            onClick={handleClose}
-            variant="contained"
-            color="primary"
-            className={classes.button}
-          >
-            {" "}
-            キャンセル{" "}
-          </Button>
+            Rotation
+          </Typography>
+          <Slider
+            value={rotation}
+            min={0}
+            max={360}
+            step={1}
+            aria-labelledby="Rotation"
+            classes={{ root: classes.slider }}
+            onChange={(e, rotation) => setRotation(rotation)}
+          />
         </div>
-      </Dialog>
+        <Button
+          onClick={showCroppedImage}
+          variant="contained"
+          color="primary"
+          classes={{ root: classes.cropButton }}
+        >
+          Show Result
+        </Button>
+      </div>
+      <ImgDialog img={croppedImage} onClose={onClose} />
     </div>
-  );
+  )
 }
