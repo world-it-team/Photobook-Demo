@@ -7,6 +7,7 @@ import Box from "@material-ui/core/Box";
 import Icon from "./Icon";
 import Typography from "@material-ui/core/Typography";
 import Photo from "./tabPanel/Photo";
+import ZoomPhoto from "./tabPanel/ZoomPhoto";
 
 
 function TabPanel(props) {
@@ -124,7 +125,7 @@ export default function EditToolTabs({ onChangeBg, onChangeImg }) {
         Item Three
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <ZoomPhoto/>
       </TabPanel>
       <TabPanel value={value} index={4}>
         Item Five
