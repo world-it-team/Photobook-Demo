@@ -4,9 +4,9 @@ import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import EditToolTabs from "./EditToolTabs";
 import Navigation from "./Navigation";
-import { Stage, Layer, Rect, Image, Transformer } from "react-konva"
-import useImage from "use-image"
-
+import { Stage, Layer, Rect, Image, Text, Transformer } from "react-konva";
+import useImage from "use-image";
+import { ContactSupportOutlined } from "@material-ui/icons";
 
 const drawerWidth = 500;
 
@@ -63,14 +63,14 @@ const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, imgUrl }) => {
         ref={shapeRef}
         {...shapeProps}
         draggable
-        onDragEnd={e => {
+        onDragEnd={(e) => {
           onChange({
             ...shapeProps,
             x: e.target.x(),
-            y: e.target.y()
+            y: e.target.y(),
           });
         }}
-        onTransformEnd={e => {
+        onTransformEnd={(e) => {
           // transformer is changing scale of the node
           // and NOT its width or height
           // but in the store we have only width and height
@@ -91,7 +91,7 @@ const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, imgUrl }) => {
             y: node.y(),
             // set minimal value
             width: node.width(),
-            height: node.height()
+            height: node.height(),
           });
         }}
       />
@@ -116,21 +116,23 @@ const initialRectangles = [
     y: 100,
     width: 200,
     height: 200,
-    id: "rect1"
-  }
+    id: "rect1",
+  },
 ];
 
 export default function UI() {
   const [rectangles, setRectangles] = useState(initialRectangles);
   const [selectedId, selectShape] = useState(null);
   const classes = useStyles();
-  const [bgUrl, setBgUrl] = useState('');
-  const [imgUrl, setImgUrl] = useState('')
-
-
+  const [bgUrl, setBgUrl] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
+  const [text, setText] = useState({text:"",fontFamily:"", fontSize:0});
+ 
   const BgImage = () => {
     const [image] = useImage(bgUrl);
-    return <Rect fillPatternImage={image} x={0} y={0} width={640} height={480} />;
+    return (
+      <Rect fillPatternImage={image} x={0} y={0} width={640} height={480} />
+    );
   };
 
   // const UrlImage = () => {
@@ -148,6 +150,18 @@ export default function UI() {
     event.preventDefault();
   }
 
+  function changeText(event) {
+    let fontFamily = event.target.style.fontFamily
+    let fontSize =   parseInt(event.target.style.fontSize.split('px')[0])
+    let text= event.target.outerText
+    setText({text,fontFamily, fontSize})
+  }
+
+
+  const handleTextEdit = e => {
+    
+    console.log(e.target.value)
+  };
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -161,7 +175,7 @@ export default function UI() {
         anchor="left"
       >
         <div className={classes.toolbar} />
-        <EditToolTabs onChangeBg={changeBg} onChangeImg={changeImg} />
+        <EditToolTabs onChangeBg={changeBg} onChangeImg={changeImg} onChangeText={changeText} />
       </Drawer>
       <div className={classes.content}>
         <Stage width={640} height={480} className={classes.canvas}>
@@ -178,7 +192,7 @@ export default function UI() {
                   onSelect={() => {
                     selectShape(rect.id);
                   }}
-                  onChange={newAttrs => {
+                  onChange={(newAttrs) => {
                     const rects = rectangles.slice();
                     rects[i] = newAttrs;
                     setRectangles(rects);
@@ -187,9 +201,11 @@ export default function UI() {
               );
             })}
           </Layer>
+          <Layer>
+          <Text text={text.text} fontFamily ={text.fontFamily} x={100} y={200} fontSize={text.fontSize} draggable  onClick={handleTextEdit}/>
+          </Layer>
         </Stage>
       </div>
     </div>
   );
 }
-
