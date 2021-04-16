@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
     top: 100,
   },
 }));
-const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, imgUrl }) => {
-  const [image] = useImage(imgUrl);
+const Rectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
+  const [image] = useImage(shapeProps.src);
   const shapeRef = useRef();
   const trRef = useRef();
 
@@ -119,24 +119,14 @@ const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, imgUrl }) => {
     </React.Fragment>
   );
 };
-const initialRectangles = [
-  {
-    x: 100,
-    y: 100,
-    width: 200,
-    height: 200,
-    id: "rect1",
-  },
-];
 
 export default function UI() {
-  const [rectangles, setRectangles] = useState(initialRectangles);
+  const [rectangles, setRectangles] = useState([]);
   const [selectedId, selectShape] = useState(null);
   const classes = useStyles();
   const [bgUrl, setBgUrl] = useState("");
-  const [imgUrl, setImgUrl] = useState("");
-  const [text, setText] = useState({text:"",fontFamily:"", fontSize:0});
- 
+  const [text, setText] = useState({ text: "", fontFamily: "", fontSize: 0 });
+
   const BgImage = () => {
     const [image] = useImage(bgUrl);
     return (
@@ -154,21 +144,27 @@ export default function UI() {
     event.preventDefault();
   }
 
-  function changeImg(event) {
-    setImgUrl(event.target.src);
-    event.preventDefault();
+  function ChangeImg(event) {
+    setRectangles(rect => [...rect, {
+      x: 100,
+      y: 100,
+      width: 200,
+      height: 200,
+      id: event.target.alt,
+      src: event.target.src
+    }])
   }
 
   function changeText(event) {
     let fontFamily = event.target.style.fontFamily
-    let fontSize =   parseInt(event.target.style.fontSize.split('px')[0])
-    let text= event.target.outerText
-    setText({text,fontFamily, fontSize})
+    let fontSize = parseInt(event.target.style.fontSize.split('px')[0])
+    let text = event.target.outerText
+    setText({ text, fontFamily, fontSize })
   }
 
 
   const handleTextEdit = e => {
-    
+
     console.log(e.target.value)
   };
   return (
@@ -184,7 +180,7 @@ export default function UI() {
         anchor="left"
       >
         <div className={classes.toolbar} />
-        <EditToolTabs onChangeBg={changeBg} onChangeImg={changeImg} onChangeText={changeText} />
+        <EditToolTabs onChangeBg={changeBg} onChangeImg={ChangeImg} onChangeText={changeText} />
       </Drawer>
       <div className={classes.content}>
         <Stage width={640} height={480} className={classes.canvas}>
@@ -195,11 +191,11 @@ export default function UI() {
               return (
                 <Rectangle
                   key={i}
-                  imgUrl={imgUrl}
+                  // imgUrl={imgUrl}
                   shapeProps={rect}
                   isSelected={rect.id === selectedId}
                   onSelect={() => {
-                    selectShape(rect.id);
+                    (rect.id === selectedId) ? selectShape(null) : selectShape(rect.id);
                   }}
                   onChange={(newAttrs) => {
                     const rects = rectangles.slice();
@@ -211,7 +207,7 @@ export default function UI() {
             })}
           </Layer>
           <Layer>
-          <Text text={text.text} fontFamily ={text.fontFamily} x={100} y={200} fontSize={text.fontSize} draggable  onClick={handleTextEdit}/>
+            <Text text={text.text} fontFamily={text.fontFamily} x={100} y={200} fontSize={text.fontSize} draggable onClick={handleTextEdit} />
           </Layer>
         </Stage>
       </div>
