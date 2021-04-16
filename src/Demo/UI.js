@@ -4,7 +4,7 @@ import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import EditToolTabs from "./EditToolTabs";
 import Navigation from "./Navigation";
-import { Stage, Layer, Rect } from "react-konva"
+import { Stage, Layer, Rect, Text } from "react-konva"
 import useImage from "use-image"
 
 
@@ -86,6 +86,12 @@ export default function UI() {
           <Layer>
             <BgImage />
             <UrlImage />
+            <Text 
+            text="Draggable Text"
+            x={50}
+            y={100}
+            draggable
+            />
           </Layer>
         </Stage>
       </div>
