@@ -4,8 +4,9 @@ import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import EditToolTabs from "./EditToolTabs";
 import Navigation from "./Navigation";
-import { Stage, Layer, Rect, Image, Transformer } from "react-konva"
+import { Stage, Layer, Rect, Image, Transformer, Text } from "react-konva"
 import useImage from "use-image"
+
 
 
 const drawerWidth = 500;
@@ -95,6 +96,12 @@ const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, imgUrl }) => {
           });
         }}
       />
+      <Text
+        text="Hãy đến với PhotoBook của chúng tôi"
+        x={50}
+        y={100}
+        draggable
+      />
       {isSelected && (
         <Transformer
           ref={trRef}
@@ -167,15 +174,6 @@ export default function UI() {
         <Stage width={640} height={480} className={classes.canvas}>
           <Layer>
             <BgImage />
-<<<<<<< HEAD
-            <UrlImage />
-            <Text 
-            text="Draggable Text"
-            x={50}
-            y={100}
-            draggable
-            />
-=======
             {/* <UrlImage /> */}
             {rectangles.map((rect, i) => {
               return (
@@ -195,7 +193,6 @@ export default function UI() {
                 />
               );
             })}
->>>>>>> 035910ba3b4f8ee9049a8e124278dfb2f4996b17
           </Layer>
         </Stage>
       </div>
