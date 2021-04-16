@@ -8,6 +8,9 @@ import { Stage, Layer, Rect, Image, Text, Transformer } from "react-konva";
 import useImage from "use-image";
 import { ContactSupportOutlined } from "@material-ui/icons";
 
+
+
+
 const drawerWidth = 500;
 
 const useStyles = makeStyles((theme) => ({
@@ -94,6 +97,12 @@ const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, imgUrl }) => {
             height: node.height(),
           });
         }}
+      />
+      <Text
+        text="Hãy đến với PhotoBook của chúng tôi"
+        x={50}
+        y={100}
+        draggable
       />
       {isSelected && (
         <Transformer

@@ -14,6 +14,7 @@ const useStyles = makeStyles(() =>
         upload: {
             marginBottom: "20px"
         },
+        
         gridListTile: {
             border: "1px solid #000000"
         },

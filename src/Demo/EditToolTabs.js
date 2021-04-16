@@ -8,6 +8,7 @@ import Icon from "./Icon";
 import Typography from "@material-ui/core/Typography";
 import Photo from "./tabPanel/Photo";
 import ZoomPhoto from "./tabPanel/ZoomPhoto";
+import Text from "./tabPanel/Text"
 
 
 function TabPanel(props) {
@@ -133,7 +134,7 @@ export default function EditToolTabs({
         <Photo onChangeImg={onChangeImg} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+      <Text/>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <div className={classes.textContainer}>
