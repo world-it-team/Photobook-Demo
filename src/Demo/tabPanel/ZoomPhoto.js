@@ -46,8 +46,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slider direction="up" ref={ref} {...props} />;
 });
 
-export default function ZoomPhoto({data}) {
-  console.log(data)
+export default function ZoomPhoto() {
   const classes = useStyles()
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [rotation, setRotation] = useState(0)

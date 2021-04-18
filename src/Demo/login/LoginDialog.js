@@ -76,7 +76,7 @@ function LoginDialog(props) {
                 component="h2"
                 variant="h5"
               >
-                Đăng nhập với
+                Đăng nhập với 
           </Typography>
               <Login />
             </div>

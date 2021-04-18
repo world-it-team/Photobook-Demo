@@ -128,7 +128,7 @@ export default function EditToolTabs({ onChangeBg, onChangeImg }) {
         <ZoomPhoto/>
       </TabPanel>
       <TabPanel value={value} index={4}>
-        Item Five
+      <ZoomPhoto/>
       </TabPanel>
       <TabPanel value={value} index={5}>
         <div className={classes.bgContainer}>
