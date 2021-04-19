@@ -7,8 +7,6 @@ import useImage from "use-image";
 import Slider from '@material-ui/core/Slider'
 import Typography from '@material-ui/core/Typography'
 
-const drawerWidth = 500;
-
 const useStyles = makeStyles((theme) => ({
   mainContent: {
     margin: "64px 0 0 0",
@@ -19,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
   LeftPanel: {
     minWidth: "40%",
     maxWidth: "40%",
-    // width: "40%",
     marginRight: "20px",
 
   },
@@ -71,6 +68,14 @@ export default function UI() {
         height={imgHeight * zoom}
         x={(640 - imgWidth) * zoom / 2}
         y={(480 - imgHeight) * zoom / 2}
+      // draggable
+      // onDragEnd={(e) => {
+      //   setState({
+      //     stageScale: state.stageScale,
+      //     stageX: e.target.x(),
+      //     stageY: e.target.y()
+      //   });
+      // }}
       />
     );
   };
