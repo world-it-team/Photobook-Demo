@@ -10,30 +10,32 @@ import Typography from '@material-ui/core/Typography'
 const drawerWidth = 500;
 
 const useStyles = makeStyles((theme) => ({
-  mainContent:{
-    margin:"64px 0 0 0",
-    width:"100%",
-    minHeight:"100vh",
+  mainContent: {
+    margin: "64px 0 0 0",
+    width: "100%",
+    minHeight: "100vh",
     display: "flex",
   },
-  LeftPanel:{
-    minWidth:"40%",
-    marginRight:"20px",
+  LeftPanel: {
+    minWidth: "40%",
+    maxWidth: "40%",
+    // width: "40%",
+    marginRight: "20px",
 
   },
-  RightPanel:{
-    width:"auto",
-    padding:"0 60px",
+  RightPanel: {
+    width: "auto",
+    padding: "0 60px",
   },
-  canvas:{
+  canvas: {
     boxShadow: "0 0 5px grey",
-    margin:"30px auto",
+    margin: "30px auto",
   },
-  zoom:{
-    position:"fixed",
-    bottom:"50px",
-    left:"50%",
-    width:"500px"
+  zoom: {
+    position: "fixed",
+    bottom: "50px",
+    left: "50%",
+    width: "500px"
   }
 }));
 
@@ -44,7 +46,7 @@ export default function UI() {
   const [height, setHeight] = useState();
   const [text, setText] = useState({ text: "", fontFamily: "", fontSize: 0 });
   const [image] = useImage(img);
-  const [ state,setState] = useState({
+  const [state, setState] = useState({
     stageScale: 1,
     stageX: 0,
     stageY: 0
@@ -63,7 +65,13 @@ export default function UI() {
     const imgWidth = width * scale;
     const imgHeight = height * scale;
     return (
-      <Image image={image} width={imgWidth * zoom} height={imgHeight * zoom} x={(640 - imgWidth) * zoom / 2} y={(480 - imgHeight) * zoom / 2} />
+      <Image
+        image={image}
+        width={imgWidth * zoom}
+        height={imgHeight * zoom}
+        x={(640 - imgWidth) * zoom / 2}
+        y={(480 - imgHeight) * zoom / 2}
+      />
     );
   };
 
@@ -83,7 +91,7 @@ export default function UI() {
 
     console.log(e.target.value)
   };
-  function handleWheel(e){
+  function handleWheel(e) {
     e.evt.preventDefault();
 
     const scaleBy = 1.01;
@@ -109,21 +117,21 @@ export default function UI() {
   return (
     <div className={classes.root}>
       <Navigation />
-      <div className={classes.mainContent}> 
+      <div className={classes.mainContent}>
         <div className={classes.LeftPanel}>
-           <EditToolTabs  onChangeImg={changeImg} onChangeText={changeText} />
+          <EditToolTabs onChangeImg={changeImg} onChangeText={changeText} />
         </div>
         <div className={classes.RightPanel}>
-          <Stage 
+          <Stage
             onWheel={handleWheel}
-            scaleX={state.stageScale  }
+            scaleX={state.stageScale}
             scaleY={state.stageScale}
-            x={state.stageX }
-            y={state.stageY }
-            width={640*zoom} 
-            height={480*zoom} 
+            x={state.stageX}
+            y={state.stageY}
+            width={640 * zoom}
+            height={480 * zoom}
             className={classes.canvas}
-            >
+          >
             <Layer className={classes.layer}>
               <DrawImage />
             </Layer>
@@ -149,7 +157,7 @@ export default function UI() {
             />
           </div>
         </div>
-       
+
       </div>
     </div>
   );
