@@ -58,11 +58,10 @@ export default function UI() {
   const [zoom, setZoom] = useState(1)
 
   useEffect(() => {
-    if (!image) {
-      return;
+    if (image) {
+      setWidth(image.width);
+      setHeight(image.height);
     }
-    setWidth(image.width);
-    setHeight(image.height);
   }, [image])
 
   const DrawImage = () => {
@@ -70,7 +69,7 @@ export default function UI() {
     const imgWidth = width * scale;
     const imgHeight = height * scale;
     return (
-      <Image image={image} width={imgWidth} height={imgHeight} x={320 - imgWidth / 2} y={240 - imgHeight / 2} />
+      <Image image={image} width={imgWidth + zoom} height={imgHeight + zoom} x={320+zoom/2 - imgWidth / 2} y={240+zoom/2 - imgHeight / 2} />
     );
   };
 
