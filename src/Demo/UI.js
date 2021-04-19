@@ -7,7 +7,6 @@ import Navigation from "./Navigation";
 import { Stage, Layer, Rect, Image, Text, } from "react-konva";
 import useImage from "use-image";
 import Slider from '@material-ui/core/Slider'
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 
 const drawerWidth = 500;
@@ -134,12 +133,12 @@ export default function UI() {
       <div className={classes.content}>
         <Stage 
           onWheel={handleWheel}
-          scaleX={state.stageScale || zoom}
-          scaleY={state.stageScale || zoom}
-          x={state.stageX}
-          y={state.stageY}
-          width={640} 
-          height={480} 
+          scaleX={state.stageScale  }
+          scaleY={state.stageScale}
+          x={state.stageX }
+          y={state.stageY }
+          width={640+zoom} 
+          height={480+zoom} 
           className={classes.canvas}
           >
           <Layer>
@@ -159,8 +158,8 @@ export default function UI() {
           <Slider
             value={zoom}
             min={1}
-            max={3}
-            step={0.1}
+            max={100}
+            step={5}
             aria-labelledby="Zoom"
             classes={{ root: classes.slider }}
             onChange={(e, zoom) => setZoom(zoom)}
