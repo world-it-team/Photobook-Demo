@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import EditToolTabs from "./EditToolTabs";
 import Navigation from "./Navigation";
-import { Stage, Layer, Rect, Image, Text, } from "react-konva";
+import { Stage, Layer, Image, Text, } from "react-konva";
 import useImage from "use-image";
 import Slider from '@material-ui/core/Slider'
 import Typography from '@material-ui/core/Typography'
@@ -12,35 +10,31 @@ import Typography from '@material-ui/core/Typography'
 const drawerWidth = 500;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  mainContent:{
+    margin:"64px 0 0 0",
+    width:"100%",
+    minHeight:"100vh",
     display: "flex",
   },
-  appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
+  LeftPanel:{
+    minWidth:"40%",
+    marginRight:"20px",
+
   },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
+  RightPanel:{
+    width:"auto",
+    padding:"0 60px",
   },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
-  content: {
-    position: "relative",
-  },
-  canvas: {
-    position: "absolute",
+  canvas:{
     boxShadow: "0 0 5px grey",
-    right: 70,
-    top: 100,
+    margin:"30px auto",
   },
   zoom:{
-    width:"500px",
-    margin:"600px 150px 0 0"
-  },
+    position:"fixed",
+    bottom:"50px",
+    left:"50%",
+    width:"500px"
+  }
 }));
 
 export default function UI() {
@@ -69,7 +63,7 @@ export default function UI() {
     const imgWidth = width * scale;
     const imgHeight = height * scale;
     return (
-      <Image image={image} width={imgWidth + zoom} height={imgHeight + zoom} x={320+zoom/2 - imgWidth / 2} y={240+zoom/2 - imgHeight / 2} />
+      <Image image={image} width={imgWidth * zoom} height={imgHeight * zoom} x={(640 - imgWidth) * zoom / 2} y={(480 - imgHeight) * zoom / 2} />
     );
   };
 
@@ -85,8 +79,6 @@ export default function UI() {
     let text = event.target.outerText
     setText({ text, fontFamily, fontSize })
   }
-
-
   const handleTextEdit = e => {
 
     console.log(e.target.value)
@@ -116,54 +108,48 @@ export default function UI() {
   }
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <Navigation />
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        anchor="left"
-      >
-        <div className={classes.toolbar} />
-        <EditToolTabs onChangeImg={changeImg} onChangeText={changeText} />
-      </Drawer>
-      <div className={classes.content}>
-        <Stage 
-          onWheel={handleWheel}
-          scaleX={state.stageScale  }
-          scaleY={state.stageScale}
-          x={state.stageX }
-          y={state.stageY }
-          width={640+zoom} 
-          height={480+zoom} 
-          className={classes.canvas}
-          >
-          <Layer>
-            <DrawImage />
-          </Layer>
-          <Layer>
-            <Text text={text.text} fontFamily={text.fontFamily} x={100} y={200} fontSize={text.fontSize} draggable onClick={handleTextEdit} />
-          </Layer>
-        </Stage>
-        <div className={classes.zoom}>
-          <Typography
-            variant="overline"
-            classes={{ root: classes.sliderLabel }}
-          >
-            Zoom
-          </Typography>
-          <Slider
-            value={zoom}
-            min={1}
-            max={100}
-            step={5}
-            aria-labelledby="Zoom"
-            classes={{ root: classes.slider }}
-            onChange={(e, zoom) => setZoom(zoom)}
-          />
+      <div className={classes.mainContent}> 
+        <div className={classes.LeftPanel}>
+           <EditToolTabs  onChangeImg={changeImg} onChangeText={changeText} />
         </div>
+        <div className={classes.RightPanel}>
+          <Stage 
+            onWheel={handleWheel}
+            scaleX={state.stageScale  }
+            scaleY={state.stageScale}
+            x={state.stageX }
+            y={state.stageY }
+            width={640*zoom} 
+            height={480*zoom} 
+            className={classes.canvas}
+            >
+            <Layer className={classes.layer}>
+              <DrawImage />
+            </Layer>
+            <Layer>
+              <Text text={text.text} fontFamily={text.fontFamily} x={100} y={200} fontSize={text.fontSize} draggable onClick={handleTextEdit} />
+            </Layer>
+          </Stage>
+          <div className={classes.zoom}>
+            <Typography
+              variant="overline"
+              classes={{ root: classes.sliderLabel }}
+            >
+              Zoom
+            </Typography>
+            <Slider
+              value={zoom}
+              min={0.1}
+              max={3}
+              step={0.01}
+              aria-labelledby="Zoom"
+              classes={{ root: classes.slider }}
+              onChange={(e, zoom) => setZoom(zoom)}
+            />
+          </div>
+        </div>
+       
       </div>
     </div>
   );

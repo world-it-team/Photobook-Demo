@@ -13,7 +13,6 @@ import Text from "./tabPanel/Text"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: "flex",
-    height: 224,
+    height: "100%",
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
