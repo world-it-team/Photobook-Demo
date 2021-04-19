@@ -8,7 +8,7 @@ import Icon from "./Icon";
 import Typography from "@material-ui/core/Typography";
 import Photo from "./tabPanel/Photo";
 import ZoomPhoto from "./tabPanel/ZoomPhoto";
-import Text from "./tabPanel/Text"
+import Quill from "./tabPanel/Quill";
 
 
 function TabPanel(props) {
@@ -68,10 +68,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 250,
     textAlign: "center",
   },
-  textContainer: {
-    display: "flex",
-    flexDirection: "column",
-  },
+
 }));
 
 const data = [
@@ -89,12 +86,7 @@ const bg = [
   { src: require("../image/bg4.jpg") },
 ];
 
-const text = [
-  { text: "Add Text1", fontFamily: "Roboto", fontSize: 25 },
-  { text: "Add Text2", fontFamily: "Amatic SC", fontSize: 20 },
-  { text: "Add Text3", fontFamily: "Rubik Mono One", fontSize: 40 },
-  { text: "Add Text4", fontFamily: "Arial", fontSize: 18 },
-];
+
 
 export default function EditToolTabs({
   onChangeImg,
@@ -132,26 +124,10 @@ export default function EditToolTabs({
         <Photo onChangeImg={onChangeImg} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Text />
+        <Quill onChangeText ={onChangeText}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <div className={classes.textContainer}>
-          {text.map((item, index) => {
-            return (
-              <Typography
-                key={index}
-                style={{
-                  fontSize: item.fontSize,
-                  fontFamily: item.fontFamily,
-                  textAlign: "center",
-                }}
-                onClick={(e) => onChangeText(e)}
-              >
-                {item.text}
-              </Typography>
-            );
-          })}
-        </div>
+       
       </TabPanel>
       <TabPanel value={value} index={3}>
         <ZoomPhoto />

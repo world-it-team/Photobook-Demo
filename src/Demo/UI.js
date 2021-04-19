@@ -41,7 +41,7 @@ export default function UI() {
   const [img, setImg] = useState("");
   const [width, setWidth] = useState();
   const [height, setHeight] = useState();
-  const [text, setText] = useState({ text: "", fontFamily: "", fontSize: 0 });
+  const [text, setText] = useState(null);
   const [image] = useImage(img);
   const [state, setState] = useState({
     stageScale: 1,
@@ -79,23 +79,20 @@ export default function UI() {
       />
     );
   };
+  const AddText = () => {
+    const [editedText] = useImage(text)
+    return <Image image={editedText} width ={300} height = {50} draggable />
+  }
 
 
   function changeImg(event) {
     setImg(event.target.src);
     event.preventDefault();
   }
-
   function changeText(event) {
-    let fontFamily = event.target.style.fontFamily
-    let fontSize = parseInt(event.target.style.fontSize.split('px')[0])
-    let text = event.target.outerText
-    setText({ text, fontFamily, fontSize })
+    setText(event)
   }
-  const handleTextEdit = e => {
-
-    console.log(e.target.value)
-  };
+  
   function handleWheel(e) {
     e.evt.preventDefault();
 
@@ -141,7 +138,7 @@ export default function UI() {
               <DrawImage />
             </Layer>
             <Layer>
-              <Text text={text.text} fontFamily={text.fontFamily} x={100} y={200} fontSize={text.fontSize} draggable onClick={handleTextEdit} />
+              <AddText/>
             </Layer>
           </Stage>
           <div className={classes.zoom}>
