@@ -98,7 +98,6 @@ const text = [
 ];
 
 export default function EditToolTabs({
-  onChangeBg,
   onChangeImg,
   onChangeText,
 }) {
@@ -134,7 +133,7 @@ export default function EditToolTabs({
         <Photo onChangeImg={onChangeImg} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <Text/>
+        <Text />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <div className={classes.textContainer}>
@@ -170,7 +169,7 @@ export default function EditToolTabs({
                   key={index}
                   src={item.src.default}
                   className={classes.bgImg}
-                  onClick={(e) => onChangeBg(e)}
+                  onClick={(e) => onChangeImg(e)}
                 ></img>
               </div>
             );

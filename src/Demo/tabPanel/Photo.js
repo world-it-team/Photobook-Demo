@@ -14,7 +14,7 @@ const useStyles = makeStyles(() =>
         upload: {
             marginBottom: "20px"
         },
-        
+
         gridListTile: {
             border: "1px solid #000000"
         },
@@ -30,6 +30,7 @@ const useStyles = makeStyles(() =>
 export default function Photo({ onChangeImg }) {
     const classes = useStyles();
     const [login, setLogin] = useState(false);
+    const [upload, setUpload] = useState(false);
     const [image, setImage] = useState(null);
     const [imgUrl, setImgUrl] = useState([]);
     const [progress, setProgress] = useState(0);
@@ -62,6 +63,7 @@ export default function Photo({ onChangeImg }) {
                             .getDownloadURL()
                             .then(url => {
                                 uploadImgData(image.name, url);
+                                setUpload(!upload)
                             });
                     }
                 );
@@ -76,7 +78,7 @@ export default function Photo({ onChangeImg }) {
                 setImgUrl(res);
             })
         }
-    });
+    }, [upload]);
 
     return (
         <div>
