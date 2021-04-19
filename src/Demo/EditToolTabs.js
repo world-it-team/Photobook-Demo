@@ -8,6 +8,7 @@ import Icon from "./Icon";
 import Typography from "@material-ui/core/Typography";
 import Photo from "./tabPanel/Photo";
 import ZoomPhoto from "./tabPanel/ZoomPhoto";
+import Text from "./tabPanel/Text"
 
 
 function TabPanel(props) {
@@ -68,6 +69,10 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 250,
     textAlign: "center",
   },
+  textContainer: {
+    display: "flex",
+    flexDirection: "column",
+  },
 }));
 
 const data = [
@@ -84,11 +89,21 @@ const bg = [
   { src: require("../image/bg3.jpg") },
   { src: require("../image/bg4.jpg") },
 ];
-console.log(bg);
-export default function EditToolTabs({ onChangeBg, onChangeImg }) {
+
+const text = [
+  { text: "Add Text1", fontFamily: "Roboto", fontSize: 25 },
+  { text: "Add Text2", fontFamily: "Amatic SC", fontSize: 20 },
+  { text: "Add Text3", fontFamily: "Rubik Mono One", fontSize: 40 },
+  { text: "Add Text4", fontFamily: "Arial", fontSize: 18 },
+];
+
+export default function EditToolTabs({
+  onChangeBg,
+  onChangeImg,
+  onChangeText,
+}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -119,13 +134,29 @@ export default function EditToolTabs({ onChangeBg, onChangeImg }) {
         <Photo onChangeImg={onChangeImg} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+      <Text/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <div className={classes.textContainer}>
+          {text.map((item, index) => {
+            return (
+              <Typography
+                key={index}
+                style={{
+                  fontSize: item.fontSize,
+                  fontFamily: item.fontFamily,
+                  textAlign: "center",
+                }}
+                onClick={(e) => onChangeText(e)}
+              >
+                {item.text}
+              </Typography>
+            );
+          })}
+        </div>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <ZoomPhoto/>
+        <ZoomPhoto />
       </TabPanel>
       <TabPanel value={value} index={4}>
       <ZoomPhoto/>
@@ -134,13 +165,12 @@ export default function EditToolTabs({ onChangeBg, onChangeImg }) {
         <div className={classes.bgContainer}>
           {bg.map((item, index) => {
             return (
-
-              <div className={classes.bgWrapper} >
+              <div className={classes.bgWrapper}>
                 <img
                   key={index}
                   src={item.src.default}
                   className={classes.bgImg}
-                  onClick={e => onChangeBg(e)}
+                  onClick={(e) => onChangeBg(e)}
                 ></img>
               </div>
             );

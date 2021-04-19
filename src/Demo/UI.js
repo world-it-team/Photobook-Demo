@@ -4,11 +4,14 @@ import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import EditToolTabs from "./EditToolTabs";
 import Navigation from "./Navigation";
-import { Stage, Layer, Rect, Image, Transformer } from "react-konva"
+import { Stage, Layer, Rect, Image, Text, Transformer } from "react-konva";
 import useImage from "use-image";
+import { ContactSupportOutlined } from "@material-ui/icons";
 import Slider from '@material-ui/core/Slider'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+
+
 
 
 const drawerWidth = 500;
@@ -31,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   content: {
-    width:"450px",
     position: "relative",
   },
   canvas: {
@@ -40,14 +42,15 @@ const useStyles = makeStyles((theme) => ({
     right: 70,
     top: 100,
   },
-  controls:{
-    with:"70%",
+  zoom:{
+    width:"500px",
     margin:"590px 50px 0 0",
     padding:"0 150px 0 0"
-  }
+  },
+
 }));
-const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, imgUrl }) => {
-  const [image] = useImage(imgUrl);
+const Rectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
+  const [image] = useImage(shapeProps.src);
   const shapeRef = useRef();
   const trRef = useRef();
 
@@ -72,14 +75,14 @@ const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, imgUrl }) => {
         ref={shapeRef}
         {...shapeProps}
         draggable
-        onDragEnd={e => {
+        onDragEnd={(e) => {
           onChange({
             ...shapeProps,
             x: e.target.x(),
-            y: e.target.y()
+            y: e.target.y(),
           });
         }}
-        onTransformEnd={e => {
+        onTransformEnd={(e) => {
           // transformer is changing scale of the node
           // and NOT its width or height
           // but in the store we have only width and height
@@ -100,9 +103,15 @@ const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, imgUrl }) => {
             y: node.y(),
             // set minimal value
             width: node.width(),
-            height: node.height()
+            height: node.height(),
           });
         }}
+      />
+      <Text
+        text="Hãy đến với PhotoBook của chúng tôi"
+        x={50}
+        y={100}
+        draggable
       />
       {isSelected && (
         <Transformer
@@ -119,91 +128,62 @@ const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, imgUrl }) => {
     </React.Fragment>
   );
 };
-const initialRectangles = [
-  {
-    x: 100,
-    y: 100,
-    width: 200,
-    height: 200,
-    id: "rect1"
-  }
-];
-
-function zoomStage(stage, scaleBy) {
-  const oldScale = stage.scaleX();
-
-  const pos = {
-    x: stage.width() / 2,
-    y: stage.height() / 2
-  };
-  const mousePointTo = {
-    x: pos.x / oldScale - stage.x() / oldScale,
-    y: pos.y / oldScale - stage.y() / oldScale
-  };
-
-  const newScale = Math.max(0.05, oldScale * scaleBy);
-
-  const newPos = {
-    x: -(mousePointTo.x - pos.x / newScale) * newScale,
-    y: -(mousePointTo.y - pos.y / newScale) * newScale
-  };
-
-  const newAttrs = limitAttributes(stage, { ...newPos, scale: newScale });
-
-  stage.to({
-    x: newAttrs.x,
-    y: newAttrs.y,
-    scaleX: newAttrs.scale,
-    scaleY: newAttrs.scale,
-    duration: 0.1
-  });
-  stage.batchDraw();
-}
-function limitAttributes(stage, newAttrs) {
-  const box = stage.findOne("Image").getClientRect();
-  const minX = -box.width + stage.width() / 2;
-  const maxX = stage.width() / 2;
-
-  const x = Math.max(minX, Math.min(newAttrs.x, maxX));
-
-  const minY = -box.height + stage.height() / 2;
-  const maxY = stage.height() / 2;
-
-  const y = Math.max(minY, Math.min(newAttrs.y, maxY));
-
-  const scale = Math.max(0.05, newAttrs.scale);
-
-  return { x, y, scale };
-}
 
 export default function UI() {
-  const stageRef = React.useRef();
-  const [rectangles, setRectangles] = useState(initialRectangles);
+  const [zoom, setZoom] = useState(1)
+  const [rectangles, setRectangles] = useState([]);
   const [selectedId, selectShape] = useState(null);
   const classes = useStyles();
-  const [bgUrl, setBgUrl] = useState('');
-  const [imgUrl, setImgUrl] = useState('');
-  const [scroll, setScroll] = useState({
-        stageScale: 1,
-        stageX: 0,
-        stageY: 0
-  });
- 
+  const [bgUrl, setBgUrl] = useState("");
+  const [text, setText] = useState({ text: "", fontFamily: "", fontSize: 0 });
+  const [state, setState] = useState({
+    stageScale: 1,
+    stageX: 0,
+    stageY: 0
+  })
+
   const BgImage = () => {
     const [image] = useImage(bgUrl);
-    return <Rect fillPatternImage={image} x={0} y={0} width={640} height={480} />;
+    return (
+      <Rect fillPatternImage={image} x={0} y={0} width={640} height={480} />
+    );
   };
+
+  // const UrlImage = () => {
+  //   const [image] = useImage(imgUrl);
+  //   return <Image image={image} width={400} height={400} />
+  // };
 
   function changeBg(event) {
     setBgUrl(event.target.src);
     event.preventDefault();
   }
 
-  function changeImg(event) {
-    setImgUrl(event.target.src);
-    event.preventDefault();
+  function ChangeImg(event) {
+    setRectangles(rect => [...rect, {
+      x: 100,
+      y: 100,
+      width: 200,
+      height: 200,
+      id: event.target.alt,
+      src: event.target.src
+    }])
   }
-  function handleWheel (e) {
+
+  function changeText(event) {
+    let fontFamily = event.target.style.fontFamily
+    let fontSize = parseInt(event.target.style.fontSize.split('px')[0])
+    let text = event.target.outerText
+    setText({ text, fontFamily, fontSize })
+  }
+
+
+  const handleTextEdit = e => {
+
+    console.log(e.target.value)
+  };
+
+  function handleWheel(e){
     e.evt.preventDefault();
     const scaleBy = 1.01;
     const stage = e.target.getStage();
@@ -217,14 +197,15 @@ export default function UI() {
 
     stage.scale({ x: newScale, y: newScale });
 
-    setScroll({
+    setState({
       stageScale: newScale,
       stageX:
         -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
       stageY:
         -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
     });
-  };
+
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -238,22 +219,21 @@ export default function UI() {
         anchor="left"
       >
         <div className={classes.toolbar} />
-        <EditToolTabs onChangeBg={changeBg} onChangeImg={changeImg} />
+        <EditToolTabs onChangeBg={changeBg} onChangeImg={ChangeImg} onChangeText={changeText}  />
       </Drawer>
       <div className={classes.content}>
         <Stage 
-          ref={stageRef}
+
           onWheel={handleWheel}
-          scaleX={scroll.stageScale  }
-          scaleY={scroll.stageScale }
-          x={scroll.stageX }
-          y={scroll.stageY }
-          width={640} 
-          height={480}
-          className={classes.canvas}
-        >
+          scaleX={state.stageScale}
+          scaleY={state.stageScale}
+          x={state.stageX}
+          y={state.stageY}
+          width={640 } 
+          height={480} 
+          className={classes.canvas} >
           <Layer
-             
+         
           >
             <BgImage />
             {/* <UrlImage /> */}
@@ -261,13 +241,13 @@ export default function UI() {
               return (
                 <Rectangle
                   key={i}
-                  imgUrl={imgUrl}
+                  // imgUrl={imgUrl}
                   shapeProps={rect}
                   isSelected={rect.id === selectedId}
                   onSelect={() => {
-                    selectShape(rect.id);
+                    (rect.id === selectedId) ? selectShape(null) : selectShape(rect.id);
                   }}
-                  onChange={newAttrs => {
+                  onChange={(newAttrs) => {
                     const rects = rectangles.slice();
                     rects[i] = newAttrs;
                     setRectangles(rects);
@@ -276,29 +256,12 @@ export default function UI() {
               );
             })}
           </Layer>
+          <Layer>
+            <Text text={text.text} fontFamily={text.fontFamily} x={100} y={200} fontSize={text.fontSize} draggable onClick={handleTextEdit} />
+          </Layer>
         </Stage>
-            
-        <div className={classes.controls}>
-        <button
-          onClick={() => {
-            zoomStage(stageRef.current, 1.2);
-          }}
-        >
-          +
-        </button>
-        <button
-          onClick={() => {
-            zoomStage(stageRef.current, 0.8);
-          }}
-        >
-          -
-        </button>
+  
       </div>
-
-
-      </div>
-      
     </div>
   );
 }
-
