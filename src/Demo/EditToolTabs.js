@@ -91,6 +91,7 @@ const bg = [
 export default function EditToolTabs({
   onChangeImg,
   onChangeText,
+  onChangeBg
 }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -144,7 +145,7 @@ export default function EditToolTabs({
                   key={index}
                   src={item.src.default}
                   className={classes.bgImg}
-                  onClick={(e) => onChangeImg(e)}
+                  onClick={(e) => onChangeBg(e)}
                 ></img>
               </div>
             );
