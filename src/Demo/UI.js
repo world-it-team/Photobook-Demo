@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, imgUrl }) => {
-  const [image] = useImage(imgUrl);
+const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, image }) => {
+  // const [image] = useImage(imgUrl);
   const shapeRef = useRef();
   const trRef = useRef();
 
@@ -130,12 +130,26 @@ export default function UI() {
   const classes = useStyles();
   const [bgUrl, setBgUrl] = useState("");
   const [imgUrl, setImgUrl] = useState("");
+  const [image] = useImage(imgUrl);
   const [text, setText] = useState(null);
   const [zoom, setZoom] = useState({
     zoomScale: 1,
     X: 0,
     Y: 0
   });
+
+  useEffect(() => {
+    if (image) {
+      const scale = Math.min(640 / image.width, 480 / image.height);
+      setRectangles([{
+        x: (640 - image.width * scale) / 2,
+        y: (480 - image.height * scale) / 2,
+        width: image.width * scale,
+        height: image.height * scale,
+        id: "rect1",
+      }])
+    }
+  }, [image])
 
   const BgImage = () => {
     const [image] = useImage(bgUrl);
@@ -225,6 +239,7 @@ export default function UI() {
                 <Rectangle
                   key={i}
                   imgUrl={imgUrl}
+                  image={image}
                   shapeProps={rect}
                   isSelected={rect.id === selectedId}
                   onSelect={() => {
@@ -233,6 +248,7 @@ export default function UI() {
                   onChange={(newAttrs) => {
                     const rects = rectangles.slice();
                     rects[i] = newAttrs;
+                    console.log(rects);
                     setRectangles(rects);
                   }}
                 />
