@@ -6,7 +6,6 @@ import EditToolTabs from "./EditToolTabs";
 import Navigation from "./Navigation";
 import { Stage, Layer, Rect, Image, Text, Transformer } from "react-konva";
 import useImage from "use-image";
-import { ContactSupportOutlined } from "@material-ui/icons";
 
 
 
@@ -40,8 +39,9 @@ const useStyles = makeStyles((theme) => ({
     top: 100,
   },
 }));
-const Rectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
-  const [image] = useImage(shapeProps.src);
+
+const Rectangle = ({ shapeProps, isSelected, onSelect, onChange, imgUrl }) => {
+  const [image] = useImage(imgUrl);
   const shapeRef = useRef();
   const trRef = useRef();
 
@@ -114,11 +114,22 @@ const Rectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
   );
 };
 
+const initialRectangles = [
+  {
+    x: 100,
+    y: 100,
+    width: 200,
+    height: 200,
+    id: "rect1",
+  },
+];
+
 export default function UI() {
-  const [rectangles, setRectangles] = useState([]);
+  const [rectangles, setRectangles] = useState(initialRectangles);
   const [selectedId, selectShape] = useState(null);
   const classes = useStyles();
   const [bgUrl, setBgUrl] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
   const [text, setText] = useState(null);
   const [zoom, setZoom] = useState({
     zoomScale: 1,
@@ -135,7 +146,7 @@ export default function UI() {
 
   const AddText = () => {
     const [editedText] = useImage(text)
-    return <Image image={editedText} width ={300} height = {50} draggable />
+    return <Image image={editedText} width={300} height={50} draggable />
   }
 
 
@@ -150,20 +161,14 @@ export default function UI() {
   }
 
   function ChangeImg(event) {
-    setRectangles(rect => [...rect, {
-      x: 100,
-      y: 100,
-      width: 200,
-      height: 200,
-      id: event.target.alt,
-      src: event.target.src
-    }])
+    setImgUrl(event.target.src);
+    event.preventDefault();
   }
 
   function changeText(event) {
     setText(event)
   }
-  function handleWheel(e){
+  function handleWheel(e) {
     e.evt.preventDefault();
 
     const scaleBy = 1.01;
@@ -202,16 +207,16 @@ export default function UI() {
         <EditToolTabs onChangeBg={changeBg} onChangeImg={ChangeImg} onChangeText={changeText} />
       </Drawer>
       <div className={classes.content}>
-        <Stage 
-          width={640} 
-          height={480} 
+        <Stage
+          width={640}
+          height={480}
           onWheel={handleWheel}
           scaleX={zoom.zoomScale}
           scaleY={zoom.zoomScale}
           x={zoom.X}
           y={zoom.Y}
           className={classes.canvas}
-          >
+        >
           <Layer>
             <BgImage />
             {/* <UrlImage /> */}
@@ -219,7 +224,7 @@ export default function UI() {
               return (
                 <Rectangle
                   key={i}
-                  // imgUrl={imgUrl}
+                  imgUrl={imgUrl}
                   shapeProps={rect}
                   isSelected={rect.id === selectedId}
                   onSelect={() => {
@@ -235,7 +240,7 @@ export default function UI() {
             })}
           </Layer>
           <Layer>
-              <AddText/>
+            <AddText />
           </Layer>
         </Stage>
       </div>
