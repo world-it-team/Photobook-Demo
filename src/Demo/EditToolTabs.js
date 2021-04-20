@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Photo from "./tabPanel/Photo";
 import ZoomPhoto from "./tabPanel/ZoomPhoto";
 import Quill from "./tabPanel/Quill";
-
+import Text from "./tabPanel/Text";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -127,7 +127,7 @@ export default function EditToolTabs({
         <Quill onChangeText ={onChangeText}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-       
+        <Text/>
       </TabPanel>
       <TabPanel value={value} index={3}>
         <ZoomPhoto />
