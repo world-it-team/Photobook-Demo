@@ -120,6 +120,11 @@ export default function UI() {
   const classes = useStyles();
   const [bgUrl, setBgUrl] = useState("");
   const [text, setText] = useState(null);
+  const [zoom, setZoom] = useState({
+    zoomScale: 1,
+    X: 0,
+    Y: 0
+  });
 
   const BgImage = () => {
     const [image] = useImage(bgUrl);
@@ -158,7 +163,29 @@ export default function UI() {
   function changeText(event) {
     setText(event)
   }
- 
+  function handleWheel(e){
+    e.evt.preventDefault();
+
+    const scaleBy = 1.01;
+    const stage = e.target.getStage();
+    const oldScale = stage.scaleX();
+    const mousePointTo = {
+      x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+      y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale
+    };
+
+    const newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+
+    stage.scale({ x: newScale, y: newScale });
+
+    setZoom({
+      zoomScale: newScale,
+      X:
+        -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
+      Y:
+        -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
+    });
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -175,7 +202,16 @@ export default function UI() {
         <EditToolTabs onChangeBg={changeBg} onChangeImg={ChangeImg} onChangeText={changeText} />
       </Drawer>
       <div className={classes.content}>
-        <Stage width={640} height={480} className={classes.canvas}>
+        <Stage 
+          width={640} 
+          height={480} 
+          onWheel={handleWheel}
+          scaleX={zoom.zoomScale}
+          scaleY={zoom.zoomScale}
+          x={zoom.X}
+          y={zoom.Y}
+          className={classes.canvas}
+          >
           <Layer>
             <BgImage />
             {/* <UrlImage /> */}
