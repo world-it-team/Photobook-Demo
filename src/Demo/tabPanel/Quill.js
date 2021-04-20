@@ -21,7 +21,29 @@ export default function Quill({onChangeText}) {
   
   }
 
- 
+ // onChange(content, delta, source, editor,comments) {
+        //   const text = editor.getText(content);
+        //   this.setState ({ content: text });
+        //   console.log(text);
+        //   console.log(editor.getContents())
+        //   const con = editor.getContents();
+        //   //const test = editor.setContents(delta);
+        //   //this.setState({comments: con})
+        //   // console.log(editor.getFormat());  
+        // }
+  
+        // onChange(html) {
+        //   this.setState ({ content: html });
+        //     console.log(html)
+        //   }
+
+        // on= ('text-change', function(delta, oldDelta, source) {
+        //   if (source == 'api') {
+        //     console.log(delta);
+        //   // } else if (source == 'user') {
+        //   //   console.log("A user action triggered this change.");
+        //   //}
+        // }});
     
   useEffect(() =>{
    

@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Photo from "./tabPanel/Photo";
 import ZoomPhoto from "./tabPanel/ZoomPhoto";
 import Quill from "./tabPanel/Quill";
-
+import Text from "./tabPanel/Text";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -91,6 +91,7 @@ const bg = [
 export default function EditToolTabs({
   onChangeImg,
   onChangeText,
+  onChangeBg
 }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -127,7 +128,7 @@ export default function EditToolTabs({
         <Quill onChangeText ={onChangeText}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-       
+        <Text/>
       </TabPanel>
       <TabPanel value={value} index={3}>
         <ZoomPhoto />
@@ -144,7 +145,7 @@ export default function EditToolTabs({
                   key={index}
                   src={item.src.default}
                   className={classes.bgImg}
-                  onClick={(e) => onChangeImg(e)}
+                  onClick={(e) => onChangeBg(e)}
                 ></img>
               </div>
             );
