@@ -117,35 +117,41 @@ export default function TextPdf() {
         setActiveStep((prevActiveStep) => (prevActiveStep + maxSteps - 1) % maxSteps);
     };
 
+    // const generatePDF = () => {
+    //     var doc = new JsPDF("l", "pt", [1000, 500]);
+    //     doc.html(document.querySelector("#content"), {
+    //         callback: function (pdf) {
+    //             // var pageCount = doc.internal.getNumberOfPages();
+    //             // pdf.deletePage(pageCount);
+    //             pdf.save("mypdf.pdf");
+    //         },
+    //         x: 0,
+    //         y: 0
+    //     });
+    // }
+
     const generatePDF = () => {
         var doc = new JsPDF("l", "pt", [1000, 500]);
-        doc.html(document.querySelector("#content"), {
-            callback: function (pdf) {
-                // var pageCount = doc.internal.getNumberOfPages();
-                // pdf.deletePage(pageCount);
-                pdf.save("mypdf.pdf");
-            },
-            x: 0,
-            y: 0
-        });
+        for (let i = 0; i < maxSteps; i++) {
+            doc.setFillColor("#fff");
+            doc.rect(0, 0, 1000, 500, "F");
+            doc.addImage(tutorialSteps[i].src, 'JPEG', 200, 0, 600, 500);
+            doc.setTextColor('#dd4a0f');
+            doc.setFontSize(30);
+            doc.text(tutorialSteps[i].label, 100, 200, {
+                baseline: 'top',
+            });
+            doc.setFontSize(20);
+            doc.text((i + 1).toString(), 960, 460, {
+                baseline: 'top',
+            });
+            doc.addPage();
+        }
+        var pageCount = doc.internal.getNumberOfPages();
+        doc.deletePage(pageCount);
+
+        doc.save("mypdf.pdf");
     }
-
-    // const generatePDF = () => {
-    //     var doc = new JsPDF("l", "pt", [1040, 540]);
-    //     // for (let i = 0; i++; i < maxSteps) {
-    //     // var imgData = naruto.toDataURL('image/jpeg');
-    //     doc.setFillColor("#fff");
-    //     doc.rect(0, 0, 1000, 500, "F");
-    //     doc.addImage(imgData, 'JPEG', 200, 0, 600, 500);
-    //     doc.setTextColor('#000000');
-    //     doc.setFontSize(30);
-    //     doc.text("abc", 100, 200);
-    //     // doc.addPage("l", "pt", [1040, 540]);
-    //     // }
-
-    //     doc.save("mypdf.pdf");
-
-    // }
 
     return (
         <div className={classes.root}>
