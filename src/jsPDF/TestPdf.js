@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     konva: {
-        // margin: "20px",
         border: "1px solid #000000",
         width: "1000px",
         height: "500px"
@@ -93,8 +92,8 @@ class DrawImage extends React.Component {
                 x={this.props.x}
                 y={this.props.y}
                 image={this.state.image}
-                width={600}
-                height={500}
+                width={this.props.width}
+                height={this.props.height}
                 ref={node => {
                     this.imageNode = node;
                 }}
@@ -106,8 +105,77 @@ class DrawImage extends React.Component {
 export default function TextPdf() {
     const classes = useStyles();
     const theme = useTheme();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const maxSteps = tutorialSteps.length;
+    const [activeStep, setActiveStep] = useState(0);
+    const [image, setImage] = useState([
+        {
+            width:600,
+            height:500,
+            x:200,
+            y:0,
+            src:naruto,
+        },
+        {
+            width:600,
+            height:500,
+            x:200,
+            y:0,
+            src:sasuke,
+        },
+        {
+            width:600,
+            height:500,
+            x:200,
+            y:0,
+            src:law,
+        },
+        {
+            width:600,
+            height:500,
+            x:200,
+            y:0,
+            src:luffy,
+        },
+        {
+            width:600,
+            height:500,
+            x:200,
+            y:0,
+            src:yonko,
+        },
+]);
+    const [label, setLabel] = useState([
+        {   
+            label:"naruto",
+            x:100,
+            y:200,
+            fontSize:30,
+        },
+        {   
+            label:"sasuuke",
+            x:100,
+            y:200,
+            fontSize:30,
+        },
+        {   
+            label:"law",
+            x:100,
+            y:200,
+            fontSize:30,
+        },
+        {   
+            label:"luffy",
+            x:100,
+            y:200,
+            fontSize:30,
+        },
+        {   
+            label:"yonko",
+            x:100,
+            y:200,
+            fontSize:30,
+        },
+]);
+    const maxSteps = image.length+1;
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => (prevActiveStep + 1) % maxSteps);
@@ -116,63 +184,63 @@ export default function TextPdf() {
     const handleBack = () => {
         setActiveStep((prevActiveStep) => (prevActiveStep + maxSteps - 1) % maxSteps);
     };
-
-    // const generatePDF = () => {
-    //     var doc = new JsPDF("l", "pt", [1000, 500]);
-    //     doc.html(document.querySelector("#content"), {
-    //         callback: function (pdf) {
-    //             // var pageCount = doc.internal.getNumberOfPages();
-    //             // pdf.deletePage(pageCount);
-    //             pdf.save("mypdf.pdf");
-    //         },
-    //         x: 0,
-    //         y: 0
-    //     });
-    // }
-
     const generatePDF = () => {
         var doc = new JsPDF("l", "pt", [1000, 500]);
         for (let i = 0; i < maxSteps; i++) {
+           if(i !== 0){
             doc.setFillColor("#fff");
             doc.rect(0, 0, 1000, 500, "F");
-            doc.addImage(tutorialSteps[i].src, 'JPEG', 200, 0, 600, 500);
+            doc.addImage(image[i-1].src, 'JPEG', image[i-1].x, image[i-1].y, image[i-1].width, image[i-1].height);
             doc.setTextColor('#dd4a0f');
-            doc.setFontSize(30);
-            doc.text(tutorialSteps[i].label, 100, 200, {
+            doc.setFontSize(label[i-1].fontSize);
+            doc.text(label[i-1].label, label[i-1].x, label[i-1].y, {
                 baseline: 'top',
             });
             doc.setFontSize(20);
-            doc.text((i + 1).toString(), 960, 460, {
+            doc.text((i).toString(), 960, 460, {
                 baseline: 'top',
             });
             doc.addPage();
+           }
+           else{
+            doc.setTextColor('#dd4a0f');
+            doc.setFontSize(30);
+            doc.text("Thành", 500, 250, {
+                baseline: 'top',
+            });
+            doc.addPage();
+           }
         }
         var pageCount = doc.internal.getNumberOfPages();
         doc.deletePage(pageCount);
-
         doc.save("mypdf.pdf");
     }
 
     return (
         <div className={classes.root}>
             <div className={classes.konva} id="content">
-                <Stage width={1000} height={500}>
-                    <Layer>
-                        <Rect
-                            x={0}
-                            y={0}
-                            width={1000}
-                            height={500}
-                            fill="#fff"
-                        />
-                        <DrawImage src={tutorialSteps[activeStep].src} x={200} y={0} />
-                        <Text text={tutorialSteps[activeStep].label} x={100} y={200} fontSize={30} fill="#dd4a0f" />
-                        <Text text={(activeStep + 1)} x={960} y={460} fontSize={20} fill="#dd4a0f" />
-                    </Layer>
-                </Stage>
-
+                <div className={classes.page2}>
+                    <Stage width={1000} height={500}>
+                       {activeStep !==0 ? 
+                         <Layer>
+                            <Rect
+                                x={0}
+                                y={0}
+                                width={1000}
+                                height={500}
+                                fill="#fff"
+                            />
+                            <DrawImage src={image[activeStep-1].src} x={image[activeStep-1].x} y={image[activeStep-1].y} width={image[activeStep-1].width} height={image[activeStep-1].height} />
+                            <Text text={label[activeStep-1].label} x={label[activeStep-1].x} y={label[activeStep-1].y} fontSize={label[activeStep-1].fontSize} fill="#dd4a0f" />
+                            <Text text={(activeStep )} x={960} y={460} fontSize={20} fill="#dd4a0f" />
+                        </Layer> 
+                     :  <Layer>
+                          <Text text="Thành" x={500} y={250} fontSize={30} fill="#dd4a0f" />
+                         </Layer>
+                    }
+                    </Stage>
+                </div>
             </div>
-
             <MobileStepper
                 steps={maxSteps}
                 className={classes.mobileStepper}
