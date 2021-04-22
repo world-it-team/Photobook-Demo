@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
@@ -85,74 +85,74 @@ export default function TextPdf() {
     const [activeStep, setActiveStep] = useState(0);
     const [image, setImage] = useState([
         {
-            width:600,
-            height:500,
-            x:200,
-            y:0,
-            src:naruto,
+            width: 600,
+            height: 500,
+            x: 200,
+            y: 0,
+            src: naruto,
         },
         {
-            width:600,
-            height:500,
-            x:200,
-            y:0,
-            src:sasuke,
+            width: 600,
+            height: 500,
+            x: 200,
+            y: 0,
+            src: sasuke,
         },
         {
-            width:600,
-            height:500,
-            x:200,
-            y:0,
-            src:law,
+            width: 600,
+            height: 500,
+            x: 200,
+            y: 0,
+            src: law,
         },
         {
-            width:600,
-            height:500,
-            x:200,
-            y:0,
-            src:luffy,
+            width: 600,
+            height: 500,
+            x: 200,
+            y: 0,
+            src: luffy,
         },
         {
-            width:600,
-            height:500,
-            x:200,
-            y:0,
-            src:yonko,
+            width: 600,
+            height: 500,
+            x: 200,
+            y: 0,
+            src: yonko,
         },
-]);
+    ]);
     const [label, setLabel] = useState([
-        {   
-            label:"naruto",
-            x:100,
-            y:200,
-            fontSize:30,
+        {
+            label: "naruto",
+            x: 100,
+            y: 200,
+            fontSize: 30,
         },
-        {   
-            label:"sasuuke",
-            x:100,
-            y:200,
-            fontSize:30,
+        {
+            label: "sasuuke",
+            x: 100,
+            y: 200,
+            fontSize: 30,
         },
-        {   
-            label:"law",
-            x:100,
-            y:200,
-            fontSize:30,
+        {
+            label: "law",
+            x: 100,
+            y: 200,
+            fontSize: 30,
         },
-        {   
-            label:"luffy",
-            x:100,
-            y:200,
-            fontSize:30,
+        {
+            label: "luffy",
+            x: 100,
+            y: 200,
+            fontSize: 30,
         },
-        {   
-            label:"yonko",
-            x:100,
-            y:200,
-            fontSize:30,
+        {
+            label: "yonko",
+            x: 100,
+            y: 200,
+            fontSize: 30,
         },
-]);
-    const maxSteps = image.length+1;
+    ]);
+    const maxSteps = image.length + 1;
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => (prevActiveStep + 1) % maxSteps);
@@ -164,34 +164,33 @@ export default function TextPdf() {
     const generatePDF = () => {
         var doc = new JsPDF("l", "pt", [1000, 500]);
         for (let i = 0; i < maxSteps; i++) {
-           if(i !== 0){
-            doc.setFillColor("#fff");
-            doc.rect(0, 0, 1000, 500, "F");
-            doc.addImage(image[i-1].src, 'JPEG', image[i-1].x, image[i-1].y, image[i-1].width, image[i-1].height);
-            doc.setTextColor('#dd4a0f');
-            doc.setFontSize(label[i-1].fontSize);
-            doc.text(label[i-1].label, label[i-1].x, label[i-1].y, {
-                baseline: 'top',
-            });
-            doc.setFontSize(20);
-            doc.text((i).toString(), 960, 460, {
-                baseline: 'top',
-            });
-            doc.addPage();
-           }
-           else{
-            doc.setTextColor('#dd4a0f');
-            doc.setFontSize(30);
-            // doc.addFont('./ArialMdmItl.TTF', 'Arial1',"Blod");
-            console.log(doc.getFontList())
-            // doc.addFileToVFS('./ArialCE.TTF');
-            doc.setFont('ARIAL',"normal"); // set font
-            doc.text("これはタンです。", 500, 250, {
-                baseline: 'top',
-            });
-            doc.addPage();
-           }
+            if (i !== 0) {
+                doc.setFillColor("#fff");
+                doc.rect(0, 0, 1000, 500, "F");
+                doc.addImage(image[i - 1].src, 'JPEG', image[i - 1].x, image[i - 1].y, image[i - 1].width, image[i - 1].height);
+                doc.setTextColor('#dd4a0f');
+                doc.setFontSize(label[i - 1].fontSize);
+                doc.text(label[i - 1].label, label[i - 1].x, label[i - 1].y, {
+                    baseline: 'top',
+                });
+                doc.setFontSize(20);
+                doc.text((i).toString(), 960, 460, {
+                    baseline: 'top',
+                });
+                doc.addPage();
+            }
+            else {
+                doc.setTextColor('#dd4a0f');
+                // doc.addFont("./NotoSerifJP-ExtraLight.otf", "NotoSerifJP", "");
+                // doc.setFont('NotoSerifJP'); // set font
+                doc.setFontSize(30);
+                doc.text("これはタイトルページです。", 100, 50, {
+                    baseline: 'top',
+                });
+                doc.addPage();
+            }
         }
+        console.log(doc.getFontList());
         var pageCount = doc.internal.getNumberOfPages();
         doc.deletePage(pageCount);
         doc.save("mypdf.pdf");
@@ -203,23 +202,23 @@ export default function TextPdf() {
 
                 <div >
                     <Stage width={1000} height={500}>
-                       {activeStep !==0 ? 
-                         <Layer>
-                            <Rect
-                                x={0}
-                                y={0}
-                                width={1000}
-                                height={500}
-                                fill="#fff"
-                            />
-                            <DrawImage src={image[activeStep-1].src} x={image[activeStep-1].x} y={image[activeStep-1].y} width={image[activeStep-1].width} height={image[activeStep-1].height} />
-                            <Text text={label[activeStep-1].label} x={label[activeStep-1].x} y={label[activeStep-1].y} fontSize={label[activeStep-1].fontSize} fill="#dd4a0f" />
-                            <Text text={(activeStep )} x={960} y={460} fontSize={20} fill="#dd4a0f" />
-                        </Layer> 
-                     :  <Layer>
-                          <Text text="タン" x={500} y={250} fontSize={30} fill="#dd4a0f" />
-                         </Layer>
-                    }
+                        {activeStep !== 0 ?
+                            <Layer>
+                                <Rect
+                                    x={0}
+                                    y={0}
+                                    width={1000}
+                                    height={500}
+                                    fill="#fff"
+                                />
+                                <DrawImage src={image[activeStep - 1].src} x={image[activeStep - 1].x} y={image[activeStep - 1].y} width={image[activeStep - 1].width} height={image[activeStep - 1].height} />
+                                <Text text={label[activeStep - 1].label} x={label[activeStep - 1].x} y={label[activeStep - 1].y} fontSize={label[activeStep - 1].fontSize} fill="#dd4a0f" />
+                                <Text text={(activeStep)} x={960} y={460} fontSize={20} fill="#dd4a0f" />
+                            </Layer>
+                            : <Layer>
+                                <Text text="これはタイトルページです。" x={100} y={50} fontSize={30} fill="#dd4a0f" />
+                            </Layer>
+                        }
                     </Stage>
                 </div>
             </div>
