@@ -6,46 +6,32 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import JsPDF from "jspdf";
 import { Stage, Layer, Image, Text, Rect } from 'react-konva';
-
+import EditToolTabs from "../Demo/EditToolTabs"
 import naruto from "../image/naruto.png"
 import sasuke from "../image/sasuke.jpg"
 import yonko from "../image/yonko.jpg"
 import law from "../image/law.jpg"
 import luffy from "../image/luffy.jpg"
 
-const tutorialSteps = [
-    {
-        label: 'naruto',
-        src: naruto,
-    },
-    {
-        label: 'sasuke',
-        src: sasuke,
-    },
-    {
-        label: 'yonko',
-        src: yonko,
-    },
-    {
-        label: 'law',
-        src: law,
-    },
-    {
-        label: 'luffy',
-        src: luffy,
-    },
-];
-
 const useStyles = makeStyles((theme) => ({
     root: {
+        display:"flex",
         margin: "auto",
-        width: 1000,
+        width: "100vw",
         flexGrow: 1,
     },
-    konva: {
-        border: "1px solid #000000",
-        width: "1000px",
-        height: "500px"
+    conten: {
+        position: "relative",
+        margin:"30px 0 0 40px",
+    },
+    panel:{
+    maxWidth:"30vw"
+    },
+    convas: {
+        position: "absolute",
+        boxShadow: "0 0 5px grey",
+        right: 70,
+        top: 100,
     },
     mobileStepper: {
         marginTop: "20px"
@@ -108,38 +94,38 @@ export default function TextPdf() {
     const [activeStep, setActiveStep] = useState(0);
     const [image, setImage] = useState([
         {
-            width:600,
-            height:500,
-            x:200,
-            y:0,
+            width:680,
+            height:400,
+            x:100,
+            y:30,
             src:naruto,
         },
         {
             width:600,
             height:500,
-            x:200,
-            y:0,
+            x:100,
+            y:30,
             src:sasuke,
         },
         {
             width:600,
             height:500,
-            x:200,
-            y:0,
+            x:100,
+            y:30,
             src:law,
         },
         {
             width:600,
             height:500,
-            x:200,
-            y:0,
+            x:100,
+            y:30,
             src:luffy,
         },
         {
             width:600,
             height:500,
-            x:200,
-            y:0,
+            x:140,
+            y:30,
             src:yonko,
         },
 ]);
@@ -176,7 +162,9 @@ export default function TextPdf() {
         },
 ]);
     const maxSteps = image.length+1;
-
+    const [bgUrl, setBgUrl] = useState("");
+    const [imgUrl, setImgUrl] = useState("");
+    const [text, setText] = useState(null);
     const handleNext = () => {
         setActiveStep((prevActiveStep) => (prevActiveStep + 1) % maxSteps);
     };
@@ -205,7 +193,11 @@ export default function TextPdf() {
            else{
             doc.setTextColor('#dd4a0f');
             doc.setFontSize(30);
-            doc.text("Thành", 500, 250, {
+            // doc.addFont('./ArialMdmItl.TTF', 'Arial1',"Blod");
+            console.log(doc.getFontList())
+            // doc.addFileToVFS('./ArialCE.TTF');
+            doc.setFont('ARIAL',"normal"); // set font
+            doc.text("これはタンです。", 500, 250, {
                 baseline: 'top',
             });
             doc.addPage();
@@ -215,18 +207,31 @@ export default function TextPdf() {
         doc.deletePage(pageCount);
         doc.save("mypdf.pdf");
     }
-
+    function changeBg(event) {
+        setBgUrl(event.target.src);
+        event.preventDefault();
+      }
+    
+      function ChangeImg(event) {
+        setImgUrl(event.target.src);
+        event.preventDefault();
+      }
+    
+      function changeText(event) {
+        setText(event)
+      }
     return (
         <div className={classes.root}>
-            <div className={classes.konva} id="content">
-                <div className={classes.page2}>
-                    <Stage width={1000} height={500}>
-                       {activeStep !==0 ? 
-                         <Layer>
+            <div  className={classes.panel}> <EditToolTabs onChangeBg={changeBg} onChangeImg={ChangeImg} onChangeText={changeText} /></div>
+            <div>
+            <div className={classes.conten} id="content" >
+                    <Stage width={800} height={500} className={classes.canvas}>
+                    {activeStep !==0 ? 
+                        <Layer>
                             <Rect
                                 x={0}
                                 y={0}
-                                width={1000}
+                                width={800}
                                 height={500}
                                 fill="#fff"
                             />
@@ -234,14 +239,13 @@ export default function TextPdf() {
                             <Text text={label[activeStep-1].label} x={label[activeStep-1].x} y={label[activeStep-1].y} fontSize={label[activeStep-1].fontSize} fill="#dd4a0f" />
                             <Text text={(activeStep )} x={960} y={460} fontSize={20} fill="#dd4a0f" />
                         </Layer> 
-                     :  <Layer>
-                          <Text text="Thành" x={500} y={250} fontSize={30} fill="#dd4a0f" />
-                         </Layer>
+                    :  <Layer>
+                        <Text text="タン" x={500} y={250} fontSize={30} fill="#dd4a0f" />
+                        </Layer>
                     }
                     </Stage>
                 </div>
-            </div>
-            <MobileStepper
+                <MobileStepper
                 steps={maxSteps}
                 className={classes.mobileStepper}
                 position="static"
@@ -250,17 +254,18 @@ export default function TextPdf() {
                 nextButton={
                     <Button size="small" onClick={handleNext} >
                         Next
-            {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
                     </Button>
                 }
                 backButton={
                     <Button size="small" onClick={handleBack} >
                         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-            Back
-          </Button>
+                Back
+                </Button>
                 }
-            />
-            <Button className={classes.saveButton} onClick={generatePDF}>Save as PDF</Button>
+                />
+                <Button className={classes.saveButton} onClick={generatePDF}>Save as PDF</Button>
+            </div>
         </div>
     );
 }
