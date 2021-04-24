@@ -6,7 +6,6 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import JsPDF from "jspdf";
 import { Stage, Layer, Image, Text, Rect } from 'react-konva';
-import Konva from "konva";
 
 import naruto from "../image/naruto.png"
 import sasuke from "../image/sasuke.jpg"
@@ -49,20 +48,14 @@ class DrawImage extends React.Component {
         this.image.removeEventListener('load', this.handleLoad);
     }
     loadImage() {
-        // save to "this" to remove "load" handler on unmount
         this.image = new window.Image();
         this.image.src = this.props.src;
         this.image.addEventListener('load', this.handleLoad);
     }
     handleLoad = () => {
-        // after setState react-konva will update canvas and redraw the layer
-        // because "image" property is changed
         this.setState({
             image: this.image
         });
-        // if you keep same image object during source updates
-        // you will have to update layer manually:
-        // this.imageNode.getLayer().batchDraw();
     };
     render() {
         return (
@@ -80,11 +73,18 @@ class DrawImage extends React.Component {
     }
 }
 
+
 export default function TextPdf2() {
     const classes = useStyles();
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
-    // const stageRef = useRef(null);
+    const stageRef0 = useRef(null);
+    const stageRef1 = useRef(null);
+    const stageRef2 = useRef(null);
+    const stageRef3 = useRef(null);
+    const stageRef4 = useRef(null);
+    const stageRef5 = useRef(null);
+    const stageRefs = [stageRef1, stageRef2, stageRef3, stageRef4, stageRef5]
     const [image, setImage] = useState([
         {
             width: 600,
@@ -148,116 +148,46 @@ export default function TextPdf2() {
             fontSize: 30,
         },
         {
-            label: "yonko",
+            label: "yonkosdfghjkhgsadfghjfdsadfgh",
             x: 100,
             y: 200,
             fontSize: 30,
         },
     ]);
     const maxSteps = image.length + 1;
-    // const [konvaImg, setKonvaImg] = useState([]);
 
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => (prevActiveStep + 1) % maxSteps);
-        // const url = stageRef.current.toDataURL();
-        // if (konvaImg.indexOf(url) === -1) {
-        //     setKonvaImg(konvaImg => [...konvaImg, url]);
-
-        // }
     };
 
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => (prevActiveStep + maxSteps - 1) % maxSteps);
-        // const url = stageRef.current.toDataURL();
-        // if (konvaImg.indexOf(url) === -1) {
-        //     setKonvaImg(konvaImg => [...konvaImg, url]);
-        // }
     };
-
 
     const generatePDF = () => {
         var doc = new JsPDF("l", "pt", [1000, 500]);
-        // for (let i = 0; i < konvaImg.length; i++) {
-        //     doc.addImage(konvaImg[i], 'JPEG', 0, 0, 1000, 500);
-        //     doc.addPage()
-        // }
-
-        for (let i = 0; i < maxSteps - 1; i++) {
-            var stage = new Konva.Stage({
-                container: 'container',
-                width: 1000,
-                height: 500,
-            });
-
-            var layer = new Konva.Layer();
-            stage.add(layer);
-
-            // var back = new Konva.Rect({
-            //     width: 1000,
-            //     height: 500,
-            //     fill: "#fff",
-            // });
-            // layer.add(back);
-            // layer.draw();
-
-
-            // var image = new Konva.Image({
-            //     x: 200,
-            //     y: 0,
-            //     image: naruto,
-            //     width: 600,
-            //     height: 500
-            // });
-            // layer.add(image);
-            // layer.batchDraw();
-            Konva.Image.fromURL(image[i].src, function (darthNode) {
-                darthNode.setAttrs({
-                    x: image[i].x,
-                    y: image[i].y,
-                    width: image[i].width,
-                    height: image[i].height
-                });
-                layer.add(darthNode);
-                layer.draw();
-            });
-
-            var text = new Konva.Text({
-                text: label[i].label,
-                x: label[i].x,
-                y: label[i].y,
-                fontSize: label[i].fontSize,
-                fill: "#dd4a0f"
-            });
-            text.cache();
-            layer.add(text);
-            layer.draw();
-
-            var text = new Konva.Text({
-                text: (i + 1).toString(),
-                x: 960,
-                y: 460,
-                fontSize: 20,
-                fill: "#dd4a0f"
-            });
-            text.cache();
-            layer.add(text);
-            layer.draw();
-
-            console.log(stage.toDataURL({ pixelRatio: 2 }));
-
+        doc.addImage(
+            stageRef0.current.toDataURL(),
+            'JPEG',
+            0,
+            0,
+            1000,
+            500
+        );
+        doc.addPage();
+        stageRefs.forEach(stageRef => {
             doc.addImage(
-                stage.toDataURL({ pixelRatio: 2 }),
+                stageRef.current.toDataURL(),
+                'JPEG',
                 0,
                 0,
-                stage.width(),
-                stage.height()
+                1000,
+                500
             );
             doc.addPage();
-        }
-
-
+        })
 
         var pageCount = doc.internal.getNumberOfPages();
         doc.deletePage(pageCount);
@@ -268,9 +198,10 @@ export default function TextPdf2() {
         <div className={classes.root}>
             <div id="container" style={{}}>  </div>
             <div className={classes.konva} id="content">
+
                 <Stage width={1000} height={500} >
                     {activeStep !== 0 ?
-                        <Layer>
+                        <Layer >
                             <Rect
                                 x={0}
                                 y={0}
@@ -287,6 +218,29 @@ export default function TextPdf2() {
                         </Layer>
                     }
                 </Stage>
+
+                <Stage width={1000} height={500} style={{ display: "none" }}>
+                    <Layer ref={stageRef0} >
+                        <Text text="これはタイトルページです。" x={100} y={50} fontSize={30} fill="#dd4a0f" />
+                    </Layer>
+                    {stageRefs.map((stageRef, i) => {
+                        return (
+                            <Layer ref={stageRef}>
+                                <Rect
+                                    x={0}
+                                    y={0}
+                                    width={1000}
+                                    height={500}
+                                    fill="#fff"
+                                />
+                                <DrawImage src={image[i].src} x={image[i].x} y={image[i].y} width={image[i].width} height={image[i].height} />
+                                <Text text={label[i].label} x={label[i].x} y={label[i].y} fontSize={label[i].fontSize} fill="#dd4a0f" />
+                                <Text text={(i + 1)} x={960} y={460} fontSize={20} fill="#dd4a0f" />
+                            </Layer>
+                        )
+                    })}
+                </Stage>
+
             </div>
             <MobileStepper
                 steps={maxSteps}
