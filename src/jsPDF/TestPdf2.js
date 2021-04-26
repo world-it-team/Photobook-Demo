@@ -6,6 +6,8 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import JsPDF from "jspdf";
 import { Stage, Layer, Image, Text, Rect } from 'react-konva';
+import useImage from 'use-image';
+import Konva from "konva"
 
 import naruto from "../image/naruto.png"
 import sasuke from "../image/sasuke.jpg"
@@ -20,11 +22,10 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     konva: {
-
-        margin:'20px  auto',
+        margin: '20px  auto',
         boxShadow: "0 0 5px grey",
-        width: "310px",
-        height: "438.5px"
+        width: "420px",
+        height: "594px"
     },
     mobileStepper: {
         marginTop: "20px"
@@ -34,96 +35,89 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-class DrawImage extends React.Component {
-    state = {
-        image: null
-    };
-    componentDidMount() {
-        this.loadImage();
+
+
+const DrawImage = ({ src, x, y, width, height }) => {
+    const [image] = useImage(src, 'Anonymous');
+    var x, y, width, height, scale;
+    if (image) {
+        scale = Math.min(420 / image.width, 594 / image.height);
+        width = image.width * scale;
+        height = image.height * scale;
+        x = (420 - width) / 2;
+        y = (594 - height) / 2;
     }
-    componentDidUpdate(oldProps) {
-        if (oldProps.src !== this.props.src) {
-            this.loadImage();
-        }
-    }
-    componentWillUnmount() {
-        this.image.removeEventListener('load', this.handleLoad);
-    }
-    loadImage() {
-        this.image = new window.Image();
-        this.image.src = this.props.src;
-        this.image.addEventListener('load', this.handleLoad);
-    }
-    handleLoad = () => {
-        this.setState({
-            image: this.image
-        });
-    };
-    render() {
-        return (
-            <Image
-                x={this.props.x}
-                y={this.props.y}
-                image={this.state.image}
-                width={this.props.width}
-                height={this.props.height}
-                ref={node => {
-                    this.imageNode = node;
-                }}
-            />
-        );
-    }
+    return <Image
+        x={x}
+        y={y}
+        image={image}
+        width={width}
+        height={height}
+    />;
 }
+
+// const SetImageZise = ({ src }) => {
+//     const [image] = useImage(src, 'Anonymous');
+//     var x, y, width, height, scale;
+//     const imageSize = [];
+//     if (image) {
+//         scale = Math.min(420 / image.width, 594 / image.height);
+//         width = image.width * scale;
+//         height = image.height * scale;
+//         x = (420 - width) / 2;
+//         y = (594 - height) / 2;
+//         imageSize = [x, y, width, height]
+//     }
+//     return imageSize
+// }
+
 
 
 export default function TextPdf2() {
     const classes = useStyles();
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
-    const stageRef0 = useRef(null);
-    const stageRef1 = useRef(null);
-    const stageRef2 = useRef(null);
-    const stageRef3 = useRef(null);
-    const stageRef4 = useRef(null);
-    const stageRef5 = useRef(null);
-    const stageRefs = [stageRef1, stageRef2, stageRef3, stageRef4, stageRef5]
+
+
     const [image, setImage] = useState([
         {
-            width: 310,
-            height: 438.5,
+            width: 420,
+            height: 420,
             x: 0,
             y: 0,
             src: naruto,
         },
         {
-            width: 310,
-            height: 438.5,
+            width: 420,
+            height: 420,
             x: 0,
             y: 0,
             src: sasuke,
         },
         {
-            width: 310,
-            height: 438.5,
+            width: 420,
+            height: 420,
             x: 0,
             y: 0,
             src: law,
         },
         {
-            width: 310,
-            height: 438.5,
+            width: 420,
+            height: 420,
             x: 0,
             y: 0,
             src: luffy,
         },
         {
-            width: 310,
-            height: 438.5,
+            width: 420,
+            height: 420,
             x: 0,
             y: 0,
             src: yonko,
         },
     ]);
+
+
     const [label, setLabel] = useState([
         {
             label: "naruto",
@@ -150,7 +144,7 @@ export default function TextPdf2() {
             fontSize: 20,
         },
         {
-            label: "yonkosdfghjkhgsadfghjfdsadfgh",
+            label: "yonko",
             x: 30,
             y: 30,
             fontSize: 20,
@@ -168,81 +162,105 @@ export default function TextPdf2() {
         setActiveStep((prevActiveStep) => (prevActiveStep + maxSteps - 1) % maxSteps);
     };
 
+
+
+
     const generatePDF = () => {
         var doc = new JsPDF("p", "pt", "a4");
-        doc.addImage(
-            stageRef0.current.toDataURL({ pixelRatio: 2 }),
-            'JPEG',
-            0,
-            0,
-            580,
-            833.15
-        );
-        doc.addPage();
-        stageRefs.forEach(stageRef => {
-            doc.addImage(
-                stageRef.current.toDataURL({ pixelRatio: 2 }),
-                'JPEG',
-                0,
-                0,
-                580,
-                833.15
-            );
-            doc.addPage();
-        })
+        let counter = 0;
 
-        var pageCount = doc.internal.getNumberOfPages();
-        doc.deletePage(pageCount);
-        doc.save("mypdf.pdf");
+        for (let i = 0; i < maxSteps - 1; i++) {
+            var stage = new Konva.Stage({
+                container: 'container',
+                width: 420,
+                height: 594,
+            });
+
+            var layer = new Konva.Layer();
+            stage.add(layer);
+
+            Konva.Image.fromURL(image[i].src, function (darthNode) {
+                var back = new Konva.Rect({
+                    width: 420,
+                    height: 594,
+                    fill: "#e1dddd",
+                });
+                layer.add(back);
+
+
+                // const imgSize = SetImageZise(image[i].src);
+
+                darthNode.setAttrs({
+                    x: image[i].x,
+                    y: image[i].y,
+                    width: image[i].width,
+                    height: image[i].height
+                });
+                layer.add(darthNode);
+
+                var text1 = new Konva.Text({
+                    text: label[i].label,
+                    x: label[i].x,
+                    y: label[i].y,
+                    fontSize: label[i].fontSize,
+                    fill: "#dd4a0f"
+                });
+                text1.cache();
+                layer.add(text1);
+
+                var text2 = new Konva.Text({
+                    text: (i + 1).toString(),
+                    x: 380,
+                    y: 560,
+                    fontSize: 15,
+                    fill: "#dd4a0f"
+                });
+                text2.cache();
+                layer.add(text2);
+
+                doc.addImage(
+                    layer.toDataURL({ pixelRatio: 2 }),
+                    0,
+                    0,
+                    595,
+                    842
+                );
+                doc.addPage();
+
+                counter++;
+
+                if (counter === maxSteps - 1) {
+                    var pageCount = doc.internal.getNumberOfPages();
+                    doc.deletePage(pageCount);
+                    doc.save("mypdf.pdf");
+                }
+            });
+        }
     }
 
     return (
         <div className={classes.root}>
-            <div id="container" style={{}}>  </div>
+            <div id="container" style={{ display: "none" }}>  </div>
             <div className={classes.konva} id="content">
-
-                <Stage width={310} height={438.5}  >
+                <Stage width={420} height={594}  >
                     {activeStep !== 0 ?
                         <Layer >
                             <Rect
                                 x={0}
                                 y={0}
-                                width={310}
-                                height={438.5}
-                                fill="#fff"
+                                width={420}
+                                height={594}
+                                fill="#e1dddd"
                             />
                             <DrawImage src={image[activeStep - 1].src} x={image[activeStep - 1].x} y={image[activeStep - 1].y} width={image[activeStep - 1].width} height={image[activeStep - 1].height} />
                             <Text text={label[activeStep - 1].label} x={label[activeStep - 1].x} y={label[activeStep - 1].y} width={260} fontSize={label[activeStep - 1].fontSize} fill="#dd4a0f" />
-                            <Text text={(activeStep)} x={290} y={420} fontSize={15} width={260} fill="#dd4a0f" />
+                            <Text text={(activeStep)} x={380} y={560} fontSize={15} width={260} fill="#dd4a0f" />
                         </Layer >
-                        : <Layer ref={stageRef0} >
-                            <Text text="これはタイトルページですokm。" x={30} y={25} fontSize={20} width={260} fill="#dd4a0f" />
+                        : <Layer >
+                            <Text text="これはタイトルページです。" x={30} y={25} fontSize={20} width={260} fill="#dd4a0f" />
                         </Layer>
                     }
                 </Stage>
-
-                <Stage width={310} height={438.5} style={{ display: "none" }}>
-                    <Layer ref={stageRef0} >
-                        <Text text="これはタイトルページですokm。" x={30} y={25} fontSize={20} width={260} fill="#dd4a0f" />
-                    </Layer>
-                    {stageRefs.map((stageRef, i) => {
-                        return (
-                            <Layer ref={stageRef}>
-                                <Rect
-                                    x={0}
-                                    y={0}
-                                    width={620}
-                                    height={877}
-                                    fill="#fff"
-                                />
-                                <DrawImage src={image[i].src} x={image[i].x} y={image[i].y} width={image[i].width} height={image[i].height} />
-                                <Text text={label[i].label} x={label[i].x} y={label[i].y}  width={260}fontSize={label[i].fontSize} fill="#dd4a0f" />
-                                <Text text={(i + 1)} x={290} y={420} fontSize={20} fill="#dd4a0f" />
-                            </Layer>
-                        )
-                    })}
-                </Stage>
-
             </div>
             <MobileStepper
                 steps={maxSteps}
