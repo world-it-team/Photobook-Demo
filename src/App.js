@@ -1,6 +1,6 @@
 
 import UI from "./Demo/UI"
-import TestPdf from "./jsPDF/TestPdf"
+import TestPdf from "./jsPDF/TestPdf2"
 
 
 function App() {

@@ -20,9 +20,11 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     konva: {
-        border: "1px solid #000000",
-        width: "1000px",
-        height: "500px"
+
+        margin:'20px  auto',
+        boxShadow: "0 0 5px grey",
+        width: "310px",
+        height: "438.5px"
     },
     mobileStepper: {
         marginTop: "20px"
@@ -87,37 +89,37 @@ export default function TextPdf2() {
     const stageRefs = [stageRef1, stageRef2, stageRef3, stageRef4, stageRef5]
     const [image, setImage] = useState([
         {
-            width: 600,
-            height: 500,
-            x: 200,
+            width: 310,
+            height: 438.5,
+            x: 0,
             y: 0,
             src: naruto,
         },
         {
-            width: 600,
-            height: 500,
-            x: 200,
+            width: 310,
+            height: 438.5,
+            x: 0,
             y: 0,
             src: sasuke,
         },
         {
-            width: 600,
-            height: 500,
-            x: 200,
+            width: 310,
+            height: 438.5,
+            x: 0,
             y: 0,
             src: law,
         },
         {
-            width: 600,
-            height: 500,
-            x: 200,
+            width: 310,
+            height: 438.5,
+            x: 0,
             y: 0,
             src: luffy,
         },
         {
-            width: 600,
-            height: 500,
-            x: 200,
+            width: 310,
+            height: 438.5,
+            x: 0,
             y: 0,
             src: yonko,
         },
@@ -125,33 +127,33 @@ export default function TextPdf2() {
     const [label, setLabel] = useState([
         {
             label: "naruto",
-            x: 100,
-            y: 200,
-            fontSize: 30,
+            x: 30,
+            y: 30,
+            fontSize: 20,
         },
         {
             label: "sasuuke",
-            x: 100,
-            y: 200,
-            fontSize: 30,
+            x: 30,
+            y: 30,
+            fontSize: 20,
         },
         {
             label: "law",
-            x: 100,
-            y: 200,
-            fontSize: 30,
+            x: 30,
+            y: 30,
+            fontSize: 20,
         },
         {
             label: "luffy",
-            x: 100,
-            y: 200,
-            fontSize: 30,
+            x: 30,
+            y: 30,
+            fontSize: 20,
         },
         {
             label: "yonkosdfghjkhgsadfghjfdsadfgh",
-            x: 100,
-            y: 200,
-            fontSize: 30,
+            x: 30,
+            y: 30,
+            fontSize: 20,
         },
     ]);
     const maxSteps = image.length + 1;
@@ -167,24 +169,24 @@ export default function TextPdf2() {
     };
 
     const generatePDF = () => {
-        var doc = new JsPDF("l", "pt", [1000, 500]);
+        var doc = new JsPDF("p", "pt", "a4");
         doc.addImage(
-            stageRef0.current.toDataURL(),
+            stageRef0.current.toDataURL({ pixelRatio: 2 }),
             'JPEG',
             0,
             0,
-            1000,
-            500
+            580,
+            833.15
         );
         doc.addPage();
         stageRefs.forEach(stageRef => {
             doc.addImage(
-                stageRef.current.toDataURL(),
+                stageRef.current.toDataURL({ pixelRatio: 2 }),
                 'JPEG',
                 0,
                 0,
-                1000,
-                500
+                580,
+                833.15
             );
             doc.addPage();
         })
@@ -199,29 +201,29 @@ export default function TextPdf2() {
             <div id="container" style={{}}>  </div>
             <div className={classes.konva} id="content">
 
-                <Stage width={1000} height={500} >
+                <Stage width={310} height={438.5}  >
                     {activeStep !== 0 ?
                         <Layer >
                             <Rect
                                 x={0}
                                 y={0}
-                                width={1000}
-                                height={500}
+                                width={310}
+                                height={438.5}
                                 fill="#fff"
                             />
                             <DrawImage src={image[activeStep - 1].src} x={image[activeStep - 1].x} y={image[activeStep - 1].y} width={image[activeStep - 1].width} height={image[activeStep - 1].height} />
-                            <Text text={label[activeStep - 1].label} x={label[activeStep - 1].x} y={label[activeStep - 1].y} fontSize={label[activeStep - 1].fontSize} fill="#dd4a0f" />
-                            <Text text={(activeStep)} x={960} y={460} fontSize={20} fill="#dd4a0f" />
-                        </Layer>
-                        : <Layer>
-                            <Text text="これはタイトルページです。" x={100} y={50} fontSize={30} fill="#dd4a0f" />
+                            <Text text={label[activeStep - 1].label} x={label[activeStep - 1].x} y={label[activeStep - 1].y} width={260} fontSize={label[activeStep - 1].fontSize} fill="#dd4a0f" />
+                            <Text text={(activeStep)} x={290} y={420} fontSize={15} width={260} fill="#dd4a0f" />
+                        </Layer >
+                        : <Layer ref={stageRef0} >
+                            <Text text="これはタイトルページですokm。" x={30} y={25} fontSize={20} width={260} fill="#dd4a0f" />
                         </Layer>
                     }
                 </Stage>
 
-                <Stage width={1000} height={500} style={{ display: "none" }}>
+                <Stage width={310} height={438.5} style={{ display: "none" }}>
                     <Layer ref={stageRef0} >
-                        <Text text="これはタイトルページです。" x={100} y={50} fontSize={30} fill="#dd4a0f" />
+                        <Text text="これはタイトルページですokm。" x={30} y={25} fontSize={20} width={260} fill="#dd4a0f" />
                     </Layer>
                     {stageRefs.map((stageRef, i) => {
                         return (
@@ -229,13 +231,13 @@ export default function TextPdf2() {
                                 <Rect
                                     x={0}
                                     y={0}
-                                    width={1000}
-                                    height={500}
+                                    width={620}
+                                    height={877}
                                     fill="#fff"
                                 />
                                 <DrawImage src={image[i].src} x={image[i].x} y={image[i].y} width={image[i].width} height={image[i].height} />
-                                <Text text={label[i].label} x={label[i].x} y={label[i].y} fontSize={label[i].fontSize} fill="#dd4a0f" />
-                                <Text text={(i + 1)} x={960} y={460} fontSize={20} fill="#dd4a0f" />
+                                <Text text={label[i].label} x={label[i].x} y={label[i].y}  width={260}fontSize={label[i].fontSize} fill="#dd4a0f" />
+                                <Text text={(i + 1)} x={290} y={420} fontSize={20} fill="#dd4a0f" />
                             </Layer>
                         )
                     })}
