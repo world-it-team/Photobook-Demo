@@ -56,23 +56,6 @@ const DrawImage = ({ src, x, y, width, height }) => {
     />;
 }
 
-// const SetImageZise = ({ src }) => {
-//     const [image] = useImage(src, 'Anonymous');
-//     var x, y, width, height, scale;
-//     const imageSize = [];
-//     if (image) {
-//         scale = Math.min(420 / image.width, 594 / image.height);
-//         width = image.width * scale;
-//         height = image.height * scale;
-//         x = (420 - width) / 2;
-//         y = (594 - height) / 2;
-//         imageSize = [x, y, width, height]
-//     }
-//     return imageSize
-// }
-
-
-
 export default function TextPdf2() {
     const classes = useStyles();
     const theme = useTheme();
@@ -168,6 +151,32 @@ export default function TextPdf2() {
     const generatePDF = () => {
         var doc = new JsPDF("p", "pt", "a4");
         let counter = 0;
+        var stage = new Konva.Stage({
+            container: 'container',
+            width: 420,
+            height: 594,
+        });
+        var layer = new Konva.Layer();
+        stage.add(layer);
+
+        var text = new Konva.Text({
+            text: "これはタイトルページです。",
+            x: 30,
+            y: 255,
+            fontSize: 20,
+            fill: "#dd4a0f"
+        });
+        text.cache();
+        layer.add(text);
+
+        doc.addImage(
+            layer.toDataURL({ pixelRatio: 2 }),
+            0,
+            0,
+            595,
+            842
+        );
+        doc.addPage();
 
         for (let i = 0; i < maxSteps - 1; i++) {
             var stage = new Konva.Stage({
@@ -187,14 +196,18 @@ export default function TextPdf2() {
                 });
                 layer.add(back);
 
-
-                // const imgSize = SetImageZise(image[i].src);
+                var x, y, width, height, scale;
+                scale = Math.min(420 / darthNode.attrs.image.width, 594 / darthNode.attrs.image.height);
+                width = darthNode.attrs.image.width * scale;
+                height = darthNode.attrs.image.height * scale;
+                x = (420 - width) / 2;
+                y = (594 - height) / 2;
 
                 darthNode.setAttrs({
-                    x: image[i].x,
-                    y: image[i].y,
-                    width: image[i].width,
-                    height: image[i].height
+                    x: x,
+                    y: y,
+                    width: width,
+                    height: height
                 });
                 layer.add(darthNode);
 
@@ -218,6 +231,15 @@ export default function TextPdf2() {
                 text2.cache();
                 layer.add(text2);
 
+
+                // fakeArray.push({
+                //     sortOrder:i,
+                //     layer:layer.toDataURL({ pixelRatio: 2 }),
+                // })
+
+
+
+
                 doc.addImage(
                     layer.toDataURL({ pixelRatio: 2 }),
                     0,
@@ -230,6 +252,8 @@ export default function TextPdf2() {
                 counter++;
 
                 if (counter === maxSteps - 1) {
+                    //todo sort fakeArray
+                    //loc qua fakeArray addimg, addpage
                     var pageCount = doc.internal.getNumberOfPages();
                     doc.deletePage(pageCount);
                     doc.save("mypdf.pdf");
@@ -253,11 +277,11 @@ export default function TextPdf2() {
                                 fill="#e1dddd"
                             />
                             <DrawImage src={image[activeStep - 1].src} x={image[activeStep - 1].x} y={image[activeStep - 1].y} width={image[activeStep - 1].width} height={image[activeStep - 1].height} />
-                            <Text text={label[activeStep - 1].label} x={label[activeStep - 1].x} y={label[activeStep - 1].y} width={260} fontSize={label[activeStep - 1].fontSize} fill="#dd4a0f" />
-                            <Text text={(activeStep)} x={380} y={560} fontSize={15} width={260} fill="#dd4a0f" />
+                            <Text text={label[activeStep - 1].label} x={label[activeStep - 1].x} y={label[activeStep - 1].y} fontSize={label[activeStep - 1].fontSize} fill="#dd4a0f" />
+                            <Text text={(activeStep)} x={380} y={560} fontSize={15} fill="#dd4a0f" />
                         </Layer >
                         : <Layer >
-                            <Text text="これはタイトルページです。" x={30} y={25} fontSize={20} width={260} fill="#dd4a0f" />
+                            <Text text="これはタイトルページです。" x={30} y={255} fontSize={20} fill="#dd4a0f" />
                         </Layer>
                     }
                 </Stage>
