@@ -28,10 +28,13 @@ const useStyles = makeStyles((theme) => ({
         height: "594px"
     },
     mobileStepper: {
-        marginTop: "20px"
+        margin: "20px auto",
+        width: "420px",
     },
     saveButton: {
-        backgroundColor: "#6a6cd6"
+        backgroundColor: "#6a6cd6",
+        display: "flex",
+        margin: "auto"
     }
 }));
 
@@ -232,27 +235,19 @@ export default function TextPdf2() {
                 text2.cache();
                 layer.add(text2);
 
-                
+
 
                 fakeArray.push({
-                    sortOrder:i,
-                    layer:layer.toDataURL({ pixelRatio: 2 }),
+                    sortOrder: i,
+                    layer: layer.toDataURL({ pixelRatio: 2 }),
                 })
 
-                // doc.addImage(
-                //     layer.toDataURL({ pixelRatio: 2 }),
-                //     0,
-                //     0,
-                //     595,
-                //     842
-                // );
-                // doc.addPage();
 
                 counter++;
 
                 if (counter === maxSteps - 1) {
-                    fakeArray.sort(function(a, b){return a.sortOrder-b.sortOrder});
-                    for(let i = 0; i < fakeArray.length; i++){
+                    fakeArray.sort(function (a, b) { return a.sortOrder - b.sortOrder });
+                    for (let i = 0; i < fakeArray.length; i++) {
                         doc.addImage(
                             fakeArray[i].layer,
                             0,
@@ -262,8 +257,6 @@ export default function TextPdf2() {
                         );
                         doc.addPage();
                     }
-                    //todo sort fakeArray
-                    //loc qua fakeArray addimg, addpage
                     var pageCount = doc.internal.getNumberOfPages();
                     doc.deletePage(pageCount);
                     doc.save("mypdf.pdf");
