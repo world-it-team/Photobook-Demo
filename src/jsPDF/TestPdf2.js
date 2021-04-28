@@ -8,6 +8,8 @@ import JsPDF from "jspdf";
 import { Stage, Layer, Image, Text, Rect } from 'react-konva';
 import useImage from 'use-image';
 import Konva from "konva"
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 import naruto from "../image/naruto.png"
 import sasuke from "../image/sasuke.jpg"
@@ -63,6 +65,7 @@ export default function TextPdf2() {
     const classes = useStyles();
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
+    const [active, setActive] = useState(false)
 
 
     const [image, setImage] = useState([
@@ -152,6 +155,7 @@ export default function TextPdf2() {
 
 
     const generatePDF = () => {
+        setActive(true)
         var doc = new JsPDF("p", "pt", "a4");
         let counter = 0;
         var stage = new Konva.Stage({
@@ -257,7 +261,12 @@ export default function TextPdf2() {
                         );
                         doc.addPage();
                     }
+
                     var pageCount = doc.internal.getNumberOfPages();
+                    if(pageCount === maxSteps+1){
+                        setActive(false)
+                    }
+                    
                     doc.deletePage(pageCount);
                     doc.save("mypdf.pdf");
                 }
@@ -308,7 +317,10 @@ export default function TextPdf2() {
           </Button>
                 }
             />
-            <Button className={classes.saveButton} onClick={generatePDF}>Save as PDF</Button>
+            <div>
+                {active && <CircularProgress  disableShrink value={100}/>}
+                <Button className={classes.saveButton} onClick={generatePDF}>Save as PDF</Button>
+            </div>
         </div>
     );
 }
