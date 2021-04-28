@@ -66,6 +66,9 @@ export default function TextPdf2() {
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const [active, setActive] = useState(false)
+    const [process, setProcess] = useState({
+        label:"Save as PDF"
+    })
 
 
     const [image, setImage] = useState([
@@ -155,6 +158,9 @@ export default function TextPdf2() {
 
 
     const generatePDF = () => {
+        setProcess({
+            label:"Loading..."
+        })
         setActive(true)
         var doc = new JsPDF("p", "pt", "a4");
         let counter = 0;
@@ -265,6 +271,10 @@ export default function TextPdf2() {
                     var pageCount = doc.internal.getNumberOfPages();
                     if(pageCount === maxSteps+1){
                         setActive(false)
+                            setProcess({
+                                label:" SAVE AS PDF "
+                            })
+ 
                     }
                     
                     doc.deletePage(pageCount);
@@ -318,8 +328,8 @@ export default function TextPdf2() {
                 }
             />
             <div>
-                {active && <CircularProgress  disableShrink value={100}/>}
-                <Button className={classes.saveButton} onClick={generatePDF}>Save as PDF</Button>
+                {/* {active && <CircularProgress  disableShrink value={100}/>} */}
+                <Button className={classes.saveButton} onClick={generatePDF}>{process.label}</Button>
             </div>
         </div>
     );
