@@ -65,9 +65,9 @@ export default function TextPdf2() {
     const classes = useStyles();
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
-    const [active, setActive] = useState(false)
     const [process, setProcess] = useState({
-        label:"Save as PDF"
+        label:"Save as PDF",
+        disabled:false,
     })
 
 
@@ -159,9 +159,9 @@ export default function TextPdf2() {
 
     const generatePDF = () => {
         setProcess({
-            label:"Loading..."
+            label:"Loading...",
+            disabled:true
         })
-        setActive(true)
         var doc = new JsPDF("p", "pt", "a4");
         let counter = 0;
         var stage = new Konva.Stage({
@@ -270,9 +270,9 @@ export default function TextPdf2() {
 
                     var pageCount = doc.internal.getNumberOfPages();
                     if(pageCount === maxSteps+1){
-                        setActive(false)
                             setProcess({
-                                label:" SAVE AS PDF "
+                                label:" SAVE AS PDF ",
+                                disabled:false
                             })
  
                     }
@@ -328,8 +328,7 @@ export default function TextPdf2() {
                 }
             />
             <div>
-                {/* {active && <CircularProgress  disableShrink value={100}/>} */}
-                <Button className={classes.saveButton} onClick={generatePDF}>{process.label}</Button>
+                <Button className={classes.saveButton} onClick={generatePDF} disabled={process.disabled}>{process.label}</Button>
             </div>
         </div>
     );
