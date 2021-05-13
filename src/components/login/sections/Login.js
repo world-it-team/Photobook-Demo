@@ -1,8 +1,8 @@
 import React from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import getFirebase from "../../utils/firebase";
-import { fromFirebase } from "../../api/user.service"
-import { setUser } from "../../utils/Auth"
+import getFirebase from "../../../utils/firebase";
+import { fromFirebase } from "../../../api/user.service"
+import { setUser } from "../../../utils/Auth"
 
 const firebase = getFirebase();
 

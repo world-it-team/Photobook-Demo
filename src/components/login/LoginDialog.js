@@ -6,7 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import { Close } from "@material-ui/icons";
-import Login from "./Login";
+import Login from "./sections/Login";
 import { isLoggedIn, getUser } from "../../utils/Auth";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,9 +45,6 @@ function LoginDialog(props) {
       <Dialog
         open={props.login}
         onClose={handleClose}
-      // aria-labelledby="form-dialog-title"
-      // disableBackdropClick
-      // disableEscapeKeyDown
       >
         <IconButton className={classes.closeButton} onClick={handleClose}>
           <Close />

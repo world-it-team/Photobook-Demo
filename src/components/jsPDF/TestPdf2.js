@@ -8,8 +8,8 @@ import JsPDF from "jspdf";
 import { Stage, Layer, Image, Text, Rect } from 'react-konva';
 import useImage from 'use-image';
 import Konva from "konva"
-import CircularProgress from '@material-ui/core/CircularProgress';
-
+import Slider from '@material-ui/core/Slider'
+import Typography from '@material-ui/core/Typography'
 
 import naruto from "../image/naruto.png"
 import sasuke from "../image/sasuke.jpg"
@@ -37,7 +37,10 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#6a6cd6",
         display: "flex",
         margin: "auto"
-    }
+    },
+    sliderContainer:{
+
+    },
 }));
 
 
@@ -65,6 +68,7 @@ export default function TextPdf2() {
     const classes = useStyles();
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
+    const [zoom, setZoom] = useState(1)
     const [process, setProcess] = useState({
         label:"Save as PDF",
         disabled:false,
@@ -269,26 +273,31 @@ export default function TextPdf2() {
                     }
 
                     var pageCount = doc.internal.getNumberOfPages();
-                    if(pageCount === maxSteps+1){
-                            setProcess({
-                                label:" SAVE AS PDF ",
-                                disabled:false
-                            })
- 
-                    }
-                    
                     doc.deletePage(pageCount);
                     doc.save("mypdf.pdf");
+                    setProcess({
+                        label:" SAVE AS PDF ",
+                        disabled:false
+                    })
+
                 }
             });
         }
+
     }
 
     return (
         <div className={classes.root}>
             <div id="container" style={{ display: "none" }}>  </div>
             <div className={classes.konva} id="content">
-                <Stage width={420} height={594}  >
+                <Stage 
+                    width={420} 
+                    height={594}
+                    scaleX={zoom}
+                    scaleY={zoom}
+                    x={ zoom}
+                    y={zoom}
+                >
                     {activeStep !== 0 ?
                         <Layer >
                             <Rect
@@ -329,6 +338,23 @@ export default function TextPdf2() {
             />
             <div>
                 <Button className={classes.saveButton} onClick={generatePDF} disabled={process.disabled}>{process.label}</Button>
+                <div className={classes.sliderContainer}>
+                    <Typography
+                        variant="overline"
+                        classes={{ root: classes.sliderLabel }}
+                    >
+                        Zoom
+                    </Typography>
+                    <Slider
+                        value={zoom}
+                        min={1}
+                        max={3}
+                        step={0.1}
+                        aria-labelledby="Zoom"
+                        classes={{ root: classes.slider }}
+                        onChange={(e, zoom) => setZoom(zoom)}
+                    />
+                </div>
             </div>
         </div>
     );
