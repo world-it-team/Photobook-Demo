@@ -1,5 +1,6 @@
 
 import LoginDialog from "./components/login/LoginDialog"
+import HomeContent from "./components/home/HomeContent"
 import {
   BrowserRouter as Router,
   Route,
@@ -10,10 +11,13 @@ import {
 function App() {
   return (
     <Router>
-        <Switch>
-          <Route exact path="/login">
-          </Route>
-        </Switch>
+      <Switch>
+        <Route exact path="/">
+          <HomeContent />
+        </Route>
+        <Route exact path="/login">
+        </Route>
+      </Switch>
     </Router>
   );
 }
