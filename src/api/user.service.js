@@ -28,6 +28,7 @@ export function fromFirebase() {
     user.displayName = firebase.auth().currentUser.displayName || "";
     user.photoURL = firebase.auth().currentUser.photoURL || "";
     user.email = firebase.auth().currentUser.email || "";
+    user.password = firebase.auth().currentUser.password || "";
 
     return user;
 }
