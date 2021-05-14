@@ -1,4 +1,3 @@
-import LoginDialog from "./components/login/LoginDialog"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import HomeContent from "./components/home/HomeContent"
 
