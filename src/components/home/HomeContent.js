@@ -5,11 +5,11 @@ import Choose from "./sections/Choose";
 export default function HomeContent(props) {
   return (
     <React.Fragment>
-      <Choose title={props.data.title} />
+      <Choose data={props.data} />
     </React.Fragment>
   );
 }
 
 HomeContent.propTypes = {
-  data: PropTypes.any
+  data: PropTypes.any.isRequired,
 };

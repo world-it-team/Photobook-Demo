@@ -18,7 +18,7 @@ export default function Choose(props) {
         <section>
             <Container className={classes.choose}>
                 <Typography variant="h4" className={classes.title}>
-                    {props.title}
+                    {props.data.title}
                 </Typography>
             </Container>
         </section>
@@ -26,5 +26,5 @@ export default function Choose(props) {
 }
 
 Choose.propTypes = {
-    title: PropTypes.string.isRequired,
+    data: PropTypes.any.isRequired,
 };
