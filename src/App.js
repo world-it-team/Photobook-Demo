@@ -1,11 +1,8 @@
-
 import LoginDialog from "./components/login/LoginDialog"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import HomeContent from "./components/home/HomeContent"
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from "react-router-dom"
+
+import { appData } from "./react/data.service";
 
 
 function App() {
@@ -13,7 +10,7 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/">
-          <HomeContent />
+          <HomeContent data={appData.chooseData} />
         </Route>
         <Route exact path="/login">
         </Route>

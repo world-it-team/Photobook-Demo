@@ -1,9 +1,30 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import { Container, Typography } from "@material-ui/core";
 
-export default function Choose() {
+
+const useStyles = makeStyles((theme) => ({
+    choose: {
+        textAlign: "center",
+        margin: "0 auto",
+        paddingBottom: theme.spacing(8),
+    }
+}));
+
+export default function Choose(props) {
+    const classes = useStyles();
     return (
         <section>
-            abc
+            <Container className={classes.choose}>
+                <Typography variant="h4" className={classes.title}>
+                    {props.title}
+                </Typography>
+            </Container>
         </section>
     );
 }
+
+Choose.propTypes = {
+    title: PropTypes.string.isRequired,
+};
