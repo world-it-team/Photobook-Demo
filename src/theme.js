@@ -2,6 +2,32 @@ import { createMuiTheme } from "@material-ui/core/styles"
 import { green, grey, red } from "@material-ui/core/colors"
 
 const rawTheme = createMuiTheme({
+  palette: {
+    primary: {
+      light: "#7986cb",
+      main: "#2278CF",
+      dark: "#303f9f",
+    },
+    secondary: {
+      light: "#ff4081",
+      main: "#f50057",
+      dark: "#c51162",
+    },
+    warning: {
+      main: "#ffc071",
+      dark: "#ffb25e",
+    },
+    error: {
+      xLight: red[50],
+      main: red[500],
+      dark: red[700],
+    },
+    success: {
+      xLight: green[50],
+      main: green[500],
+      dark: green[700],
+    },
+  },
   typography: {
     // fontFamily: "'Roboto', sans-serif",
     fontSize: 14,
@@ -56,7 +82,7 @@ const theme = {
       ...rawTheme.typography.h3,
       ...fontHeader,
       fontSize: 30,
-      color:"#2278CF",
+      color: "#2278CF",
     },
     h4: {
       ...rawTheme.typography.h4,
@@ -65,6 +91,7 @@ const theme = {
       [rawTheme.breakpoints.up('sm')]: {
         fontSize: 22,
       },
+      color: "#2278CF",
     },
     h5: {
       ...rawTheme.typography.h5,
@@ -85,8 +112,9 @@ const theme = {
     subtitle1: {
       ...rawTheme.typography.subtitle1,
       fontSize: 12,
+      lineHeight: 1.6,
       [rawTheme.breakpoints.up('sm')]: {
-        fontSize: 18,
+        fontSize: 16,
       },
     },
     body1: {
