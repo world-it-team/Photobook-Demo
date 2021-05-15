@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 const firebase = getFirebase();
 
 
-function Login() {
+function Login({ redirectTo }) {
     const classes = useStyles();
 
     const [state, setState] = useState({
@@ -61,8 +61,6 @@ function Login() {
 
     function getUiConfig() {
         return {
-          signInFlow: "popup",
-          signInSuccessUrl: "/",
           signInOptions: [
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             firebase.auth.FacebookAuthProvider.PROVIDER_ID,
