@@ -1,5 +1,6 @@
 
-import LoginDialog from "./components/login/LoginDialog"
+import Login from "./components/login/Login"
+import SingUp from "./components/login/SingUp";
 import {
   BrowserRouter as Router,
   Route,
@@ -12,6 +13,10 @@ function App() {
     <Router>
         <Switch>
           <Route exact path="/login">
+            <Login/>
+          </Route>
+          <Route exact path="/singup">
+            <SingUp/>
           </Route>
         </Switch>
     </Router>
