@@ -8,6 +8,7 @@ import getFirebase from "../../utils/firebase";
 import { fromFirebase } from "../../api/user.service";
 import { setUser } from "../../utils/Auth";
 import { useFormik } from 'formik';
+import {useHistory} from "react-router-dom";
 import * as yup from 'yup';
 import {createUserDoc} from "../../api/user.service";
 
@@ -51,13 +52,13 @@ const firebase = getFirebase();
 
 function Login({ redirectTo }) {
     const classes = useStyles();
-
     const [state, setState] = useState({
         email: "",
         password: ""
     });
-    const [errorEmail, setErrorEmail] = useState("")
-    const [errorPassword, setErrorPassword] = useState("")
+    const [errorEmail, setErrorEmail] = useState("");
+    const [errorPassword, setErrorPassword] = useState("");
+    const history = useHistory();
 
     function getUiConfig() {
         return {
@@ -101,6 +102,13 @@ function Login({ redirectTo }) {
             firebase
                 .auth()
                 .signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                  // Signed in 
+                  var user = userCredential.user;
+                  if(user !== undefined){
+                    history.push("/");
+                  }
+                })
                 .catch((error) => {
                   console.log(error)
                   switch(error.code){

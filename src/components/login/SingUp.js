@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import getFirebase from "../../utils/firebase";
 import {createUserDoc} from "../../api/user.service";
+import {useHistory} from "react-router-dom";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -57,7 +58,7 @@ function SingUp() {
     });
     const [errorEmail, setErrorEmail] = useState("")
     const [errorPassword, setErrorPassword] = useState("")
-    
+    const history = useHistory();
     const validationSchema = yup.object({
         displayName: yup
             .string()
@@ -95,7 +96,11 @@ function SingUp() {
                 .then((userCredential) => {
                     // Signed in 
                     var user = userCredential.user;
-                    createUserDoc(user,{displayName})
+                    createUserDoc(user,{displayName});
+                    if(user !== undefined){
+                        history.push("/login");
+                      }
+
                   })
                 .catch((error) => {
                     switch(error.code){

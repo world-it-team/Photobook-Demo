@@ -35,7 +35,6 @@ export function fromFirebase() {
 
 export function createUserDoc(user, addDisplayName){
     if(!user) return;
-    console.log(user.email)
     const userRef = firebase.firestore().doc(`users/${user.uid}`)
 
     const snapshot = userRef.get()
