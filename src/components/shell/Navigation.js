@@ -1,5 +1,5 @@
 import React from "react";
-import Alink from "./Alink";
+import Alink from "../common/Alink";
 import { makeStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
