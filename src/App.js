@@ -2,6 +2,7 @@
 import HomeContent from "./components/home/HomeContent"
 import Login from "./components/login/Login"
 import SingUp from "./components/login/SingUp";
+import RedirectPage from "./components/login/RedirectPage";
 import {
   BrowserRouter as Router,
   Route,
@@ -16,6 +17,9 @@ function App() {
         <Switch>
           <Route exact path="/login">
             <Login/>
+          </Route>
+          <Route exact path="/redirectPage">
+            <RedirectPage/>
           </Route>
           <Route exact path="/singup">
             <SingUp/>
