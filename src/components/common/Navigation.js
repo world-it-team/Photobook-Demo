@@ -50,10 +50,11 @@ export default function Navigation() {
             Blog
           </li>
         </Alink>
+        <Alink to="/login">
         <li className={classes.navItem}>
-          {" "}
           <ExitToAppIcon /> Login
         </li>
+        </Alink>
       </ul>
     </nav>
   );

@@ -2,7 +2,6 @@ import { getUser, setUser } from "../utils/Auth";
 import User from "../models/User";
 
 import getFirebase, { getCollectionByName } from "../utils/firebase";
-import { Email } from "@material-ui/icons";
 
 const firebase = getFirebase();
 const userInfoCollection = getCollectionByName("users");
@@ -24,13 +23,18 @@ export function loadingUserInfo() {
 
 export function fromFirebase() {
     const user = new User();
-
     user.uid = firebase.auth().currentUser.uid;
     user.displayName = firebase.auth().currentUser.displayName || "";
     user.photoURL = firebase.auth().currentUser.photoURL || "";
     user.email = firebase.auth().currentUser.email || "";
 
     return user;
+}
+
+export function getUserLogin(){
+    const user = fromFirebase();
+    setUser(user)
+    createUserDoc(user, user.displayName)
 }
 
 export function createUserDoc(user, addDisplayName){
@@ -41,7 +45,7 @@ export function createUserDoc(user, addDisplayName){
 
     if(!snapshot.exists){
         const  email = user.email;
-        const {displayName} = addDisplayName;
+        const displayName = addDisplayName;
         try{
             userRef.set({
                 displayName,

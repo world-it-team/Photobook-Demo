@@ -49,7 +49,6 @@ const firebase = getFirebase();
 
 function SingUp() {
     const classes = useStyles();
-
     const [state, setState] = useState({
         displayName: "",
         email: "",
@@ -94,13 +93,14 @@ function SingUp() {
                 .auth()
                 .createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    // Signed in 
+                    // Signed in
                     var user = userCredential.user;
+                    user.sendEmailVerification();
+                    alert("Email send")                 
                     createUserDoc(user,{displayName});
-                    if(user !== undefined){
+                    if(user){
                         history.push("/login");
                       }
-
                   })
                 .catch((error) => {
                     switch(error.code){
@@ -110,6 +110,7 @@ function SingUp() {
                         case "auth/weak-password":
                             setErrorPassword(error.message)
                             break;
+                        default:
                     }
                 });
           },

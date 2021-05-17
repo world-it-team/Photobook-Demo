@@ -5,20 +5,17 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import getFirebase from "../../utils/firebase";
-import { fromFirebase } from "../../api/user.service";
-import { setUser } from "../../utils/Auth";
 import { useFormik } from 'formik';
 import {useHistory} from "react-router-dom";
+import Alink from "../common/Alink";
 import * as yup from 'yup';
-import {createUserDoc} from "../../api/user.service";
+import {getUserLogin} from "../../api/user.service";
 
 const useStyles = makeStyles((theme) => ({
     root:{
         width:"100%",
         height:"100%",
-        [theme.breakpoints.up("xs")]: {
-           margin:" 30% auto",
-        }
+        margin:" 30% auto",
     },
     form:{
         [theme.breakpoints.up("xs")]: {
@@ -48,9 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const firebase = getFirebase();
-
-
-function Login({ redirectTo }) {
+function Login() {
     const classes = useStyles();
     const [state, setState] = useState({
         email: "",
@@ -62,16 +57,16 @@ function Login({ redirectTo }) {
 
     function getUiConfig() {
         return {
+          signInFlow: "popup",
+          signInSuccessUrl: "/",
           signInOptions: [
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             firebase.auth.FacebookAuthProvider.PROVIDER_ID,
           ],
           callbacks: {
             signInSuccessWithAuthResult: () => {
-              const user = fromFirebase();
-              createUserDoc(user, user.displayName)
-              setUser(user);
-              window.location.reload()
+              getUserLogin()
+              history.push("/");
             },
           },
         };
@@ -105,12 +100,11 @@ function Login({ redirectTo }) {
                 .then((userCredential) => {
                   // Signed in 
                   var user = userCredential.user;
-                  if(user !== undefined){
+                  if(user){
                     history.push("/");
                   }
                 })
                 .catch((error) => {
-                  console.log(error)
                   switch(error.code){
                       case "auth/user-not-found":
                       case "auth/email-already-in-use":
@@ -119,6 +113,7 @@ function Login({ redirectTo }) {
                       case "auth/wrong-password":
                           setErrorPassword(error.message);
                           break;
+                      default:
                   }
               });
           },
@@ -173,7 +168,9 @@ function Login({ redirectTo }) {
             />
           )}
        </div>
-       <Typography  variant="h6" gutterBottom className={classes.singUp}>SingUp</Typography>
+      <Alink to="/singup">
+        <Typography  variant="h6" gutterBottom className={classes.singUp}>SingUp</Typography>
+      </Alink>
       </div>
       )
     };
