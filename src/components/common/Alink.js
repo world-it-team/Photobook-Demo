@@ -8,5 +8,5 @@ export default function ALink(props){
         window.scrollTo(0, 0);
     }, [pathname]);
     
-    return <NavLink {...props}>{props.children}</NavLink>
+    return <NavLink {...props} style={{textDecoration:"none"}}>{props.children}</NavLink>
 }
