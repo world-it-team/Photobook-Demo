@@ -1,15 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Choose from "./sections/Choose";
-import Navigation from "../common/Navigation"
 import Banner from "./sections/Banner"
+import Layout from "../shell/Layout"
 export default function HomeContent(props) {
   return (
-    <React.Fragment>
-      {/* <Choose data={props.data} /> */}
-      <Navigation/>
+    <Layout>
       <Banner />
-    </React.Fragment>
+        <Choose data={props.data} />
+    </Layout>
   );
 }
 
