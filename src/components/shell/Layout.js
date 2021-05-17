@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Header from "./Header";
+import Navigation from "./Navigation";
 import Footer from "./Footer";
 const useStyles = makeStyles(() => ({
     app: {
@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
 const Layout = (props) => {
     const classes = useStyles();
     return <React.Fragment className={classes.app}>
-        <Header />
+        <Navigation />
         <main>
             {props.children}
         </main>
