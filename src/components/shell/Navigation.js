@@ -34,11 +34,12 @@ export default function Navigation() {
 
     const classes = useStyles();
     const firebase = getFirebase()
-  
+    const [state, setState] = useState(isLoggedIn());
+   
     const handleLogout = () => {
-      // console.log(logout(firebase))
-      logout(firebase).then(() => {
-    });
+    
+      logout(firebase)
+      setState(false)
   }
 
   return (
@@ -62,7 +63,7 @@ export default function Navigation() {
             Blog
           </li>
         </Alink>
-        {!isLoggedIn()  ?
+        {!state  ?
             <Alink to="/login">
               <li  className={classes.navItem}>
                 <ExitToAppIcon /> Login
