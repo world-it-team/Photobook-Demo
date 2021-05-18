@@ -10,6 +10,7 @@ import {useHistory} from "react-router-dom";
 import Alink from "../common/Alink";
 import * as yup from 'yup';
 import {getUserLogin} from "../../api/user.service";
+import { setUser } from "../../utils/Auth";
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -100,6 +101,7 @@ function Login() {
                 .then((userCredential) => {
                   // Signed in 
                   var user = userCredential.user;
+                  setUser(user)
                   if(user){
                     history.push("/");
                   }
