@@ -1,5 +1,6 @@
 
 import HomeContent from "./components/home/HomeContent"
+import ImageContent from "./components/imagePage/ImageContent"
 import Login from "./components/login/Login"
 import SingUp from "./components/login/SingUp";
 import RedirectPage from "./components/login/RedirectPage";
@@ -26,6 +27,9 @@ function App() {
           </Route>
           <Route exact path="/">
             <HomeContent data={appData.chooseData} />
+         </Route>
+         <Route exact path="/images">
+            <ImageContent />
          </Route>
       </Switch>
     </Router>
