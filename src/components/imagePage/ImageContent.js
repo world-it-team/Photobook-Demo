@@ -6,7 +6,7 @@ import Ranking from './sections/Ranking'
 export default function ImageContent(props) {
   return (
     <Layout>
-        <Ranking data={props.data} />
+        {/* <Ranking data={props.data} /> */}
         <ChooseImage/>
     </Layout>
   );
