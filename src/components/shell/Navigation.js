@@ -1,10 +1,13 @@
-import React from "react";
+import React,{useState} from "react";
 import Alink from "../common/Alink";
 import { makeStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
 import ImageIcon from "@material-ui/icons/Image";
 import ChromeReaderModeIcon from "@material-ui/icons/ChromeReaderMode";
+import { isLoggedIn,logout } from "../../utils/Auth"
+import {useHistory} from "react-router-dom";
+import getFirebase from "../../utils/firebase"
 
 const useStyles = makeStyles({
 root: {
@@ -28,7 +31,17 @@ root: {
 });
 
 export default function Navigation() {
-  const classes = useStyles();
+
+    const classes = useStyles();
+    const firebase = getFirebase()
+    const [state, setState] = useState(isLoggedIn());
+   
+    const handleLogout = () => {
+    
+      logout(firebase)
+      setState(false)
+  }
+
   return (
     <nav className={classes.root}>
       <h1 className={classes.navTitle}>フォトブック</h1>
@@ -50,11 +63,21 @@ export default function Navigation() {
             Blog
           </li>
         </Alink>
-        <Alink to="/login">
-        <li className={classes.navItem}>
-          <ExitToAppIcon /> Login
-        </li>
-        </Alink>
+        {!state  ?
+            <Alink to="/login">
+              <li  className={classes.navItem}>
+                <ExitToAppIcon /> Login
+              </li>
+          </Alink>
+          :  
+          <div onClick={handleLogout}>
+            <Alink to="/">
+              <li  className={classes.navItem}>
+                <ExitToAppIcon /> LogOut
+              </li>
+            </Alink>
+          </div>
+        }
       </ul>
     </nav>
   );
