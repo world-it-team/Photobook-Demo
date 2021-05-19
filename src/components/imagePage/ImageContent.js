@@ -8,9 +8,9 @@ export default function ImageContent(props) {
   console.log(props)
   return (
     <Layout>
-        <ChooseImage/>
+        {/* <ChooseImage/> */}
         <WorksOfOthers data={props.data.WorksOfOthers}/>
-        <ChooseImage data={props.data}/>
+        {/* <ChooseImage data={props.data}/> */}
     </Layout>
   );
 }

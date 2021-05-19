@@ -9,8 +9,9 @@ import { useFormik } from 'formik';
 import {useHistory} from "react-router-dom";
 import Alink from "../common/Alink";
 import * as yup from 'yup';
-import {getUserLogin} from "../../api/user.service";
-import { setUser } from "../../utils/Auth";
+import {getUserLogin ,loadingUserInfo,fromFirebase,addOrUpdateUserInfo} from "../../api/user.service";
+import { getUser,setUser } from "../../utils/Auth";
+
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -66,8 +67,17 @@ function Login() {
           ],
           callbacks: {
             signInSuccessWithAuthResult: () => {
-              getUserLogin()
-              history.push("/");
+              loadingUserInfo().then((doc)=>{
+                console.log(doc)
+                if(doc.popup == true){
+                  history.push("/popup");
+                  doc.popup = false;
+                  addOrUpdateUserInfo(doc)
+                }else{
+                 history.push("/");
+                }
+               });
+               getUserLogin()
             },
           },
         };
@@ -88,23 +98,30 @@ function Login() {
         },
         validationSchema: validationSchema,
           onSubmit: (values) => {
+
             let { email, password } = values
-            console.log(values)
             setState(prevState => ({
                 ...prevState,
                 email: email,
                 password: password
             }));
+            console.log(getUser())
             firebase
                 .auth()
                 .signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                  // Signed in 
-                  var user = userCredential.user;
-                  setUser(user)
-                  if(user){
+                  const userInfo =  fromFirebase();
+                  setUser(userInfo)
+                  loadingUserInfo().then((doc)=>{
+                   if(doc.popup == true){
+                     history.push("/popup");
+                     doc.popup = false;
+                     addOrUpdateUserInfo(doc)
+                   }else{
                     history.push("/");
-                  }
+                   }
+                  });
+              
                 })
                 .catch((error) => {
                   switch(error.code){
@@ -170,8 +187,8 @@ function Login() {
             />
           )}
        </div>
-      <Alink to="/singup">
-        <Typography  variant="h6" gutterBottom className={classes.singUp}>SingUp</Typography>
+      <Alink to="/sigup">
+        <Typography  variant="h6" gutterBottom className={classes.singUp}>SigUp</Typography>
       </Alink>
       </div>
       )

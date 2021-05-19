@@ -7,19 +7,19 @@ const firebase = getFirebase();
 const userInfoCollection = getCollectionByName("users");
 export function loadingUserInfo() {
     var docRef = userInfoCollection.doc(getUser().uid);
-
     return docRef.get().then((doc) => {
         if (doc.exists) {
             const userInfo = doc.data();
+            console.log(userInfo)
+            userInfo.uid = getUser().uid;
             setUser(userInfo);
-
             return userInfo;
         } else {
             return getUser();
         }
     });
+    
 }
-
 
 export function fromFirebase() {
     const user = new User();
@@ -27,16 +27,28 @@ export function fromFirebase() {
     user.displayName = firebase.auth().currentUser.displayName || "";
     user.photoURL = firebase.auth().currentUser.photoURL || "";
     user.email = firebase.auth().currentUser.email || "";
-
+    user.popup = firebase.auth().currentUser.popup || true;
     return user;
 }
 
+
 export function getUserLogin(){
-    const user = fromFirebase();
+    const user = fromFirebase()
     setUser(user)
     createUserDoc(user, user.displayName)
 }
 
+export function addOrUpdateUserInfo(userInfo) {
+    console.log(userInfo)
+    var user = fromFirebase()
+    user.uid = userInfo.uid;
+    user.displayName = userInfo.displayName ;
+    user.photoURL = userInfo.photoURL || "";
+    user.email = userInfo.email ;
+    user.popup = userInfo.popup ;
+  
+    return userInfoCollection.doc(user.uid).set(Object.assign({}, user))
+  }
 export function createUserDoc(user, addDisplayName){
     if(!user) return;
     const userRef = firebase.firestore().doc(`users/${user.uid}`)
@@ -46,10 +58,12 @@ export function createUserDoc(user, addDisplayName){
     if(!snapshot.exists){
         const  email = user.email;
         const displayName = addDisplayName;
+        const popup = true
         try{
             userRef.set({
                 displayName,
                 email,
+                popup,
                 createAt: new Date(),
             });
         }

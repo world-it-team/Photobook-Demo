@@ -4,8 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import getFirebase from "../../utils/firebase";
-import {createUserDoc} from "../../api/user.service";
+import {createUserDoc,} from "../../api/user.service";
+
 import {useHistory} from "react-router-dom";
+
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -97,8 +99,8 @@ function SingUp() {
                     var user = userCredential.user;
                     user.sendEmailVerification();
                     alert("Verification code will be sent to your email")                 
-                    createUserDoc(user,{displayName});
-                    history.push("/singup");
+                    createUserDoc(user,displayName);
+                    history.push("/login");
                   })
                 .catch((error) => {
                     switch(error.code){

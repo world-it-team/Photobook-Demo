@@ -2,7 +2,8 @@
 import HomeContent from "./components/home/HomeContent"
 import ImageContent from "./components/imagePage/ImageContent"
 import Login from "./components/login/Login"
-import SingUp from "./components/login/SingUp";
+import Popup from "./components/login/sections/Popup"
+import SigUp from "./components/login/SigUp";
 import RedirectPage from "./components/login/RedirectPage";
 import {
   BrowserRouter as Router,
@@ -22,11 +23,14 @@ function App() {
           <Route exact path="/login">
             <Login/>
           </Route>
+          <Route exact path="/popup">
+            <Popup/>
+          </Route>
           <Route exact path="/redirectPage">
             <RedirectPage/>
           </Route>
-          <Route exact path="/signup">
-            <SingUp/>
+          <Route exact path="/sigup">
+            <SigUp/>
           </Route>
           <Route exact path="/">
             <HomeContent data={appData.chooseData} />

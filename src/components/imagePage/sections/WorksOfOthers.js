@@ -5,42 +5,46 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
     
 import Image from "../../common/Image"
 
-const useStyles = makeStyles((theme) => ({
-  tagContainer: {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    "& > *": {
-      margin: theme.spacing(0.5),
-    },
+const useStyles = makeStyles((theme) => ({  
+  root: {
+    width:"80%",
+    position:"relative",
+    margin:"0 auto",
+    
   },
-  tag: {
-    listStyle: "none",
-    border: "1px solid grey",
-    borderRadius: 4,
-    padding: "5px 10px",
+  title:{
+    position:"absolute",
+    top:"20px",
+    left:"20px"
   },
-  imageContainer:{
-      
+  image:{
+      "& >img":{
+        width: "100%",
+        height: "300px",
+      }
+  },
+  icon:{
+    position:"absolute",
+    top:"20px",
+    right:"20px"
   }
 }));
 
 
 export default function WorksOfOthers({data}) {
-  console.log(data)
   const classes = useStyles();
   return (
-    <section>
+    <section className= {classes.section}>
         {data.map((item) => {
             return(
               <div className= {classes.root}>
-                <div className= {classes.title}>
+                <div className= {classes.title} >
                     {item.tagName}
                 </div>
-                <div >
+                <div className= {classes.image}>
                     <Image {...item.img[0]}/>
                 </div>
-                <FavoriteIcon/>
+                <FavoriteIcon className= {classes.icon}/>
               </div>
             )
                        
