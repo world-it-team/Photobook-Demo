@@ -29,7 +29,7 @@ function App() {
             <HomeContent data={appData.chooseData} />
          </Route>
          <Route exact path="/images">
-            <ImageContent />
+            <ImageContent data={appData.chooseImage}/>
          </Route>
       </Switch>
     </Router>

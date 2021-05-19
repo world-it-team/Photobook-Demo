@@ -5,7 +5,7 @@ import ChooseImage from "./sections/ChooseImage"
 export default function ImageContent(props) {
   return (
     <Layout>
-        <ChooseImage/>
+        <ChooseImage data={props.data}/>
     </Layout>
   );
 }
