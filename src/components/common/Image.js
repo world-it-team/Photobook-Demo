@@ -7,6 +7,8 @@ export function getImg(src) {
   switch (category) {
     case "home":
       return validateUrl(category, imgFileName);
+    case "imagePage":
+      return validateUrl(category, imgFileName);
     default:
       return src;
   }

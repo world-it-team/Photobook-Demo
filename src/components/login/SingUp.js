@@ -96,11 +96,9 @@ function SingUp() {
                     // Signed in
                     var user = userCredential.user;
                     user.sendEmailVerification();
-                    alert("Email send")                 
+                    alert("Verification code will be sent to your email")                 
                     createUserDoc(user,{displayName});
-                    if(user){
-                        history.push("/login");
-                      }
+                    history.push("/singup");
                   })
                 .catch((error) => {
                     switch(error.code){
