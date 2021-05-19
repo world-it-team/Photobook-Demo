@@ -67,6 +67,8 @@ function Login() {
           ],
           callbacks: {
             signInSuccessWithAuthResult: () => {
+              getUserLogin()
+              console.log(getUser())
               loadingUserInfo().then((doc)=>{
                 console.log(doc)
                 if(doc.popup == true){
@@ -77,7 +79,7 @@ function Login() {
                  history.push("/");
                 }
                });
-               getUserLogin()
+
             },
           },
         };
@@ -109,7 +111,7 @@ function Login() {
             firebase
                 .auth()
                 .signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
+                .then(() => {
                   const userInfo =  fromFirebase();
                   setUser(userInfo)
                   loadingUserInfo().then((doc)=>{
