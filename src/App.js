@@ -5,6 +5,7 @@ import Login from "./components/login/Login"
 import Popup from "./components/login/sections/Popup"
 import SigUp from "./components/login/SigUp";
 import RedirectPage from "./components/login/RedirectPage";
+import PopUp from "./components/login/sections/Popup"
 import {
   BrowserRouter as Router,
   Route,
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route exact path="/sigup">
             <SigUp/>
+          </Route>
+          <Route exact path="/popup">
+            <PopUp/>
           </Route>
           <Route exact path="/">
             <HomeContent data={appData.chooseData} />
