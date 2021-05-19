@@ -1,11 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Layout from "../shell/Layout"
-import ChooseImage from "./sections/ChooseImage"
+import Layout from "../shell/Layout";
+import ChooseImage from "./sections/ChooseImage";
+import WorksOfOthers from "./sections/WorksOfOthers"
+
+
 export default function ImageContent(props) {
+  console.log(props)
   return (
     <Layout>
         <ChooseImage/>
+        <WorksOfOthers data={props.data.WorksOfOthers}/>
     </Layout>
   );
 }

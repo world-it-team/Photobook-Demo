@@ -9,6 +9,9 @@ import {
   Route,
   Switch,
 } from "react-router-dom"
+
+
+
 import { appData } from "./react/data.service";
 
 
@@ -29,7 +32,7 @@ function App() {
             <HomeContent data={appData.chooseData} />
          </Route>
          <Route exact path="/images">
-            <ImageContent />
+            <ImageContent data={appData.chooseImage}/>
          </Route>
       </Switch>
     </Router>
