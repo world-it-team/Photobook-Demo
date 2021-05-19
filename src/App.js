@@ -25,14 +25,14 @@ function App() {
           <Route exact path="/redirectPage">
             <RedirectPage/>
           </Route>
-          <Route exact path="/singup">
+          <Route exact path="/signup">
             <SingUp/>
           </Route>
           <Route exact path="/">
             <HomeContent data={appData.chooseData} />
          </Route>
          <Route exact path="/images">
-            <ImageContent data={appData.chooseImage}/>
+            <ImageContent data={appData.chooseImage} />
          </Route>
       </Switch>
     </Router>

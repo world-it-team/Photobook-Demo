@@ -74,7 +74,7 @@ export default function Choose(props) {
         setPage(value);
     };
 
-    console.log(props.data)
+    // console.log(props.data)
     return (
         <section>
             <Container className={classes.choose}>
