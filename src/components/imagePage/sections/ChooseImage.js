@@ -5,9 +5,19 @@ import GridListTile from "@material-ui/core/GridListTile";
 import Image from "../../common/Image";
 import SearchIcon from "@material-ui/icons/Search";
 import Modal from "@material-ui/core/Modal";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+
+import { getStorage } from "../../../utils/firebase";
+import { getUser, isLoggedIn } from "../../../utils/Auth";
+import { getImgData, uploadImgData } from "../../../api/photo.service";
+
+const storage = getStorage();
+const uid = getUser().uid;
+
+
+
+
 const useStyles = makeStyles((theme) => ({
   searchInput: {
     display: "flex",
@@ -67,8 +77,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   modalImage: {
-    width: "100%",
-    height: "100%",
+    width: "95%",
+    height: "90%",
     objectFit: "contain",
   },
   buttonWrap: {
@@ -85,7 +95,6 @@ function removeAccents(str) {
 
 export default function ChooseImage(props) {
   const classes = useStyles();
-
   const filterImage = (data, query) => {
     if (!query) {
       return data;
@@ -99,26 +108,68 @@ export default function ChooseImage(props) {
   const [searchQuery, setSearchQuery] = useState("");
   const filteredImage = filterImage(props.data, searchQuery.toLowerCase());
 
-  const [open, setOpen] = React.useState(false);
-  const [imageURL, setImageURL] = React.useState("");
-  // console.log(imageURL)
+  const [open, setOpen] = useState(false);
+  const [image, setImage] = useState("");
+
+  
+  const [login, setLogin] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [upload, setUpload] = useState(false);
+
   const handleOpen = (e) => {
+  
     setOpen(true);
-    setImageURL(e.target.src);
+    setImage(e.target.src);
   };
   const handleClose = () => {
     setOpen(false);
   };
+  
+  const chooseImage = () => {
+  
+//      if (isLoggedIn()) {
+//       if (image) {
+//         const uploadTask = storage.ref(`${uid}/${image.name}`).put(image);
+//         uploadTask.on(
+//             "state_changed",
+//             snapshot => {
+//                 const progress = Math.round(
+//                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+//                 );
+//                 setProgress(progress);
+//             },
+//             error => {
+//                 console.log(error);
+//             },
+//             () => {
+//                 storage
+//                     .ref(uid)
+//                     .child(image.name)
+//                     .getDownloadURL()
+//                     .then(url => {
+//                         uploadImgData(image.name, url);
+//                         setUpload(!upload)
+//                     });
+//             }
+//         );
+//     }
+// } else setLogin(true);
+//    setOpen(false);
+  };
 
+
+  React.useEffect(() =>{
+   
+  },[])
+  
   return (
-    <section>
+    <section >
       {/*Search Bar*/}
       <div className={classes.searchInput}>
         <input
           style={{ width: 200, height: 28 }}
           type="string"
           placeholder="Search image ..."
-          value={searchQuery}
           onInput={(e) => setSearchQuery(e.target.value)}
         />
         <SearchIcon style={{ color: "black" }} />
@@ -145,18 +196,19 @@ export default function ChooseImage(props) {
         <GridList cellHeight={80} className={classes.gridList} cols={3}>
           {filteredImage.map((tile) => (
             <GridListTile key={tile} cols={1} onClick={(e) => handleOpen(e)}>
-              <Image {...tile.img} className={classes.image} />
+              <Image {...tile.img} className={classes.image}/>
             </GridListTile>
           ))}
         </GridList>
         {/*Zoom Image When Click*/}
-        <Modal className={classes.modal} open={open} onClose={handleClose}>
-          <div className={classes.paper}>
-            <img src={imageURL} className={classes.modalImage} />
-    
+        <Modal className={classes.modal} open={open} onClose={handleClose} >
+          <div className={classes.paper} >
+            <img src={image} className={classes.modalImage} />
               <Grid container className={classes.buttonWrap}>
                 <Grid container item xs={6} justify="flex-start">
-                  <Button variant="contained" color="primary">
+                  <Button variant="contained" color="primary"
+                     onClick={chooseImage}
+                  >
                     Choose
                   </Button>
                 </Grid>
@@ -175,7 +227,9 @@ export default function ChooseImage(props) {
         </Modal>
 
         {/*Choosed Image Container*/}
-        <div></div>
+        <div>
+            
+        </div>
       </div>
     </section>
   );
