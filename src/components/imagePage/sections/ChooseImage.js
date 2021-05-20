@@ -5,9 +5,9 @@ import GridListTile from "@material-ui/core/GridListTile";
 import Image from "../../common/Image";
 import SearchIcon from "@material-ui/icons/Search";
 import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
-
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles((theme) => ({
   searchInput: {
     display: "flex",
@@ -50,20 +50,30 @@ const useStyles = makeStyles((theme) => ({
     // objectPosition:"50% 50%"
   },
   modal: {
-    // position: "absolute",
-    // width: "100%",
-    // height: "100%",
-    paddingTop:40
+    position: "relative",
+    maxWidth: "100%",
+    maxHeight: "90vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
   },
   paper: {
-    // display: "flex",
-    // flexDirection: "column"
-  },
-  modalImage: {
     position: "absolute",
     width: "100%",
     height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalImage: {
+    width: "100%",
+    height: "100%",
     objectFit: "contain",
+  },
+  buttonWrap: {
+    width: "80%",
+    maxHeight:40
   },
 }));
 
@@ -129,6 +139,7 @@ export default function ChooseImage(props) {
           </li>
         ))}
       </div>
+
       {/*Image List*/}
       <div className={classes.imageContainer}>
         <GridList cellHeight={80} className={classes.gridList} cols={3}>
@@ -139,15 +150,32 @@ export default function ChooseImage(props) {
           ))}
         </GridList>
         {/*Zoom Image When Click*/}
-        <Modal
-          className={classes.modal}
-          open={open}
-          onClose={handleClose}
-        >
-            <div className={classes.paper}>
-              <img src={imageURL} className={classes.modalImage} />
-            </div>
+        <Modal className={classes.modal} open={open} onClose={handleClose}>
+          <div className={classes.paper}>
+            <img src={imageURL} className={classes.modalImage} />
+    
+              <Grid container className={classes.buttonWrap}>
+                <Grid container item xs={6} justify="flex-start">
+                  <Button variant="contained" color="primary">
+                    Choose
+                  </Button>
+                </Grid>
+                <Grid container item xs={6} justify="flex-end">
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>
+                </Grid>
+              </Grid>
+        
+          </div>
         </Modal>
+
+        {/*Choosed Image Container*/}
+        <div></div>
       </div>
     </section>
   );
