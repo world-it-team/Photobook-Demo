@@ -5,8 +5,6 @@ import { Button } from "@material-ui/core";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Paper from '@material-ui/core/Paper';
@@ -66,6 +64,17 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign: "middle",
     borderRadius: "50%",
     background: "#ff834f",
+  },
+  action:{
+    display:"flex",
+    justifyContent: "space-between",
+    margin:"10px",
+  },
+  actionButton:{
+    color:"red",
+  },
+  actionBuyNow:{
+    backgroundColor:"#ff834f",
   }
 
 }));
@@ -84,11 +93,10 @@ export default function WorksOfOthers({data}) {
   const [visibleSize, setVisibleSize] = useState(3);
   const [popup, setPopup] = useState(false);
   const [value, setValue] = useState(0)
-  const [page, setPage] = useState(1);
   const [maxStep, setMaxStep] = useState(0);
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const Last = page * visibleSize;
+  const Last = 1 * visibleSize;
   const First = Last - visibleSize;
 
   const ShowMoreItems = () => {
@@ -142,7 +150,7 @@ const handleBack = () => {
           >
             <DialogContent>
               {data.map((itemList,index)=>{
-                return value == index ?(
+                return value === index ?(
                       <div className= {classes.image} >
                          <Image {...itemList.img[activeStep]}/>
                          <MobileStepper
@@ -170,15 +178,14 @@ const handleBack = () => {
                 ):null
               })}
             </DialogContent>
-            <DialogActions>
-           
-              <Button autoFocus onClick={handleClose} color="primary">
+            <div className={classes.action}>
+              <Button className={classes.actionButton} autoFocus onClick={handleClose} >
                 Cancel
               </Button>
-              <Button color="primary">
-                Subscribe
+              <Button className={classes.actionBuyNow} autoFocus >
+                 Buy now
               </Button>
-            </DialogActions>
+            </div>
           </Dialog> 
           {visibleSize === 3 ? (
             <div className={classes.button}>
