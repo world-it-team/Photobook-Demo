@@ -1,90 +1,85 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
 import Image from "../../common/Image"
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 const useStyles = makeStyles((theme) => ({
-    rank :{
-        display: "flex",
-        flexWrap: "wrap",
-        // flexDirection: "column",
-        width: "100%",
-    },
+  title: {
+    fontSize:"20px",
+    fontWeight:"700",
+    marginLeft:"40px"
+  },
+  content:{
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "row",
+  },
   item:{
-    width: "50%",
- 
-    },  
-  list: {
-    maxWidth: 345,
+    display: "flex",
+    width: "45%",
+    margin:"10px auto",
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+  start:{
+    width: "20%",
+    height: "50px",
+    top:"10px",
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+  subitem:{
+    width: "80%",
+    position:"relative",
+    margin:"10px auto",
   },
-  expandOpen: {
-    transform: 'rotate(180deg)',
+  itemTitle:{
+    width: "70px",
+    height:" 20px",
+    backgroundColor:"white",
+    border:" 1px solid ",
+    borderRadius: "5px",
+    textAlign: "center",
+    position:"absolute",
+    top:"10px",
+    left:"5px",
   },
-  avatar: {
-    backgroundColor: red[500],
+  image:{
+    "& >img":{
+      width: "100%",
+      height:"150px",
+      border: "1px ",
+      borderRadius: "10px",
+    }
   },
-      cardImage: {
-        width: " 100%",
-        height: "100px",
-        margin: "auto",
-        borderRadius: "10px",
-        objectFit: "cover"
-    },
+  icon:{
+    position:"absolute",
+    top:"10px",
+    right:"5px"
+  },
 }));
 
 export default function Ranking(props) {
-    console.log(props.data)
   const classes = useStyles();
   
   return (
-    <div className={classes.rank}>
+    <section className= {classes.section}>
+      <div className= {classes.title}> ランキング</div>
+      <div className= {classes.content}>
         {props.data.map((item, index) => {
-            return(
-                <div className={classes.item}>
-                   {index < 10 && 
-                   <Card className={classes.list}>
-                        <Image className={classes.cardImage}  {...item.img} />
-                        <CardActions disableSpacing>
-                            <IconButton aria-label="add to favorites">
-                                <FavoriteIcon />
-                            </IconButton>
-                        </CardActions>
-                        <CardActions disableSpacing>
-                            <IconButton aria-label="add to favorites">
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                AAA 
-                            </Typography>
-                            </IconButton>
-                        </CardActions>
-                        <Image  {...item.img} />
-                        <CardContent>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                            {index+1 }
-                            </Typography>
-                        </CardContent> 
-                    </Card>
-                    }
-                </div>
-            )
+            return index < 10 ?  (
+                   <div className= {classes.item}>
+                     <StarBorderIcon className= {classes.start} value="1"/>
+                     <div className= {classes.subitem}>
+                        <div className= {classes.itemTitle} >
+                            {item.category}
+                        </div>
+                        <div className= {classes.image}>
+                            <Image {...item.img}/>
+                        </div>
+                        <FavoriteIcon className= {classes.icon}/>
+                      </div>
+                  </div>
+            ): null
          })}
-    </div>
+        </div>
+    </section>
   );
 }

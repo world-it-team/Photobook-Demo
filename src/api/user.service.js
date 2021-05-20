@@ -10,8 +10,8 @@ export function loadingUserInfo() {
     return docRef.get().then((doc) => {
         if (doc.exists) {
             const userInfo = doc.data();
-            console.log(userInfo)
             userInfo.uid = getUser().uid;
+            userInfo.emailVerified = getUser().emailVerified;
             setUser(userInfo);
             return userInfo;
         } else {
@@ -28,9 +28,17 @@ export function fromFirebase() {
     user.photoURL = firebase.auth().currentUser.photoURL || "";
     user.email = firebase.auth().currentUser.email || "";
     user.popup = firebase.auth().currentUser.popup || true ;
+    user.emailVerified = firebase.auth().currentUser.emailVerified;
+    console.log(firebase.auth().currentUser)
     return user;
 }
 
+export function handleVerifyEmail(actionCode) {
+    console.log(actionCode);
+    firebase.auth().applyActionCode(actionCode).then((resp) => {
+        console.log(resp)
+    });
+}
 
 export function getUserLogin(){
     const user = fromFirebase()
@@ -46,6 +54,7 @@ export function addOrUpdateUserInfo(userInfo) {
     user.photoURL = userInfo.photoURL || "";
     user.email = userInfo.email ;
     user.popup = userInfo.popup ;
+    user.emailVerified = userInfo.emailVerified
   
     return userInfoCollection.doc(user.uid).set(Object.assign({}, user))
   }
@@ -54,15 +63,16 @@ export function createUserDoc(user, addDisplayName){
     const userRef = firebase.firestore().doc(`users/${user.uid}`)
     userRef.get().then((doc) => {
         if (!doc.exists) {
-            console.log("a")
             const  email = user.email;
             const displayName = addDisplayName;
-            const popup = true
+            const popup = true;
+            const emailVerified = false;
             try{
                 userRef.set({
                     displayName,
                     email,
                     popup,
+                    emailVerified,
                     createAt: new Date(),
                 });
             }
