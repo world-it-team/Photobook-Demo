@@ -1,10 +1,18 @@
 import React,{useState} from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles,useTheme } from "@material-ui/core/styles";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Button } from "@material-ui/core";
-
-    
-import Image from "../../common/Image"
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import Paper from '@material-ui/core/Paper';
+import Draggable from 'react-draggable';  
+import Image from "../../common/Image";
+import MobileStepper from '@material-ui/core/MobileStepper';
 
 const useStyles = makeStyles((theme) => ({  
   title:{
@@ -17,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     height:"300px",
     position:"relative",
     margin:"30px auto",
-
     borderRadius: "10px",
     
   },
@@ -42,41 +49,137 @@ const useStyles = makeStyles((theme) => ({
       }
   },
   icon:{
+    color:"white",
     position:"absolute",
+    fontSize:"30px",
     top:"20px",
     right:"20px"
+  },
+  likeCount:{
+    position:"absolute",
+    top:"18px",
+    right:"10px",
+    height: "20px",
+    width: "20px",
+    display:" table-cell",
+    textAlign: "center",
+    verticalAlign: "middle",
+    borderRadius: "50%",
+    background: "#ff834f",
   }
+
 }));
+
+function PaperComponent(props) {
+  return (
+    <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+      <Paper {...props} />
+    </Draggable>
+  );
+}
 
 
 export default function WorksOfOthers({data}) {
   const classes = useStyles();
   const [visibleSize, setVisibleSize] = useState(3);
+  const [popup, setPopup] = useState(false);
+  const [value, setValue] = useState(0)
   const [page, setPage] = useState(1);
+  const [maxStep, setMaxStep] = useState(0);
+  const theme = useTheme();
+  const [activeStep, setActiveStep] = useState(0);
   const Last = page * visibleSize;
   const First = Last - visibleSize;
 
   const ShowMoreItems = () => {
-    setVisibleSize(4);
+    setVisibleSize(visibleSize+1);
   };
 
+  function handleClickOpen(index,length){
+    setValue(index)
+    setMaxStep(length)
+    setPopup(true)
+  } 
 
+const handleClose = () =>{
+  setPopup(false)
+  setActiveStep(0)
+}
+
+const handleNext = () => {
+  setActiveStep((prevActiveStep) => (prevActiveStep + 1) % maxStep);
+};
+
+const handleBack = () => {
+  setActiveStep((prevActiveStep) => (prevActiveStep + maxStep - 1) % maxStep);
+};
   return (
     <section className= {classes.section}>
         <div className= {classes.title}> 他人作品</div>
-        {data.slice(First, Last).map((item) => {
+        {data.slice(First, Last).map((item,index) => {
             return(
-              <div className= {classes.root}>
+              <div className= {classes.root } onClick={()=>handleClickOpen(index,item.img.length)}>
                 <div className= {classes.rootTitle} >
                     {item.tagName}
                 </div>
                 <div className= {classes.image}>
                     <Image {...item.img[0]}/>
                 </div>
-                <FavoriteIcon className= {classes.icon}/>
+                <div>
+                  <FavoriteIcon className= {classes.icon}/>
+                  <div className= {classes.likeCount}>
+                      2
+                  </div>
+                </div>
               </div>
-            )         
+            )  
          })}
+          <Dialog
+            open={popup}
+            onClose={handleClose}
+            PaperComponent={PaperComponent}
+            aria-labelledby="draggable-dialog-title"
+          >
+            <DialogContent>
+              {data.map((itemList,index)=>{
+                return value == index ?(
+                      <div className= {classes.image} >
+                         <Image {...itemList.img[activeStep]}/>
+                         <MobileStepper
+                            steps={itemList.img.length}
+                            className={classes.mobileStepper}
+                            position="static"
+                            variant="text"
+                            activeStep={activeStep}
+                            nextButton={
+                                <Button size="small" onClick={handleNext} >
+                                    Next
+                                    {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                                </Button>
+                            }
+                            backButton={
+                                  <Button size="small" onClick={handleBack} >        
+                                      Back
+                                      {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                                  </Button>
+                            }
+                        />
+                      </div>
+                     
+               
+                ):null
+              })}
+            </DialogContent>
+            <DialogActions>
+           
+              <Button autoFocus onClick={handleClose} color="primary">
+                Cancel
+              </Button>
+              <Button color="primary">
+                Subscribe
+              </Button>
+            </DialogActions>
+          </Dialog> 
           {visibleSize === 3 ? (
             <div className={classes.button}>
                 <Button variant="contained" color="primary" onClick={ShowMoreItems}> もっと見る </Button>

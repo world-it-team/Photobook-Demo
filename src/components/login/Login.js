@@ -71,7 +71,7 @@ function Login() {
               console.log(getUser())
               loadingUserInfo().then((doc)=>{
                 console.log(doc)
-                if(doc.popup == true){
+                if(doc.popup === true){
                   history.push("/popup");
                   doc.popup = false;
                   addOrUpdateUserInfo(doc)
@@ -115,7 +115,7 @@ function Login() {
                   const userInfo =  fromFirebase();
                   setUser(userInfo)
                   loadingUserInfo().then((doc)=>{
-                   if(doc.popup == true){
+                   if(doc.popup === true){
                      history.push("/popup");
                      doc.popup = false;
                      addOrUpdateUserInfo(doc)

@@ -71,23 +71,4 @@ export function createUserDoc(user, addDisplayName){
             }
         }
     });
-    // const snapshot = userRef.get()
-    // console.log(snapshot)
-    // if(!snapshot.exists){
-    //     console.log("a")
-    //     const  email = user.email;
-    //     const displayName = addDisplayName;
-    //     const popup = true
-    //     try{
-    //         userRef.set({
-    //             displayName,
-    //             email,
-    //             popup,
-    //             createAt: new Date(),
-    //         });
-    //     }
-    //     catch(error){
-    //         console.log("Error in creating user", error )
-    //     }
-    // }
 }

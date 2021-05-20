@@ -6,7 +6,6 @@ import HomeIcon from "@material-ui/icons/Home";
 import ImageIcon from "@material-ui/icons/Image";
 import ChromeReaderModeIcon from "@material-ui/icons/ChromeReaderMode";
 import { isLoggedIn,logout } from "../../utils/Auth"
-import {useHistory} from "react-router-dom";
 import getFirebase from "../../utils/firebase"
 
 const useStyles = makeStyles({
