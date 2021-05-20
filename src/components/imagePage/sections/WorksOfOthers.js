@@ -65,6 +65,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "50%",
     background: "#ff834f",
   },
+  button:{
+    textAlign:"center",
+    marginBottom:"20px",
+  },
   action:{
     display:"flex",
     justifyContent: "space-between",
