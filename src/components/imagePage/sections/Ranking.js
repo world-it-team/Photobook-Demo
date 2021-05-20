@@ -20,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
     width: "45%",
     margin:"10px auto",
   },
-  start:{
-    width: "20%",
-    height: "50px",
-    top:"10px",
-  },
+  // start:{
+  //   width: "20%",
+  //   height: "50px",
+  //   top:"10px",
+  // },
   subitem:{
     width: "80%",
     position:"relative",
@@ -50,10 +50,42 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   icon:{
+    color:"white",
     position:"absolute",
+    fontSize:"25px",
     top:"10px",
-    right:"5px"
+    right:"10px"
   },
+  rank:{
+    position: "relative",
+    width: "50px",
+  },
+  number:{
+    position: "absolute",
+    margin: "0 auto",
+    top: "20px",
+    left: "20px",
+  },
+  start:{
+    width: "50px",
+    position: "absolute",
+    fontSize: "60px",
+    border: "1px"
+  },
+  likeCount:{
+    position:"absolute",
+    top: "10px",
+    right: "5px",
+    width: "17px",
+    height: "17px",
+    display:" table-cell",
+    textAlign: "center",
+    verticalAlign: "middle",
+    borderRadius: "50%",
+    background: "#ff834f",
+    fontSize: "11px",
+  }
+
 }));
 
 export default function Ranking(props) {
@@ -66,7 +98,11 @@ export default function Ranking(props) {
         {props.data.map((item, index) => {
             return index < 10 ?  (
                    <div className= {classes.item}>
-                     <StarBorderIcon className= {classes.start} value="1"/>
+                     <div className= {classes.rank}>
+                        <div className= {classes.number}>{index+1}</div>
+                        <StarBorderIcon className= {classes.start}/>
+                     </div>
+                     
                      <div className= {classes.subitem}>
                         <div className= {classes.itemTitle} >
                             {item.category}
@@ -74,7 +110,12 @@ export default function Ranking(props) {
                         <div className= {classes.image}>
                             <Image {...item.img}/>
                         </div>
-                        <FavoriteIcon className= {classes.icon}/>
+                        <div>
+                          <FavoriteIcon className= {classes.icon}/>
+                          <div className= {classes.likeCount}>
+                              2
+                          </div>
+                        </div>
                       </div>
                   </div>
             ): null
