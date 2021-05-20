@@ -107,22 +107,30 @@ function Login() {
                 email: email,
                 password: password
             }));
-            console.log(getUser())
+            
             firebase
                 .auth()
                 .signInWithEmailAndPassword(email, password)
-                .then(() => {
+                .then((userCredential) => {
+                  var user = userCredential.user;
+                  console.log(getUser())
                   const userInfo =  fromFirebase();
                   setUser(userInfo)
-                  loadingUserInfo().then((doc)=>{
-                   if(doc.popup == true){
-                     history.push("/popup");
-                     doc.popup = false;
-                     addOrUpdateUserInfo(doc)
-                   }else{
-                    history.push("/");
-                   }
-                  });
+                  if(user.emailVerified == true){
+                    console.log(user.emailVerified)
+                    loadingUserInfo().then((doc)=>{
+                      if(doc.popup == true){
+                        history.push("/popup");
+                        doc.popup = false;
+                        addOrUpdateUserInfo(doc)
+                      }else{
+                       history.push("/");
+                      }
+                     });
+                  }else{
+                    console.log("chua check mail")
+                  }
+                  
               
                 })
                 .catch((error) => {
@@ -189,7 +197,7 @@ function Login() {
             />
           )}
        </div>
-      <Alink to="/sigup">
+      <Alink to="/signup">
         <Typography  variant="h6" gutterBottom className={classes.singUp}>SigUp</Typography>
       </Alink>
       </div>
