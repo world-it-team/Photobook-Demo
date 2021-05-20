@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: theme.spacing(8),
     },
     cardInfo: {
-        height: "220px",
+        height: "280px",
         margin: "20px",
         border: "solid 1px",
         borderRadius: "10px",
@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
     },
     cardImage: {
         width: " 100%",
-        height: " 220px",
+        height: " 210px",
         margin: "auto",
-        borderRadius: "10px",
+        borderRadius: "10px 10px 0 0",
         objectFit: "cover"
     },
     description: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         left: "50%",
         transform: "translateX(-50%)",
-        bottom: "60px",
+        bottom: "45px",
         fontSize: "16px",
         fontWeight: 700,
         color: "#323312"
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         left: "50%",
         transform: "translateX(-50%)",
-        bottom: "20px",
+        bottom: "10px",
         height: "30px",
         backgroundColor: "#cf7b3c"
     },
@@ -85,7 +85,7 @@ export default function Choose(props) {
                     {props.data.photobook.slice(First, Last).map((cardInfo, index) => {
                         return <div className={classes.cardInfo}>
                             <Image className={classes.cardImage} {...cardInfo.img} />
-                            <Typography variant="h5" className={classes.description}>{cardInfo.description}{cardInfo.price}</Typography>
+                            <Typography variant="h5" className={classes.description}>{cardInfo.description + "  " + cardInfo.price}</Typography>
                             <Button variant="contained" color="primary" className={classes.buttonCard}> すぐ作成 </Button>
                         </div>
                     })}
