@@ -39,11 +39,13 @@ const useStyles = makeStyles((theme) => ({
 
   },
   image:{
+    width:"100%",
       "& >img":{
         width: "100%",
         height:"300px",
         border: "1px ",
         borderRadius: "10px",
+        objectFit: "cover",
       }
   },
   icon:{
@@ -79,14 +81,19 @@ const useStyles = makeStyles((theme) => ({
   },
   actionBuyNow:{
     backgroundColor:"#ff834f",
+  },
+  test:{
+    "&>MuiDialog-container>MuiDialog-paper":{
+      width:"100%"
   }
-
+  },
 }));
 
 function PaperComponent(props) {
+  const classes = useStyles();
   return (
-    <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-      <Paper {...props} />
+    <Draggable   handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+      <Paper   className= {classes.test} {...props} />
     </Draggable>
   );
 }
@@ -150,9 +157,16 @@ const handleBack = () => {
             open={popup}
             onClose={handleClose}
             PaperComponent={PaperComponent}
-            aria-labelledby="draggable-dialog-title"
+            aria-labelledby="draggable-dialog-title"  
+            className= {classes.test} 
+            {...PaperComponent}
+            PaperProps={{
+              style: {
+                width:"100%"
+              },
+            }}
           >
-            <DialogContent>
+            <DialogContent className= {classes.dialogContent}>
               {data.map((itemList,index)=>{
                 return value === index ?(
                       <div className= {classes.image} >
@@ -177,8 +191,6 @@ const handleBack = () => {
                             }
                         />
                       </div>
-                     
-               
                 ):null
               })}
             </DialogContent>
@@ -195,7 +207,7 @@ const handleBack = () => {
             <div className={classes.button}>
                 <Button variant="contained" color="primary" onClick={ShowMoreItems}> もっと見る </Button>
             </div>
-        ) : null}
+          ) : null}
     </section>
   );
 }
