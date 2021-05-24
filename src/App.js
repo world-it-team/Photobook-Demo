@@ -30,7 +30,7 @@ function App() {
           <Route exact path="/redirectPage">
             <RedirectPage/>
           </Route>
-          <Route exact path="/sigup">
+          <Route exact path="/signup">
             <SigUp/>
           </Route>
           <Route exact path="/popup">
