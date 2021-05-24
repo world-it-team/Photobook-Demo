@@ -3,10 +3,9 @@ import HomeContent from "./components/home/HomeContent"
 import ImageContent from "./components/imagePage/ImageContent"
 import Login from "./components/login/Login"
 import Popup from "./components/login/sections/Popup"
-import SigUp from "./components/login/SigUp"
+import SignUp from "./components/login/SignUp"
 import RedirectPage from "./components/login/RedirectPage"
 import PopUp from "./components/login/sections/Popup"
-import Newphotos from "./components/imagePage/sections/NewPhotos"
 import {
   BrowserRouter as Router,
   Route,
@@ -16,7 +15,6 @@ import {
 
 
 import { appData } from "./react/data.service";
-import NewPhotos from "./components/imagePage/sections/NewPhotos"
 
 
 function App() {
@@ -33,13 +31,10 @@ function App() {
             <RedirectPage/>
           </Route>
           <Route exact path="/signup">
-            <SigUp/>
+            <SignUp/>
           </Route>
           <Route exact path="/popup">
             <PopUp/>
-          </Route>
-          <Route exact path="/newphotos">
-            <NewPhotos/>
           </Route>
           <Route exact path="/">
             <HomeContent data={appData.chooseData} />

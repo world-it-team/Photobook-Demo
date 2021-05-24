@@ -1,4 +1,24 @@
 {
+    "Newphotos":{
+        "tags" : ["PhotoBook","Event","Football"],
+        "img":[
+            {
+                "alt":"",
+                "src":"../../images/imagePage/pog3.png"
+            },
+            {
+                "alt":"",
+                "src":"../../images/imagePage/fnd.png"
+                },
+            {
+                "alt":"",
+                "src":"../../images/imagePage/mbb.png"
+            }   
+        ],
+        "title":["フォトブック　キャンペーン開始！","スマホカメラ横撮りのすすめ","写真プリント　キャンペーン開始"],
+        "subtitle":["2021.05.18 13:00","2021.05.12 00:15","2021.05.10 22:35"]
+
+    },
     "ChooseImage": [
         {
             "category": "blackpink",

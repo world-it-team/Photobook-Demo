@@ -185,7 +185,7 @@ function Login() {
                     {(<div className={classes.errors}>{errorPassword} </div>)}
                 </div>
                 <Button variant="contained" color="primary" type="submit" className={classes.button}>
-                        SingIn
+                        SignIn
                 </Button>
             </form>
         </div>
@@ -198,7 +198,7 @@ function Login() {
           )}
        </div>
       <Alink to="/signup">
-        <Typography  variant="h6" gutterBottom className={classes.singUp}>SigUp</Typography>
+        <Typography  variant="h6" gutterBottom className={classes.singUp}>SignUp</Typography>
       </Alink>
       </div>
       )

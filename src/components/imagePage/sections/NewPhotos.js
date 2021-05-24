@@ -1,91 +1,100 @@
-import React from 'react';
+import React,{useState} from "react";
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions';
-import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Button from '@material-ui/core/Button';
-import Football from '../../../images/imagePage/Cr7.png';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import Image from "../../common/Image";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     margin:"auto",
+    marginTop:"5%",
+    marginBottom:"5%",
     maxWidth: 345,
   },
   button:{
     position:"absolute",
     zIndex:"1",
     margin:"5%",
-    marginTop:"30px",
+    marginTop:"4%",
     backgroundColor:"#ffffff",
   },
   like:{
     display: "inline-flex",
-  },
-  icon:{
     position:"absolute",
     zIndex:"1",
-    marginTop:"100px",
-    marginLeft:"260px"
+    color:"white",
+    marginTop:"5%",
+    marginLeft:"78%"
   },
-  text:{
-    padding:"3px",
-  },
-  media: {
+  img: {
     position:"relative",
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+    width:"100%"
+  },
+  prev:{
+    position:"absolute",
+    fontSize:"xxx-large",
+    color: "silver",
+    top:"37%",
+    left:"10px"
+  },
+  next:{
+    position:"absolute",
+    fontSize:"xxx-large",
+    color: "silver",
+    top:"37%",
+    right:"10px",
+  },
+  sub:{
+    margin:"4%"
+  },
+  title:{
+    fontSize:"1.2rem",
+    textTransform: "capitalize",
+  },
+  datetime:{
+    fontSize:"0.7rem",
   },
 }));
 
-export default function NewPhotos() {
+export default function NewPhotos({data}) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-  const data = {
-    tags : ["PhotoBook","Event","Football"],
-    img:["/src/images/imagePage/Cr7.png","/src/images/imagePage/fnd.png","/src/images/imagePage/mbb.png",],
-    title:["フォトブック　キャンペーン開始！","スマホカメラ横撮りのすすめ","写真プリント　キャンペーン開始",],
-    subtitle:["2021.05.18 13:00","2021.05.12 00:15","2021.05.10 22:35",]
+  const [activeImg, setActiveImg] = useState(0);
+  const [activeTags, setActiveTags] = useState(0);
+  const [activeTitle, setActiveTitle] = useState(0);
+  const [activeSubtitle, setActiveSubtitle] = useState(0);
+  function handleBack(img,tags,title,subtitle){
+    setActiveImg((prevActiveStep) => (prevActiveStep +img - 1) % img);
+    setActiveTags((prevActiveStep) => (prevActiveStep +tags - 1) % tags);
+    setActiveTitle((prevActiveStep) => (prevActiveStep +title - 1) % title);
+    setActiveSubtitle((prevActiveStep) => (prevActiveStep +subtitle - 1) % subtitle); 
   }
-
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
+  function handleNext(img,tags,title,subtitle){
+    setActiveImg((prevActiveStep) => (prevActiveStep + 1) % img);
+    setActiveTags((prevActiveStep) => (prevActiveStep + 1) % tags);
+    setActiveTitle((prevActiveStep) => (prevActiveStep + 1) % title);
+    setActiveSubtitle((prevActiveStep) => (prevActiveStep + 1) % subtitle); 
+  }
   return (
     <Card className={classes.root}>
-      <Button  className={classes.button} variant="contained" color="">
-        PhotoBook
+      <Button  className={classes.button} variant="contained">
+        {data.tags[activeTags]}
       </Button>
-      <CardActions className={classes.like}>
-        <IconButton className={classes.icon}>
-          <FavoriteIcon/>
-        </IconButton>
-      </CardActions>
-      <CardActions className={classes.pre}>
-        <IconButton>
-          <ArrowBackIosIcon/>
-        </IconButton>
-      </CardActions>
-      <CardActions className={classes.next}>
-        <IconButton>
-          <NavigateNextIcon/>
-        </IconButton>
-      </CardActions>
-      <CardMedia
-        className={classes.media}
-        image={Football}
-        title="Photos Campus"
-      />
-        <CardHeader
-        title="フォトブック　キャンペーン開始！"
-        subheader="2021.05.06 09:45"
-      />
+      <FavoriteIcon className={classes.like}/>
+      <Image {...data.img[activeImg]} className={classes.img}/>
+      <NavigateBeforeIcon className={classes.prev}  onClick={()=>handleBack(data.img.length,data.tags.length,data.title.length,data.subtitle.length)}/>
+      <NavigateNextIcon className={classes.next}  onClick={()=>handleNext(data.img.length,data.tags.length,data.title.length,data.subtitle.length)}/>
+      <div className={classes.sub}>
+        <Container className={classes.title}>
+          {data.title[activeTitle]}
+        </Container>
+        <Container className={classes.datetime}>
+          {data.subtitle[activeSubtitle]}
+        </Container>
+      </div>
     </Card>
   );
 }

@@ -4,7 +4,6 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
-import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import StarsIcon from '@material-ui/icons/Stars';
@@ -12,7 +11,6 @@ import AcUnitIcon from '@material-ui/icons/AcUnit';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import Button from '@material-ui/core/Button';
-import { Autocomplete } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   root: {
