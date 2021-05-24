@@ -42,12 +42,13 @@ const useStyles = makeStyles((theme) => ({
     left:"5px",
   },
   image:{
-    "& >img":{
-      width: "100%",
-      height:"150px",
-      border: "1px ",
-      borderRadius: "10px",
-    }
+    width:"100%",
+      "& >img":{
+        width: "100%",
+        height:"150px",
+        border: "1px ",
+        objectFit: "cover",
+      }
   },
   icon:{
     color:"white",
@@ -63,14 +64,14 @@ const useStyles = makeStyles((theme) => ({
   number:{
     position: "absolute",
     margin: "0 auto",
-    top: "20px",
-    left: "20px",
+    top: "23px",
+    left: "16px",
+    fontSize:"12px"
   },
   start:{
-    width: "50px",
+    width: "40px",
     position: "absolute",
     fontSize: "60px",
-    border: "1px"
   },
   likeCount:{
     position:"absolute",
