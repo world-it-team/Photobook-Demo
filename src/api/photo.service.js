@@ -14,10 +14,10 @@ export function uploadImgData(imageName, url) {
 }
 
 export function getImgData() {
-    const imgData = getCollectionByName(uid);
-    var data = [];
+    const data = [];
     return (
-        imgData.get().then((querySnapshot) => {
+        getCollectionByName("image").get().then((querySnapshot) => {
+            
             querySnapshot.forEach((doc) => {
                 data.push({
                     ...doc.data(),

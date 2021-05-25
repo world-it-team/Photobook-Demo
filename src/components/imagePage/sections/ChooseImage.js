@@ -10,8 +10,9 @@ import Grid from "@material-ui/core/Grid";
 
 import { getStorage, getCollectionByName } from "../../../utils/firebase";
 import { getUser, isLoggedIn } from "../../../utils/Auth";
+import { getImgData } from "../../../api/photo.service";
 
-const storage = getStorage();
+// const storage = getStorage();
 
 const uid = getUser().uid;
 
@@ -82,16 +83,36 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
     maxHeight: 40,
   },
+  choosedImageContainer: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 50,
+  },
+  choosedImageWrapper: {
+    position: "relative",
+    width: 50,
+    height: 50,
+  },
+  choosedImage: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
 }));
 
 const category = ["All", "BlackPink", "Rose", "Lisa", "Jisoo", "Jennie"];
 
-function removeAccents(str) {
+const removeAccents = (str) => {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
+};
 
 export default function ChooseImage(props) {
   const classes = useStyles();
+
   const filterImage = (data, query) => {
     if (!query) {
       return data;
@@ -107,8 +128,19 @@ export default function ChooseImage(props) {
 
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState({ src: "", alt: "" });
-
+  const [choosedImageKey, setChoosedImageKey] = useState("");
   const [loader, setLoader] = useState(false);
+
+  const choosedImage = [];
+  props.data
+    .map((item) => item.img)
+    .filter((current) => {
+      for (let key in choosedImageKey) {
+        if (choosedImageKey[key] === current.alt) {
+          choosedImage.push(current);
+        }
+      }
+    });
 
   const handleOpen = (e) => {
     setOpen(true);
@@ -125,12 +157,23 @@ export default function ChooseImage(props) {
           id: uid,
           key: image.alt,
         });
-      }
-    }
+      };
+    };
+    getImgData().then((data) => {
+      const result = data
+        .filter((result) => result.id === uid)
+        .map((result) => result.key);
+      console.log(result);
+      setChoosedImageKey(result);
+    });
+   
+    
     setOpen(false);
   };
 
-  React.useEffect(() => {}, []);
+  React.useEffect(() => {
+  
+  }, []);
 
   return (
     <section>
@@ -209,7 +252,13 @@ export default function ChooseImage(props) {
         </Modal>
 
         {/*Choosed Image Container*/}
-        <div></div>
+        <div className={classes.choosedImageContainer}>
+          {choosedImage.map((tile) => (
+            <div className={classes.choosedImageWrapper}>
+              <Image {...tile} className={classes.choosedImage} />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
