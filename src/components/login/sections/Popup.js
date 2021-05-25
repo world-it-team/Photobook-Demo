@@ -1,10 +1,9 @@
 import React from "react";
+import Alink from "../../common/Alink";
 import { makeStyles } from "@material-ui/core/styles";
+import Container from '@material-ui/core/Container';
 import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
 import CardActions from "@material-ui/core/CardActions";
-import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import StarsIcon from '@material-ui/icons/Stars';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
@@ -15,7 +14,6 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
-    
   },
   title:{
     margin:"5%",
@@ -32,12 +30,11 @@ const useStyles = makeStyles((theme) => ({
     padding:0,
   },
   text:{
-    fontSize:"12px",
-    margin:0,
-    padding:0,
+    fontSize:"24px",
+    margin:"auto",
   },
   button:{
-
+    margin:"5%"
   }
 }));
 
@@ -49,64 +46,66 @@ export default function PopUp() {
       <div className={classes.title}>
         お気に入りのアイテムを選択してください
       </div>
-      <Card className={classes.card}>
-        <CardActions className={classes.icon}>
-          <StarsIcon aria-label="add to favorites">
-            <FavoriteIcon />
-          </StarsIcon>
-        </CardActions>
-        <CardHeader className={classes.text}
-          action={<IconButton aria-label="settings"></IconButton>}
-          title="公式グッズ"
-        />
-      </Card>
-      <Card className={classes.card}>
-        <CardActions className={classes.icon}>
-          <AcUnitIcon aria-label="add to favorites">
-            <FavoriteIcon />
-          </AcUnitIcon>
-        </CardActions>
-        <CardHeader className={classes.text}
-          action={<IconButton aria-label="settings"></IconButton>}
-          title="マッス 大会公式グッズ"
-        />
-      </Card>
-      <Card className={classes.card}>
-        <CardActions className={classes.icon}>
-          <ImportContactsIcon aria-label="add to favorites">
-            <FavoriteIcon />
-          </ImportContactsIcon>
-        </CardActions>
-        <CardHeader className={classes.text}
-          action={<IconButton aria-label="settings"></IconButton>}
-          title="フォトブック"
-        />
-      </Card>
-      <Card className={classes.card}>
-        <CardActions className={classes.icon}>
-          <EventAvailableIcon aria-label="add to favorites">
-            <FavoriteIcon />
-          </EventAvailableIcon>
-        </CardActions>
-        <CardHeader className={classes.text}
-          action={<IconButton aria-label="settings"></IconButton>}
-          title="イベント"
-        />
-      </Card>
-      <Card className={classes.card}>
-        <CardActions className={classes.icon}>
-          <AttachmentIcon aria-label="add to favorites">
-            <FavoriteIcon />
-          </AttachmentIcon>
-        </CardActions>
-        <CardHeader className={classes.text}
-          action={<IconButton aria-label="settings"></IconButton>}
-          title="付属品"
-        />
-      </Card>
-      <Button  className={classes.button} variant="contained" color="black">
-        スキップ
-      </Button>
+      <Alink to="/">
+        <Card className={classes.card}>
+          <CardActions className={classes.icon}>
+            <StarsIcon/>
+          </CardActions>
+          <Container className={classes.text}>
+            公式グッズ
+          </Container>
+        </Card>
+      </Alink>
+      
+      <Alink to="/">
+        <Card className={classes.card}>
+          <CardActions className={classes.icon}>
+            <AcUnitIcon />
+          </CardActions>
+          <Container className={classes.text}>
+            マッス 大会公式グッズ
+          </Container>
+        </Card>
+      </Alink>
+      
+      <Alink to="/">
+        <Card className={classes.card}>
+          <CardActions className={classes.icon}>
+            <ImportContactsIcon />
+          </CardActions>
+          <Container className={classes.text}>
+            フォトブック
+          </Container>
+        </Card>
+      </Alink>
+      
+      <Alink to="/">
+        <Card className={classes.card}>
+          <CardActions className={classes.icon}>
+            <EventAvailableIcon />
+          </CardActions>
+          <Container className={classes.text}>
+            イベント
+          </Container>
+        </Card>
+      </Alink>
+     
+      <Alink to="/">
+        <Card className={classes.card}>
+          <CardActions className={classes.icon}>
+            <AttachmentIcon />
+          </CardActions>
+          <Container className={classes.text}>
+            付属品
+          </Container>
+        </Card>
+      </Alink>
+      
+      <Alink to="/">
+        <Button  className={classes.button} variant="contained" color="black">
+          スキップ
+        </Button>
+      </Alink>
     </div>
   );
 }
