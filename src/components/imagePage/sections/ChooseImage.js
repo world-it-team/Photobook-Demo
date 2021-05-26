@@ -8,9 +8,8 @@ import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import checkBox from "../../../images/imagePage/checkbox.png";
-import { getStorage, getCollectionByName } from "../../../utils/firebase";
 import { getUser, isLoggedIn } from "../../../utils/Auth";
-import { getImgData } from "../../../api/photo.service";
+import { getChoosedImage, saveChoosedImage } from "../../../api/photo.service";
 
 // const storage = getStorage();
 
@@ -129,25 +128,16 @@ export default function ChooseImage(props) {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState({ src: "", alt: "", id: null });
   const [choosedImageKey, setChoosedImageKey] = useState("");
-  const [loader, setLoader] = useState(false);
-  // console.log(image)
-  const choosedImage = [];
-  props.data
+
+  const choosedImage = props.data
     .map((item) => item.img)
-    .filter((current) => {
-      for (let key in choosedImageKey) {
-        if (choosedImageKey[key] === current.alt) {
-          choosedImage.push(current);
-        }
-      }
-    });
+    .filter((item) => choosedImageKey.includes(item.alt));
 
-  const addCheckbox = () => {
-    const elm = document.getElementById(image.id);
-
-    elm.setAttribute("src", checkBox);
-    // elm.removeEventListener("click",fc);
-  };
+  // const addCheckbox = () => {
+  //   const elm = document.getElementById(image.id);
+  //   elm.setAttribute("src", checkBox);
+  //   // elm.removeEventListener("click",fc);
+  // };
 
   const handleOpen = (e) => {
     setOpen(true);
@@ -158,29 +148,16 @@ export default function ChooseImage(props) {
   };
 
   const chooseImage = () => {
-    if (isLoggedIn()) {
-      if (image) {
-        getCollectionByName("image").doc().set({
-          uid: uid,
-          key: image.alt,
-          id: image.id
-        });
-      }
+    if (isLoggedIn() && image) {
+      saveChoosedImage(image);
     }
-
-    getImgData().then((data) => {
-      const result = data
-        .filter((result) => result.uid === uid)
-        .map((result) => result.key)
-        .sort();
-      console.log(result);
+    getChoosedImage().then((data) => {
+      const result = data.map((result) => result.key);
       setChoosedImageKey(result);
     });
     // addCheckbox();
     setOpen(false);
   };
-
-  React.useEffect(() => {}, []);
 
   return (
     <section>
