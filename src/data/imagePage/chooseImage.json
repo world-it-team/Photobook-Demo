@@ -1,283 +1,371 @@
 {
-    "Newphotos":{
-        "tags" : ["PhotoBook","Event","Football"],
-        "img":[
-            {
-                "alt":"",
-                "src":"../../images/imagePage/pog3.png"
-            },
-            {
-                "alt":"",
-                "src":"../../images/imagePage/fnd.png"
-                },
-            {
-                "alt":"",
-                "src":"../../images/imagePage/mbb.png"
-            }   
-        ],
-        "title":["フォトブック　キャンペーン開始！","スマホカメラ横撮りのすすめ","写真プリント　キャンペーン開始"],
-        "subtitle":["2021.05.18 13:00","2021.05.12 00:15","2021.05.10 22:35"]
-
-    },
-    "ChooseImage": [
-        {
-            "category": "blackpink",
-            "img": {
-                "alt": "blackpink1",
-                "src": "../../images/imagePage/blackpink1.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "blackpink",
-            "img": {
-                "alt": "blackpink2",
-                "src": "../../images/imagePage/blackpink2.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "blackpink",
-            "img": {
-                "alt": "blackpink3",
-                "src": "../../images/imagePage/blackpink3.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "jisoo",
-            "img": {
-                "alt": "jisoo1",
-                "src": "../../images/imagePage/jisoo1.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "jisoo",
-            "img": {
-                "alt": "jisoo2",
-                "src": "../../images/imagePage/jisoo2.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "jisoo",
-            "img": {
-                "alt": "jisoo3",
-                "src": "../../images/imagePage/jisoo3.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "jisoo",
-            "img": {
-                "alt": "jisoo4",
-                "src": "../../images/imagePage/jisoo4.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "jisoo",
-            "img": {
-                "alt": "jisoo5",
-                "src": "../../images/imagePage/jisoo5.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "jisoo",
-            "img": {
-                "alt": "jisoo6",
-                "src": "../../images/imagePage/jisoo6.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "rose",
-            "img": {
-                "alt": "rose1",
-                "src": "../../images/imagePage/rose1.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "rose",
-            "img": {
-                "alt": "rose2",
-                "src": "../../images/imagePage/rose2.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "rose",
-            "img": {
-                "alt": "rose3",
-                "src": "../../images/imagePage/rose3.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "rose",
-            "img": {
-                "alt": "rose4",
-                "src": "../../images/imagePage/rose4.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "lisa",
-            "img": {
-                "alt": "lisa1",
-                "src": "../../images/imagePage/lisa1.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "lisa",
-            "img": {
-                "alt": "lisa2",
-                "src": "../../images/imagePage/lisa2.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "lisa",
-            "img": {
-                "alt": "lisa3",
-                "src": "../../images/imagePage/lisa3.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "lisa",
-            "img": {
-                "alt": "lisa4",
-                "src": "../../images/imagePage/lisa4.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "jennie",
-            "img": {
-                "alt": "jennie1",
-                "src": "../../images/imagePage/jennie1.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "jennie",
-            "img": {
-                "alt": "jennie2",
-                "src": "../../images/imagePage/jennie2.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "jennie",
-            "img": {
-                "alt": "jennie3",
-                "src": "../../images/imagePage/jennie3.png"
-            },
-            "title": "",
-            "time": ""
-        },
-        {
-            "category": "jennie",
-            "img": {
-                "alt": "jennie4",
-                "src": "../../images/imagePage/jennie4.png"
-            },
-            "title": "",
-            "time": ""
-        }
+  "Newphotos": {
+    "tags": ["PhotoBook", "Event", "Football"],
+    "img": [
+      {
+        "alt": "",
+        "src": "../../images/imagePage/pog3.png"
+      },
+      {
+        "alt": "",
+        "src": "../../images/imagePage/fnd.png"
+      },
+      {
+        "alt": "",
+        "src": "../../images/imagePage/mbb.png"
+      }
     ],
-    "WorksOfOthers": [
-        {
-            "tagName": "photobook",
-            "img": [
-                {
-                    "src": "../../images/imagePage/jennie1.png",
-                    "alt": "jennie1"
-                },
-                {
-                    "src": "../../images/imagePage/jennie2.png",
-                    "alt": "blackpink2"
-                },
-                {
-                    "src": "../../images/imagePage/jennie3.png",
-                    "alt": "jennie3"
-                }
-            ]
-        },
-        {
-            "tagName": "wedding",
-            "img": [
-                {
-                    "src": "../../images/imagePage/blackpink1.png",
-                    "alt": "blackpink1"
-                },
-                {
-                    "src": "../../images/imagePage/blackpink2.png",
-                    "alt": "blackpink2"
-                },
-                {
-                    "src": "../../images/imagePage/blackpink3.png",
-                    "alt": "blackpink3"
-                }
-            ]
-        },
-        {
-            "tagName": "Event",
-            "img": [
-                {
-                    "src": "../../images/imagePage/jisoo1.png",
-                    "alt": "jisoo1"
-                },
-                {
-                    "src": "../../images/imagePage/jisoo2.png",
-                    "alt": "jisoo2"
-                },
-                {
-                    "src": "../../images/imagePage/jisoo3.png",
-                    "alt": "jisoo3"
-                }
-            ]
-        },
-        {
-            "tagName": "Albmu",
-            "img": [
-                {
-                    "src": "../../images/imagePage/lisa1.png",
-                    "alt": "jisoo1"
-                },
-                {
-                    "src": ".../../images/imagePage/lisa2.png",
-                    "alt": "jisoo2"
-                },
-                {
-                    "src": "../../images/imagePage/lisa3.png",
-                    "alt": "jisoo3"
-                }
-            ]
+    "title": [
+      "フォトブック　キャンペーン開始！",
+      "スマホカメラ横撮りのすすめ",
+      "写真プリント　キャンペーン開始"
+    ],
+    "subtitle": ["2021.05.18 13:00", "2021.05.12 00:15", "2021.05.10 22:35"]
+  },
+  "Ranking": [
+    {
+      "category": "blackpink",
+      "img": {
+        "alt": "blackpink1",
+        "src": "../../images/imagePage/blackpink1.png"
+      }
+    },
+    {
+      "category": "blackpink",
+      "img": {
+        "alt": "blackpink3",
+        "src": "../../images/imagePage/blackpink3.png"
+      }
+    },
+    {
+      "category": "jisoo",
+      "img": {
+        "alt": "jisoo1",
+        "src": "../../images/imagePage/jisoo1.png"
+      }
+    },
+    {
+      "category": "jisoo",
+      "img": {
+        "alt": "jisoo2",
+        "src": "../../images/imagePage/jisoo2.png"
+      }
+    },
+    {
+      "category": "jisoo",
+      "img": {
+        "alt": "jisoo3",
+        "src": "../../images/imagePage/jisoo3.png"
+      }
+    },
+    {
+      "category": "jisoo",
+      "img": {
+        "alt": "jisoo4",
+        "src": "../../images/imagePage/jisoo4.png"
+      }
+    },
+    {
+      "category": "jisoo",
+      "img": {
+        "alt": "jisoo5",
+        "src": "../../images/imagePage/jisoo5.png"
+      }
+    },
+    {
+      "category": "rose",
+      "img": {
+        "alt": "rose1",
+        "src": "../../images/imagePage/rose1.png"
+      }
+    },
+    {
+      "category": "rose",
+      "img": {
+        "alt": "rose2",
+        "src": "../../images/imagePage/rose2.png"
+      }
+    },
+    {
+        "category": "rose",
+        "img": {
+          "alt": "rose3",
+          "src": "../../images/imagePage/rose3.png"
         }
-    ]
+      }
+  ],
+  "ChooseImage": [
+    {
+      "category": "blackpink",
+      "img": {
+        "alt": "blackpink1",
+        "src": "../../images/imagePage/blackpink1.png",
+        "id": 1
+      }
+    },
+    {
+      "category": "blackpink",
+      "img": {
+        "alt": "blackpink2",
+        "src": "../../images/imagePage/blackpink2.png",
+        "id": 2
+      }
+    },
+    {
+      "category": "blackpink",
+      "img": {
+        "alt": "blackpink3",
+        "src": "../../images/imagePage/blackpink3.png",
+        "id": 3
+      }
+    },
+    {
+      "category": "jisoo",
+      "img": {
+        "alt": "jisoo1",
+        "src": "../../images/imagePage/jisoo1.png",
+        "id": 4
+      }
+    },
+    {
+      "category": "jisoo",
+      "img": {
+        "alt": "jisoo2",
+        "src": "../../images/imagePage/jisoo2.png",
+        "id": 5
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "jisoo",
+      "img": {
+        "alt": "jisoo3",
+        "src": "../../images/imagePage/jisoo3.png",
+        "id": 6
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "jisoo",
+      "img": {
+        "alt": "jisoo4",
+        "src": "../../images/imagePage/jisoo4.png",
+        "id": 7
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "jisoo",
+      "img": {
+        "alt": "jisoo5",
+        "src": "../../images/imagePage/jisoo5.png",
+        "id": 8
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "jisoo",
+      "img": {
+        "alt": "jisoo6",
+        "src": "../../images/imagePage/jisoo6.png",
+        "id": 9
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "rose",
+      "img": {
+        "alt": "rose1",
+        "src": "../../images/imagePage/rose1.png",
+        "id": 10
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "rose",
+      "img": {
+        "alt": "rose2",
+        "src": "../../images/imagePage/rose2.png",
+        "id": 11
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "rose",
+      "img": {
+        "alt": "rose3",
+        "src": "../../images/imagePage/rose3.png",
+        "id": 12
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "rose",
+      "img": {
+        "alt": "rose4",
+        "src": "../../images/imagePage/rose4.png",
+        "id": 13
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "lisa",
+      "img": {
+        "alt": "lisa1",
+        "src": "../../images/imagePage/lisa1.png",
+        "id": 14
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "lisa",
+      "img": {
+        "alt": "lisa2",
+        "src": "../../images/imagePage/lisa2.png",
+        "id": 15
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "lisa",
+      "img": {
+        "alt": "lisa3",
+        "src": "../../images/imagePage/lisa3.png",
+        "id": 16
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "lisa",
+      "img": {
+        "alt": "lisa4",
+        "src": "../../images/imagePage/lisa4.png",
+        "id": 17
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "jennie",
+      "img": {
+        "alt": "jennie1",
+        "src": "../../images/imagePage/jennie1.png",
+        "id": 18
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "jennie",
+      "img": {
+        "alt": "jennie2",
+        "src": "../../images/imagePage/jennie2.png",
+        "id": 19
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "jennie",
+      "img": {
+        "alt": "jennie3",
+        "src": "../../images/imagePage/jennie3.png",
+        "id": 20
+      },
+      "title": "",
+      "time": ""
+    },
+    {
+      "category": "jennie",
+      "img": {
+        "alt": "jennie4",
+        "src": "../../images/imagePage/jennie4.png",
+        "id": 21
+      },
+      "title": "",
+      "time": ""
+    }
+  ],
+  "WorksOfOthers": [
+    {
+      "tagName": "photobook",
+      "img": [
+        {
+          "src": "../../images/imagePage/jennie1.png",
+          "alt": "jennie1"
+        },
+        {
+          "src": "../../images/imagePage/jennie2.png",
+          "alt": "blackpink2"
+        },
+        {
+          "src": "../../images/imagePage/jennie3.png",
+          "alt": "jennie3"
+        }
+      ]
+    },
+    {
+      "tagName": "wedding",
+      "img": [
+        {
+          "src": "../../images/imagePage/blackpink1.png",
+          "alt": "blackpink1"
+        },
+        {
+          "src": "../../images/imagePage/blackpink2.png",
+          "alt": "blackpink2"
+        },
+        {
+          "src": "../../images/imagePage/blackpink3.png",
+          "alt": "blackpink3"
+        }
+      ]
+    },
+    {
+      "tagName": "Event",
+      "img": [
+        {
+          "src": "../../images/imagePage/jisoo1.png",
+          "alt": "jisoo1"
+        },
+        {
+          "src": "../../images/imagePage/jisoo2.png",
+          "alt": "jisoo2"
+        },
+        {
+          "src": "../../images/imagePage/jisoo3.png",
+          "alt": "jisoo3"
+        }
+      ]
+    },
+    {
+      "tagName": "Albmu",
+      "img": [
+        {
+          "src": "../../images/imagePage/lisa1.png",
+          "alt": "jisoo1"
+        },
+        {
+          "src": ".../../images/imagePage/lisa2.png",
+          "alt": "jisoo2"
+        },
+        {
+          "src": "../../images/imagePage/lisa3.png",
+          "alt": "jisoo3"
+        }
+      ]
+    }
+  ]
 }

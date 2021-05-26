@@ -9,7 +9,7 @@ export default function ImageContent(props) {
   return (
     <Layout>
         <Newphotos data={props.data.Newphotos} />
-        <Ranking data={props.data.ChooseImage} />
+        <Ranking data={props.data.Ranking} />
         <WorksOfOthers data={props.data.WorksOfOthers}/>
         <ChooseImage data={props.data.ChooseImage}/>
     </Layout>

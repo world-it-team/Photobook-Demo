@@ -90,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Ranking(props) {
+
   const classes = useStyles();
   
   return (
@@ -98,7 +99,7 @@ export default function Ranking(props) {
       <div className= {classes.content}>
         {props.data.map((item, index) => {
             return index < 10 ?  (
-                   <div className= {classes.item}>
+                   <div className= {classes.item} key={index}>
                      <div className= {classes.rank}>
                         <div className= {classes.number}>{index+1}</div>
                         <StarBorderIcon className= {classes.start}/>

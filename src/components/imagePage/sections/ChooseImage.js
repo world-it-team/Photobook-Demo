@@ -7,7 +7,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-
+import checkBox from "../../../images/imagePage/checkbox.png";
 import { getStorage, getCollectionByName } from "../../../utils/firebase";
 import { getUser, isLoggedIn } from "../../../utils/Auth";
 import { getImgData } from "../../../api/photo.service";
@@ -127,10 +127,10 @@ export default function ChooseImage(props) {
   const filteredImage = filterImage(props.data, searchQuery.toLowerCase());
 
   const [open, setOpen] = useState(false);
-  const [image, setImage] = useState({ src: "", alt: "" });
+  const [image, setImage] = useState({ src: "", alt: "", id: null });
   const [choosedImageKey, setChoosedImageKey] = useState("");
   const [loader, setLoader] = useState(false);
-
+  // console.log(image)
   const choosedImage = [];
   props.data
     .map((item) => item.img)
@@ -142,9 +142,16 @@ export default function ChooseImage(props) {
       }
     });
 
+  const addCheckbox = () => {
+    const elm = document.getElementById(image.id);
+
+    elm.setAttribute("src", checkBox);
+    // elm.removeEventListener("click",fc);
+  };
+
   const handleOpen = (e) => {
     setOpen(true);
-    setImage({ src: e.target.src, alt: e.target.alt });
+    setImage({ src: e.target.src, alt: e.target.alt, id: e.target.id });
   };
   const handleClose = () => {
     setOpen(false);
@@ -153,27 +160,27 @@ export default function ChooseImage(props) {
   const chooseImage = () => {
     if (isLoggedIn()) {
       if (image) {
-        getCollectionByName("image").add({
-          id: uid,
+        getCollectionByName("image").doc().set({
+          uid: uid,
           key: image.alt,
+          id: image.id
         });
-      };
-    };
+      }
+    }
+
     getImgData().then((data) => {
       const result = data
-        .filter((result) => result.id === uid)
-        .map((result) => result.key);
+        .filter((result) => result.uid === uid)
+        .map((result) => result.key)
+        .sort();
       console.log(result);
       setChoosedImageKey(result);
     });
-   
-    
+    // addCheckbox();
     setOpen(false);
   };
 
-  React.useEffect(() => {
-  
-  }, []);
+  React.useEffect(() => {}, []);
 
   return (
     <section>
@@ -214,8 +221,8 @@ export default function ChooseImage(props) {
       {/*Image List*/}
       <div className={classes.imageContainer}>
         <GridList cellHeight={80} className={classes.gridList} cols={3}>
-          {filteredImage.map((tile) => (
-            <GridListTile key={tile} cols={1} onClick={(e) => handleOpen(e)}>
+          {filteredImage.map((tile, index) => (
+            <GridListTile key={index} cols={1} onClick={(e) => handleOpen(e)}>
               <Image {...tile.img} className={classes.image} />
             </GridListTile>
           ))}
@@ -253,9 +260,9 @@ export default function ChooseImage(props) {
 
         {/*Choosed Image Container*/}
         <div className={classes.choosedImageContainer}>
-          {choosedImage.map((tile) => (
+          {choosedImage.map((tile, index) => (
             <div className={classes.choosedImageWrapper}>
-              <Image {...tile} className={classes.choosedImage} />
+              <Image {...tile} className={classes.choosedImage} key={index} />
             </div>
           ))}
         </div>

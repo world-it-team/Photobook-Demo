@@ -137,7 +137,7 @@ const handleBack = () => {
         <div className= {classes.title}> 他人作品</div>
         {data.slice(First, Last).map((item,index) => {
             return(
-              <div className= {classes.root } onClick={()=>handleClickOpen(index,item.img.length)}>
+              <div className= {classes.root } onClick={()=>handleClickOpen(index,item.img.length)} key={index}>
                 <div className= {classes.rootTitle} >
                     {item.tagName}
                 </div>
@@ -169,7 +169,7 @@ const handleBack = () => {
             <DialogContent className= {classes.dialogContent}>
               {data.map((itemList,index)=>{
                 return value === index ?(
-                      <div className= {classes.image} >
+                      <div className= {classes.image} key={index} >
                          <Image {...itemList.img[activeStep]}/>
                          <MobileStepper
                             steps={itemList.img.length}
