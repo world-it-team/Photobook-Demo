@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 const firebase = getFirebase();
 
 
-function SingUp() {
+function SignUp() {
     const classes = useStyles();
     const [state, setState] = useState({
         displayName: "",
@@ -122,7 +122,7 @@ function SingUp() {
         <div  className={classes.form}>
             <form  onSubmit={formik.handleSubmit} >
                 <Typography variant="h2" className={classes.text}>
-                    SingUp
+                    SignUp
                 </Typography>
                 <div className={classes.row}>
                 <Typography  variant="h7" gutterBottom className={classes.label}>Name</Typography>
@@ -184,13 +184,13 @@ function SingUp() {
                     (<div className={classes.errors}>{formik.errors.confirmPassword}</div>)}
                 </div>
                 <Button variant="contained" color="primary" type="submit" className={classes.button}>
-                        SingUp
+                        SignUp
                 </Button>
             </form>
         </div>
-       <Typography  variant="h6" gutterBottom className={classes.singUp}>SingIn</Typography>
+       <Typography  variant="h6" gutterBottom className={classes.singUp}>SignIn</Typography>
       </div>
       )
     };
     
-    export default SingUp;
+    export default SignUp;
