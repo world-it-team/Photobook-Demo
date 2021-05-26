@@ -1,0 +1,20 @@
+{
+    "NewArticles": [
+        {
+            "src": "../../images/imagePage/jennie1.png",
+            "alt": "jennie1"
+        },
+        {
+            "src": "../../images/imagePage/blackpink1.png",
+            "alt": "blackpink1"
+        },
+        {
+            "src": "../../images/imagePage/jisoo1.png",
+            "alt": "jisoo1"
+        },
+        {
+            "src": "../../images/imagePage/lisa1.png",
+            "alt": "jisoo1"
+        }
+    ]
+}

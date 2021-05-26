@@ -1,6 +1,7 @@
 
 import HomeContent from "./components/home/HomeContent"
 import ImageContent from "./components/imagePage/ImageContent"
+import BlogContent from "./components/blog/BlogContent"
 import Login from "./components/login/Login"
 import Popup from "./components/login/sections/Popup"
 import SigUp from "./components/login/SigUp";
@@ -41,6 +42,9 @@ function App() {
          </Route>
          <Route exact path="/images">
             <ImageContent data={appData.chooseImage} />
+         </Route>
+         <Route exact path="/blog">
+            <BlogContent data={appData.blog} />
          </Route>
       </Switch>
     </Router>

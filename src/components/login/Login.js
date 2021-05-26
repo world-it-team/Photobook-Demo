@@ -60,7 +60,6 @@ function Login() {
     function getUiConfig() {
         return {
           signInFlow: "popup",
-          signInSuccessUrl: "/",
           signInOptions: [
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             firebase.auth.FacebookAuthProvider.PROVIDER_ID,
@@ -68,7 +67,6 @@ function Login() {
           callbacks: {
             signInSuccessWithAuthResult: () => {
               getUserLogin()
-              console.log(getUser())
               loadingUserInfo().then((doc)=>{
                 console.log(doc)
                 if(doc.popup === true){
@@ -100,7 +98,6 @@ function Login() {
         },
         validationSchema: validationSchema,
           onSubmit: (values) => {
-
             let { email, password } = values
             setState(prevState => ({
                 ...prevState,
