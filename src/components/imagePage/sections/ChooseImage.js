@@ -83,23 +83,32 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 40,
   },
   choosedImageContainer: {
+    width: "95%",
+    margin:"auto"
+  },
+  choosedImageBox: {
     display: "flex",
     flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 50,
+    flexWrap:"wrap",
+    minHeight:90,
+    maxWidth:327,
+    border: "1px solid lightblue",
+    gap:2
   },
   choosedImageWrapper: {
     position: "relative",
-    width: 50,
-    height: 50,
+    width: 45,
+    height: 45,
   },
   choosedImage: {
     position: "absolute",
     width: "100%",
     height: "100%",
     objectFit: "cover",
+    
+  },
+  nextStepBtn: {
+    marginTop: 10,
   },
 }));
 
@@ -173,7 +182,7 @@ export default function ChooseImage(props) {
       </div>
 
       {/*Tag*/}
-      <h3>Category</h3>
+      <h3 style={{ marginLeft:"2.5%"}}>Category</h3>
       <div className={classes.tagContainer}>
         {category.map((item, index) => (
           <li
@@ -194,7 +203,7 @@ export default function ChooseImage(props) {
           </li>
         ))}
       </div>
-
+      <p style={{ marginLeft:" 2.5%", marginBottom:10}}>Photo Choose!</p>
       {/*Image List*/}
       <div className={classes.imageContainer}>
         <GridList cellHeight={80} className={classes.gridList} cols={3}>
@@ -234,15 +243,25 @@ export default function ChooseImage(props) {
             </Grid>
           </div>
         </Modal>
+      </div>
 
-        {/*Choosed Image Container*/}
-        <div className={classes.choosedImageContainer}>
+      {/*Choosed Image Container*/}
+      <div className={classes.choosedImageContainer}>
+        <h3>選んだ写真</h3>
+        <div className={classes.choosedImageBox}>
           {choosedImage.map((tile, index) => (
             <div className={classes.choosedImageWrapper}>
               <Image {...tile} className={classes.choosedImage} key={index} />
             </div>
           ))}
         </div>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.nextStepBtn}
+        >
+          Photo Edit
+        </Button>
       </div>
     </section>
   );
