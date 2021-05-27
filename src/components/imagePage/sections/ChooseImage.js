@@ -84,16 +84,16 @@ const useStyles = makeStyles((theme) => ({
   },
   choosedImageContainer: {
     width: "95%",
-    margin:"auto"
+    margin: "auto",
   },
   choosedImageBox: {
     display: "flex",
     flexDirection: "row",
-    flexWrap:"wrap",
-    minHeight:90,
-    maxWidth:327,
+    flexWrap: "wrap",
+    minHeight: 90,
+    maxWidth: 327,
     border: "1px solid lightblue",
-    gap:2
+    gap: 2,
   },
   choosedImageWrapper: {
     position: "relative",
@@ -105,7 +105,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
-    
   },
   nextStepBtn: {
     marginTop: 10,
@@ -138,10 +137,6 @@ export default function ChooseImage(props) {
   const [image, setImage] = useState({ src: "", alt: "", id: null });
   const [choosedImageKey, setChoosedImageKey] = useState("");
 
-  const choosedImage = props.data
-    .map((item) => item.img)
-    .filter((item) => choosedImageKey.includes(item.alt));
-
   // const addCheckbox = () => {
   //   const elm = document.getElementById(image.id);
   //   elm.setAttribute("src", checkBox);
@@ -157,16 +152,21 @@ export default function ChooseImage(props) {
   };
 
   const chooseImage = () => {
-    if (isLoggedIn() && image) {
+    if (isLoggedIn() && choosedImageKey.includes(image.alt) == false)
       saveChoosedImage(image);
-    }
+    setOpen(false);
+  };
+
+  const choosedImage = props.data
+    .map((item) => item.img)
+    .filter((item) => choosedImageKey.includes(item.alt));
+
+  React.useEffect(() => {
     getChoosedImage().then((data) => {
       const result = data.map((result) => result.key);
       setChoosedImageKey(result);
     });
-    // addCheckbox();
-    setOpen(false);
-  };
+  },[getChoosedImage()]);
 
   return (
     <section>
@@ -182,7 +182,7 @@ export default function ChooseImage(props) {
       </div>
 
       {/*Tag*/}
-      <h3 style={{ marginLeft:"2.5%"}}>Category</h3>
+      <h3 style={{ marginLeft: "2.5%" }}>Category</h3>
       <div className={classes.tagContainer}>
         {category.map((item, index) => (
           <li
@@ -203,7 +203,7 @@ export default function ChooseImage(props) {
           </li>
         ))}
       </div>
-      <p style={{ marginLeft:" 2.5%", marginBottom:10}}>Photo Choose!</p>
+      <p style={{ marginLeft: " 2.5%", marginBottom: 10 }}>Photo Choose!</p>
       {/*Image List*/}
       <div className={classes.imageContainer}>
         <GridList cellHeight={80} className={classes.gridList} cols={3}>
