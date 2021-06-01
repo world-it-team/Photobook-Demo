@@ -9,55 +9,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Image from "../../common/Image";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    margin:"auto",
-    marginTop:"5%",
-    marginBottom:"5%",
-    maxWidth: 345,
-  },
-  button:{
-    position:"absolute",
-    zIndex:"1",
-    margin:"5%",
-    marginTop:"4%",
-    backgroundColor:"#ffffff",
-  },
-  like:{
-    display: "inline-flex",
-    position:"absolute",
-    zIndex:"1",
-    color:"white",
-    marginTop:"5%",
-    marginLeft:"78%"
-  },
-  img: {
-    position:"relative",
-    width:"100%"
-  },
-  prev:{
-    position:"absolute",
-    fontSize:"xxx-large",
-    color: "silver",
-    top:"37%",
-    left:"10px"
-  },
-  next:{
-    position:"absolute",
-    fontSize:"xxx-large",
-    color: "silver",
-    top:"37%",
-    right:"10px",
-  },
-  sub:{
-    margin:"4%"
-  },
-  title:{
-    fontSize:"1.2rem",
-    textTransform: "capitalize",
-  },
-  datetime:{
-    fontSize:"0.7rem",
-  },
+ 
 }));
 
 export default function NewPhotos({data}) {

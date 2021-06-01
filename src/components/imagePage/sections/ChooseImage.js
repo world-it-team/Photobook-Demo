@@ -11,97 +11,12 @@ import checkBox from "../../../images/imagePage/checkbox.png";
 import { getStorage, getCollectionByName } from "../../../utils/firebase";
 import { getUser, isLoggedIn } from "../../../utils/Auth";
 import { getImgData } from "../../../api/photo.service";
-
-// const storage = getStorage();
+  
 
 const uid = getUser().uid;
 
 const useStyles = makeStyles((theme) => ({
-  searchInput: {
-    display: "flex",
-    color: "#EAEAEA",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingLeft: 15,
-  },
-  tagContainer: {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    "& > *": {
-      margin: theme.spacing(0.5),
-    },
-  },
-  tag: {
-    listStyle: "none",
-    border: "1px solid grey",
-    borderRadius: 4,
-    padding: "5px 10px",
-  },
-  imageContainer: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    overflow: "hidden",
-    backgroundColor: theme.palette.background.paper,
-  },
-  gridList: {
-    width: "95%",
-    maxHeight: "50vh",
-    position: "relative",
-  },
-  image: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    // objectPosition:"50% 50%"
-  },
-  modal: {
-    position: "relative",
-    maxWidth: "100%",
-    maxHeight: "90vh",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-  paper: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalImage: {
-    width: "95%",
-    height: "90%",
-    objectFit: "contain",
-  },
-  buttonWrap: {
-    width: "80%",
-    maxHeight: 40,
-  },
-  choosedImageContainer: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 50,
-  },
-  choosedImageWrapper: {
-    position: "relative",
-    width: 50,
-    height: 50,
-  },
-  choosedImage: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-  },
+
 }));
 
 const category = ["All", "BlackPink", "Rose", "Lisa", "Jisoo", "Jennie"];
