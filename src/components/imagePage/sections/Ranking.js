@@ -104,7 +104,7 @@ export default function Ranking(props) {
             return (
                    <div className= {classes.item} key={index}>
                      <div className= {classes.rank}>
-                        <div className= {classes.number}>{item.likeCount}</div>
+                        <div className= {classes.number}>{index+1}</div>
                         <StarBorderIcon className= {classes.start}/>
                      </div>
                      
@@ -118,7 +118,7 @@ export default function Ranking(props) {
                         <div>
                           <FavoriteIcon className= {classes.icon}/>
                           <div className= {classes.likeCount}>
-                              2
+                              {item.likeCount}
                           </div>
                         </div>
                       </div>
