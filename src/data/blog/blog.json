@@ -1,20 +1,47 @@
 {
-    "NewArticles": [
+    "NewArticles":[
         {
-            "src": "../../images/imagePage/jennie1.png",
-            "alt": "jennie1"
+            "img":{
+                "src":"../../images/blog/Cr7.png",
+                "alt":""
+            },
+            "subtitle":"フォトブック　キャンペーン開始！",
+            "datetime":"2021.05.06 09:45"
         },
         {
-            "src": "../../images/imagePage/blackpink1.png",
-            "alt": "blackpink1"
+            "img":{
+                "src":"../../images/blog/fnd.png",
+                "alt":""
+            },
+            "subtitle":"フォトブック　キャンペーン開始！",
+            "datetime":"2021.05.06 09:45"
         },
         {
-            "src": "../../images/imagePage/jisoo1.png",
-            "alt": "jisoo1"
+            "img":{
+                "src":"../../images/blog/jennie4.png",
+                "alt":""
+            },
+            "subtitle":"フォトブック　キャンペーン開始！",
+            "datetime":"2021.05.06 09:45"
         },
         {
-            "src": "../../images/imagePage/lisa1.png",
-            "alt": "jisoo1"
+            "img":{
+                "src":"../../images/blog/jisoo6.png",
+                "alt":""
+            },
+            "subtitle":"フォトブック　キャンペーン開始！",
+            "datetime":"2021.05.06 09:45"
+        },
+        {
+            "img":{
+                "src":"../../images/blog/lisa1.png",
+                "alt":""
+            },
+            "subtitle":"フォトブック　キャンペーン開始！",
+            "datetime":"2021.05.06 09:45"
         }
+
+      
     ]
+             
 }
