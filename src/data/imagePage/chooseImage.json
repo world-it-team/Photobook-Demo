@@ -25,6 +25,7 @@
   "Ranking": [
     {
       "category": "blackpink",
+      "likeCount": 6,
       "img": {
         "alt": "blackpink1",
         "src": "../../images/imagePage/blackpink1.png"
@@ -32,6 +33,7 @@
     },
     {
       "category": "blackpink",
+      "likeCount": 5,
       "img": {
         "alt": "blackpink3",
         "src": "../../images/imagePage/blackpink3.png"
@@ -39,6 +41,7 @@
     },
     {
       "category": "jisoo",
+      "likeCount": 7,
       "img": {
         "alt": "jisoo1",
         "src": "../../images/imagePage/jisoo1.png"
@@ -46,6 +49,7 @@
     },
     {
       "category": "jisoo",
+      "likeCount": 5,
       "img": {
         "alt": "jisoo2",
         "src": "../../images/imagePage/jisoo2.png"
@@ -53,6 +57,7 @@
     },
     {
       "category": "jisoo",
+      "likeCount": 3,
       "img": {
         "alt": "jisoo3",
         "src": "../../images/imagePage/jisoo3.png"
@@ -60,6 +65,7 @@
     },
     {
       "category": "jisoo",
+      "likeCount": 5,
       "img": {
         "alt": "jisoo4",
         "src": "../../images/imagePage/jisoo4.png"
@@ -67,6 +73,7 @@
     },
     {
       "category": "jisoo",
+      "likeCount": 4,
       "img": {
         "alt": "jisoo5",
         "src": "../../images/imagePage/jisoo5.png"
@@ -74,6 +81,7 @@
     },
     {
       "category": "rose",
+      "likeCount": 3,
       "img": {
         "alt": "rose1",
         "src": "../../images/imagePage/rose1.png"
@@ -81,6 +89,7 @@
     },
     {
       "category": "rose",
+      "likeCount": 6,
       "img": {
         "alt": "rose2",
         "src": "../../images/imagePage/rose2.png"
@@ -88,9 +97,42 @@
     },
     {
         "category": "rose",
+        "likeCount": 5,
         "img": {
           "alt": "rose3",
           "src": "../../images/imagePage/rose3.png"
+        }
+      },
+      {
+        "category": "rose",
+        "likeCount": 6,
+        "img": {
+          "alt": "rose2",
+          "src": "../../images/imagePage/rose2.png"
+        }
+      },
+      {
+        "category": "rose",
+        "likeCount": 1,
+        "img": {
+          "alt": "rose2",
+          "src": "../../images/imagePage/rose2.png"
+        }
+      },
+      {
+        "category": "rose",
+        "likeCount": 4,
+        "img": {
+          "alt": "rose2",
+          "src": "../../images/imagePage/rose2.png"
+        }
+      },
+      {
+        "category": "rose",
+        "likeCount": 3,
+        "img": {
+          "alt": "rose2",
+          "src": "../../images/imagePage/rose2.png"
         }
       }
   ],

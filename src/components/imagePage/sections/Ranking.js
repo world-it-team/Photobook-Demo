@@ -91,17 +91,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Ranking(props) {
 
+  props.data.sort(function (a, b) { return b.likeCount - a.likeCount })
+  let imgRank = props.data.slice(0, 10);
+
   const classes = useStyles();
   
   return (
     <section className= {classes.section}>
       <div className= {classes.title}> ランキング</div>
       <div className= {classes.content}>
-        {props.data.map((item, index) => {
-            return index < 10 ?  (
+        {imgRank.map((item, index) => {
+            return (
                    <div className= {classes.item} key={index}>
                      <div className= {classes.rank}>
-                        <div className= {classes.number}>{index+1}</div>
+                        <div className= {classes.number}>{item.likeCount}</div>
                         <StarBorderIcon className= {classes.start}/>
                      </div>
                      
@@ -120,7 +123,7 @@ export default function Ranking(props) {
                         </div>
                       </div>
                   </div>
-            ): null
+            )
          })}
         </div>
     </section>
