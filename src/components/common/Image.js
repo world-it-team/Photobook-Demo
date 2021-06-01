@@ -9,6 +9,8 @@ export function getImg(src) {
       return validateUrl(category, imgFileName);
     case "imagePage":
       return validateUrl(category, imgFileName);
+    case "blog":
+      return validateUrl(category, imgFileName);
     default:
       return src;
   }
