@@ -1,5 +1,5 @@
 import { getCollectionByName } from "../utils/firebase";
-import { getUser } from "../utils/Auth";
+import { getUser, isLoggedIn } from "../utils/Auth";
 
 
 const uid = getUser().uid;
@@ -15,16 +15,17 @@ export function saveChoosedImage(image) {
 
 export function getChoosedImage() {
     const data = [];
+
     return (
-      
-        getCollectionByName("image").where("uid", "==", uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                data.push({
-                    ...doc.data(),
+
+           getCollectionByName("image").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    data.push({
+                        ...doc.data(),
+                    });
                 });
-            });
-            return data;
-        })
+                return data;
+            })
     )
 };
 

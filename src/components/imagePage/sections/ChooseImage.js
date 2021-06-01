@@ -119,6 +119,11 @@ const removeAccents = (str) => {
 
 export default function ChooseImage(props) {
   const classes = useStyles();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [open, setOpen] = useState(false);
+  const [image, setImage] = useState({ src: "", alt: "", id: null });
+  const [choosedImageKey, setChoosedImageKey] = useState("");
+
 
   const filterImage = (data, query) => {
     if (!query) {
@@ -129,14 +134,7 @@ export default function ChooseImage(props) {
       return searchResult.includes(removeAccents(query));
     });
   };
-
-  const [searchQuery, setSearchQuery] = useState("");
   const filteredImage = filterImage(props.data, searchQuery.toLowerCase());
-
-  const [open, setOpen] = useState(false);
-  const [image, setImage] = useState({ src: "", alt: "", id: null });
-  const [choosedImageKey, setChoosedImageKey] = useState("");
-
   // const addCheckbox = () => {
   //   const elm = document.getElementById(image.id);
   //   elm.setAttribute("src", checkBox);
@@ -163,7 +161,7 @@ export default function ChooseImage(props) {
 
   React.useEffect(() => {
     getChoosedImage().then((data) => {
-      const result = data.map((result) => result.key);
+      const result = data.filter(x => x.uid ===uid).map((result) => result.key);
       setChoosedImageKey(result);
     });
   },[getChoosedImage()]);
