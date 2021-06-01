@@ -1,13 +1,10 @@
 import React ,{useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Container from '@material-ui/core/Container';
 import Image from "../../common/Image";
 import { Button } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({  
-    title:{
-        marginLeft:"30px",
-        fontSize:"30px",
-        fontWeight:"500"
-    },
+  
     root: {
         width:"80%",
         height:"300px",
@@ -16,8 +13,15 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "10px",
         
       },
+      title:{
+        margin:"30px",
+        fontSize:"30px",
+        fontWeight:"500"
+      },
       image:{
+        position:"relative",
         width:"100%",
+        display: "inline-flex",
           "& >img":{
             width: "100%",
             height:"300px",
@@ -25,6 +29,25 @@ const useStyles = makeStyles((theme) => ({
             borderRadius: "10px",
             objectFit: "cover",
           }
+      },
+      sub:{
+        margin:"auto",
+        marginTop: "67%",
+        position:"absolute",
+        zIndex:"1",
+        backgroundColor: "darkslategrey",
+        opacity: "0.9",
+      },
+      subtitle:{
+        margin:"auto",
+        marginTop:"2%",
+        color:"white",
+        fontSize:"20px",
+        fontWeight:"500"
+      },
+      datetime:{
+        margin:"2%",
+        color:"white",
       },
       button:{
         textAlign:"center",
@@ -37,25 +60,33 @@ export default function NewArticles({data}) {
     const [visibleSize, setVisibleSize] = useState(3);
     const Last = 1 * visibleSize;
     const First = Last - visibleSize;
+    console.log(data);
+
   
     const ShowMoreItems = () => {
-      setVisibleSize(visibleSize+1);
+      setVisibleSize(visibleSize+2);
     };
   return (
     <section>
-        <div className= {classes.title }>
+        <div className= {classes.title}>
             新着記事
         </div>
         <div>
             {data.slice(First, Last).map((item)=>{
                 return(
-                    <div className= {classes.root }>
-
-                <div className= {classes.image}>
-                    <Image {...item}/>
-                </div>
-
-              </div>
+                  <div className= {classes.root }>
+                      <div className= {classes.image}>
+                          <Image {...item.img}/>
+                          <div className={classes.sub}>
+                            <Container className={classes.subtitle}>
+                              {item.subtitle}
+                            </Container>
+                            <Container className={classes.datetime}>
+                              {item.datetime}
+                            </Container>
+                          </div>
+                      </div>
+                  </div>
                 )
             })}
             {visibleSize === 3 ? (
