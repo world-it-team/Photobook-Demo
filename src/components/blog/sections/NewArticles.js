@@ -32,9 +32,10 @@ const useStyles = makeStyles((theme) => ({
       },
       sub:{
         margin:"auto",
-        marginTop: "67%",
+        marginTop: "70%",
         position:"absolute",
         zIndex:"1",
+        borderRadius: "0 0 10px 10px",
         backgroundColor: "darkslategrey",
         opacity: "0.9",
       },
