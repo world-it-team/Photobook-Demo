@@ -122,7 +122,7 @@ function SignUp() {
         <div  className={classes.form}>
             <form  onSubmit={formik.handleSubmit} >
                 <Typography variant="h2" className={classes.text}>
-                    SignUp
+                    Sign Up
                 </Typography>
                 <div className={classes.row}>
                 <Typography  variant="h7" gutterBottom className={classes.label}>Name</Typography>
@@ -184,11 +184,11 @@ function SignUp() {
                     (<div className={classes.errors}>{formik.errors.confirmPassword}</div>)}
                 </div>
                 <Button variant="contained" color="primary" type="submit" className={classes.button}>
-                        SignUp
+                        Sign Up
                 </Button>
             </form>
         </div>
-       <Typography  variant="h6" gutterBottom className={classes.singUp}>SignIn</Typography>
+       <Typography  variant="h6" gutterBottom className={classes.singUp}>Sign In</Typography>
       </div>
       )
     };

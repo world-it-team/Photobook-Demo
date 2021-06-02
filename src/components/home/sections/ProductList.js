@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button, Container, Typography } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import Image from "../../common/Image"
+import ALink from "../../common/Alink"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Choose(props) {
+export default function ProductList(props) {
     const classes = useStyles();
     const [page, setPage] = useState(1);
     const [visibleSize, setVisibleSize] = useState(3);
@@ -86,7 +87,8 @@ export default function Choose(props) {
                         return <div className={classes.cardInfo}>
                             <Image className={classes.cardImage} {...cardInfo.img} />
                             <Typography variant="h5" className={classes.description}>{cardInfo.description + "  " + cardInfo.price}</Typography>
-                            <Button variant="contained" color="primary" className={classes.buttonCard}> すぐ作成 </Button>
+                            
+                            <ALink to ={`/photoedit`}><Button variant="contained" color="primary" className={classes.buttonCard}> すぐ作成 </Button></ALink>
                         </div>
                     })}
                 </div>
@@ -106,7 +108,10 @@ export default function Choose(props) {
                             shape="rounded"
                             disabled={false}
                         />
+                  
                         <Button variant="contained" color="primary" onClick={ShowLessItems}> キャンセル </Button>
+                    
+                       
                     </div>
                 ) : null}
             </Container>
@@ -114,6 +119,6 @@ export default function Choose(props) {
     );
 }
 
-Choose.propTypes = {
+ProductList.propTypes = {
     data: PropTypes.any.isRequired,
 };

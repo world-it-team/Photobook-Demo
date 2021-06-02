@@ -150,7 +150,7 @@ function Login() {
         <div  className={classes.form}>
             <form  onSubmit={formik.handleSubmit} >
                 <Typography variant="h2" className={classes.text}>
-                    LogIn
+                    Log In
                 </Typography>
                 <div className={classes.row}>
                 <Typography  variant="h7" gutterBottom className={classes.label}>Email</Typography>
@@ -182,7 +182,7 @@ function Login() {
                     {(<div className={classes.errors}>{errorPassword} </div>)}
                 </div>
                 <Button variant="contained" color="primary" type="submit" className={classes.button}>
-                        SignIn
+                        Sign In
                 </Button>
             </form>
         </div>
@@ -195,7 +195,7 @@ function Login() {
           )}
        </div>
       <Alink to="/signup">
-        <Typography  variant="h6" gutterBottom className={classes.singUp}>SignUp</Typography>
+        <Typography  variant="h6" gutterBottom className={classes.singUp}>Sign Up</Typography>
       </Alink>
       </div>
       )

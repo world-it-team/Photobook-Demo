@@ -7,7 +7,7 @@ const uid = getUser().uid;
 
 
 export function saveChoosedImage(image) {
-    return  getCollectionByName("image").doc().set({
+    return  getCollectionByName("image").add({
         uid: uid,
         key: image.alt,
       });

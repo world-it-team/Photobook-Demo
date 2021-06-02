@@ -8,6 +8,7 @@ import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import checkBox from "../../../images/imagePage/checkbox.png";
+import ALink from "../../common/Alink"
 import { getUser, isLoggedIn } from "../../../utils/Auth";
 import { getChoosedImage, saveChoosedImage } from "../../../api/photo.service";
 
@@ -253,13 +254,18 @@ export default function ChooseImage(props) {
             </div>
           ))}
         </div>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.nextStepBtn}
-        >
-          Photo Edit
-        </Button>
+
+
+        <ALink to={`/photoedit`}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.nextStepBtn}
+          >
+            Photo Edit
+          </Button>
+        </ALink>
+       
       </div>
     </section>
   );
