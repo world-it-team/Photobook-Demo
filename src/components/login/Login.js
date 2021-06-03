@@ -113,21 +113,7 @@ function Login() {
                   console.log(getUser())
                   const userInfo =  fromFirebase();
                   setUser(userInfo)
-                  if(user.emailVerified == true){
-                    console.log(user.emailVerified)
-                    loadingUserInfo().then((doc)=>{
-                      if(doc.popup == true){
-                        history.push("/popup");
-                        doc.popup = false;
-                        addOrUpdateUserInfo(doc)
-                      }else{
-                       history.push("/");
-                      }
-                     });
-                  }else{
-                    console.log("chua check mail")
-                  }
-                  
+                  console.log(user.emailVerified)
               
                 })
                 .catch((error) => {

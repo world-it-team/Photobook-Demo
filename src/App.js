@@ -2,6 +2,7 @@
 import HomeContent from "./components/home/HomeContent"
 import ImageContent from "./components/imagePage/ImageContent"
 import BlogContent from "./components/blog/BlogContent"
+import TestContent from "./components/testPage/TestContent"
 import Login from "./components/login/Login"
 import Popup from "./components/login/sections/Popup"
 import SignUp from "./components/login/SignUp"
@@ -45,6 +46,9 @@ function App() {
          </Route>
          <Route exact path="/blog">
             <BlogContent data={appData.blog} />
+         </Route>
+         <Route exact path="/test">
+            <TestContent data={appData.test} />
          </Route>
       </Switch>
     </Router>

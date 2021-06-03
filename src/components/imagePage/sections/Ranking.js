@@ -5,7 +5,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 const useStyles = makeStyles((theme) => ({
-
+  image:{
+  }
 }));
 
 export default function Ranking(props) {
