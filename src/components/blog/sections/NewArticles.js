@@ -63,7 +63,6 @@ export default function NewArticles({data}) {
     const First = Last - visibleSize;
     console.log(data);
 
-  
     const ShowMoreItems = () => {
       setVisibleSize(visibleSize+2);
     };
