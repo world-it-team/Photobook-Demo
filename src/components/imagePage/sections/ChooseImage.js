@@ -7,16 +7,17 @@ import SearchIcon from "@material-ui/icons/Search";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import checkBox from "../../../images/imagePage/checkbox.png";
-import ALink from "../../common/Alink"
+import ALink from "../../common/Alink";
 import { getUser, isLoggedIn } from "../../../utils/Auth";
-import { getChoosedImage, saveChoosedImage } from "../../../api/photo.service";
+import { getChoosedImage, saveChoosedImage,deleteChoosedImage } from "../../../api/photo.service";
+import DoneIcon from "@material-ui/icons/Done";
 
-// const storage = getStorage();
+
 
 const uid = getUser().uid;
 
 const useStyles = makeStyles((theme) => ({
+  /*Search Tag*/
   searchInput: {
     display: "flex",
     color: "#EAEAEA",
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 4,
     padding: "5px 10px",
   },
+  /*Image List Container*/
   imageContainer: {
     display: "flex",
     flexWrap: "wrap",
@@ -55,8 +57,29 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
-    // objectPosition:"50% 50%"
+    zIndex: 1,
   },
+  gridItemWrap: {
+    position: "relative",
+  },
+  blur: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(1,1,1,0.4)",
+    zIndex: 2,
+    display: "none",
+  },
+  doneIcon: {
+    width: 70,
+    height: 50,
+    position: "absolute",
+    color: "white",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%,-50%)",
+  },
+  /*Zoom, show Modal*/
   modal: {
     position: "relative",
     maxWidth: "100%",
@@ -83,6 +106,7 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
     maxHeight: 40,
   },
+  /* Choosed Image*/
   choosedImageContainer: {
     width: "95%",
     margin: "auto",
@@ -114,9 +138,29 @@ const useStyles = makeStyles((theme) => ({
 
 const category = ["All", "BlackPink", "Rose", "Lisa", "Jisoo", "Jennie"];
 
-const removeAccents = (str) => {
+function removeAccents(str) {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+function filterImage (data, query) {
+  if (!query) {
+    return data;
+  }
+  return data.filter((current) => {
+    const searchResult = removeAccents(current.category.toLowerCase());
+    return searchResult.includes(removeAccents(query));
+  });
 };
+function getSrc(src) {
+  const results = src.split("/");
+  const imgFileName = results[results.length - 1];
+  return require("../../../images/imagePage/" + imgFileName).default;
+}
+function getChoosedElement(data) {
+  const parse = data.map(item =>item.alt)
+  return [...document.getElementsByTagName("div")].filter(
+    (element) =>  parse.includes(element.id)
+  );
+}
 
 export default function ChooseImage(props) {
   const classes = useStyles();
@@ -125,22 +169,7 @@ export default function ChooseImage(props) {
   const [image, setImage] = useState({ src: "", alt: "", id: null });
   const [choosedImageKey, setChoosedImageKey] = useState("");
 
-
-  const filterImage = (data, query) => {
-    if (!query) {
-      return data;
-    }
-    return data.filter((current) => {
-      const searchResult = removeAccents(current.category.toLowerCase());
-      return searchResult.includes(removeAccents(query));
-    });
-  };
   const filteredImage = filterImage(props.data, searchQuery.toLowerCase());
-  // const addCheckbox = () => {
-  //   const elm = document.getElementById(image.id);
-  //   elm.setAttribute("src", checkBox);
-  //   // elm.removeEventListener("click",fc);
-  // };
 
   const handleOpen = (e) => {
     setOpen(true);
@@ -151,21 +180,37 @@ export default function ChooseImage(props) {
   };
 
   const chooseImage = () => {
-    if (isLoggedIn() && choosedImageKey.includes(image.alt) == false)
-      saveChoosedImage(image);
+    if (isLoggedIn() && choosedImageKey.includes(image.alt) === false)
+      saveChoosedImage(image,uid);
     setOpen(false);
   };
+
+  const unChoose =(e) => {
+    deleteChoosedImage(e.target.id)
+  }
 
   const choosedImage = props.data
     .map((item) => item.img)
     .filter((item) => choosedImageKey.includes(item.alt));
+ 
 
+  /* Get Choosed Image from Firebase */
   React.useEffect(() => {
     getChoosedImage().then((data) => {
-      const result = data.filter(x => x.uid ===uid).map((result) => result.key);
+      const result = data
+        .filter((x) => x.uid === uid)
+        .map((result) => result.key);
       setChoosedImageKey(result);
     });
-  },[getChoosedImage()]);
+  });
+
+  /* Set Style Choosed Element */
+  React.useEffect(() => {
+    const element = getChoosedElement(choosedImage)
+    element.map((item) => 
+      item.style.display = 'block'
+    )
+  },[choosedImage])
 
   return (
     <section>
@@ -207,8 +252,21 @@ export default function ChooseImage(props) {
       <div className={classes.imageContainer}>
         <GridList cellHeight={80} className={classes.gridList} cols={3}>
           {filteredImage.map((tile, index) => (
-            <GridListTile key={index} cols={1} onClick={(e) => handleOpen(e)}>
-              <Image {...tile.img} className={classes.image} />
+            <GridListTile key={index} cols={1} style={{ position: "relative" }}>
+              <img
+                src={getSrc(tile.img.src)}
+                alt={tile.img.alt}
+                className={classes.image}
+                onClick={(e) => handleOpen(e)}
+                id ={tile.img.id}
+              />
+              <div
+                onClick={(e) => unChoose(e)}
+                className={classes.blur}
+                id={tile.img.alt}
+              >
+                <DoneIcon className={classes.doneIcon} id={tile.img.alt}/>
+              </div>
             </GridListTile>
           ))}
         </GridList>
@@ -255,7 +313,6 @@ export default function ChooseImage(props) {
           ))}
         </div>
 
-
         <ALink to={`/photoedit`}>
           <Button
             variant="contained"
@@ -265,7 +322,6 @@ export default function ChooseImage(props) {
             Photo Edit
           </Button>
         </ALink>
-       
       </div>
     </section>
   );

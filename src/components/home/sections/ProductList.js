@@ -88,7 +88,7 @@ export default function ProductList(props) {
                             <Image className={classes.cardImage} {...cardInfo.img} />
                             <Typography variant="h5" className={classes.description}>{cardInfo.description + "  " + cardInfo.price}</Typography>
                             
-                            <ALink to ={`/photoedit`}><Button variant="contained" color="primary" className={classes.buttonCard}> すぐ作成 </Button></ALink>
+                            <ALink to ={`/images`}><Button variant="contained" color="primary" className={classes.buttonCard}> すぐ作成 </Button></ALink>
                         </div>
                     })}
                 </div>
