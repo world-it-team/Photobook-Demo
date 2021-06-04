@@ -9,10 +9,12 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import ALink from "../../common/Alink";
 import { getUser, isLoggedIn } from "../../../utils/Auth";
-import { getChoosedImage, saveChoosedImage,deleteChoosedImage } from "../../../api/photo.service";
+import {
+  getChoosedImage,
+  saveChoosedImage,
+  deleteChoosedImage,
+} from "../../../api/photo.service";
 import DoneIcon from "@material-ui/icons/Done";
-
-
 
 const uid = getUser().uid;
 
@@ -141,7 +143,7 @@ const category = ["All", "BlackPink", "Rose", "Lisa", "Jisoo", "Jennie"];
 function removeAccents(str) {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
-function filterImage (data, query) {
+function filterImage(data, query) {
   if (!query) {
     return data;
   }
@@ -149,16 +151,16 @@ function filterImage (data, query) {
     const searchResult = removeAccents(current.category.toLowerCase());
     return searchResult.includes(removeAccents(query));
   });
-};
+}
 function getSrc(src) {
   const results = src.split("/");
   const imgFileName = results[results.length - 1];
   return require("../../../images/imagePage/" + imgFileName).default;
 }
 function getChoosedElement(data) {
-  const parse = data.map(item =>item.alt)
-  return [...document.getElementsByTagName("div")].filter(
-    (element) =>  parse.includes(element.id)
+  const parse = data.map((item) => item.alt);
+  return [...document.getElementsByTagName("div")].filter((element) =>
+    parse.includes(element.id)
   );
 }
 
@@ -181,24 +183,27 @@ export default function ChooseImage(props) {
 
   const chooseImage = () => {
     if (isLoggedIn() && choosedImageKey.includes(image.alt) === false)
-      saveChoosedImage(image,uid);
+      saveChoosedImage(image);
     setOpen(false);
   };
 
-  const unChoose =(e) => {
-    deleteChoosedImage(e.target.id)
-  }
+  const unChoose = (e) => {
+    deleteChoosedImage(e.target.id);
+    const unChooseElm = [...document.getElementsByTagName("div")].filter(
+      (elm) => elm.id === e.target.id
+    )[0];
+    unChooseElm.style.display = "none";
+  };
 
   const choosedImage = props.data
     .map((item) => item.img)
     .filter((item) => choosedImageKey.includes(item.alt));
- 
 
   /* Get Choosed Image from Firebase */
   React.useEffect(() => {
     getChoosedImage().then((data) => {
       const result = data
-        .filter((x) => x.uid === uid)
+        // .filter((x) => x.uid === uid)
         .map((result) => result.key);
       setChoosedImageKey(result);
     });
@@ -206,11 +211,9 @@ export default function ChooseImage(props) {
 
   /* Set Style Choosed Element */
   React.useEffect(() => {
-    const element = getChoosedElement(choosedImage)
-    element.map((item) => 
-      item.style.display = 'block'
-    )
-  },[choosedImage])
+    const element = getChoosedElement(choosedImage);
+    element.map((item) => (item.style.display = "block"));
+  }, [choosedImage]);
 
   return (
     <section>
@@ -247,7 +250,9 @@ export default function ChooseImage(props) {
           </li>
         ))}
       </div>
+
       <p style={{ marginLeft: " 2.5%", marginBottom: 10 }}>Photo Choose!</p>
+
       {/*Image List*/}
       <div className={classes.imageContainer}>
         <GridList cellHeight={80} className={classes.gridList} cols={3}>
@@ -258,18 +263,23 @@ export default function ChooseImage(props) {
                 alt={tile.img.alt}
                 className={classes.image}
                 onClick={(e) => handleOpen(e)}
-                id ={tile.img.id}
+                id={tile.img.id}
               />
               <div
                 onClick={(e) => unChoose(e)}
                 className={classes.blur}
                 id={tile.img.alt}
               >
-                <DoneIcon className={classes.doneIcon} id={tile.img.alt}/>
+                <DoneIcon
+                  className={classes.doneIcon}
+                  id={tile.img.alt}
+                  onClick={(e) => unChoose(e)}
+                />
               </div>
             </GridListTile>
           ))}
         </GridList>
+
         {/*Zoom Image When Click*/}
         <Modal className={classes.modal} open={open} onClose={handleClose}>
           <div className={classes.paper}>
