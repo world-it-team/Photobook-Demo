@@ -16,8 +16,6 @@ import {
 } from "../../../api/photo.service";
 import DoneIcon from "@material-ui/icons/Done";
 
-
-
 const useStyles = makeStyles((theme) => ({
   /*Search Tag*/
   searchInput: {
@@ -70,6 +68,12 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     [theme.breakpoints.up("md")]: {
       height: 680,
+    },
+  },
+  gridListTile: {
+    height: "100px !important",
+    [theme.breakpoints.up("sm")]: {
+      height: "300px !important",
     },
   },
   image: {
@@ -180,15 +184,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const blurStyle ={
+const blurStyle = {
   position: "absolute",
   width: "100%",
   height: "100%",
   backgroundColor: "rgba(1,1,1,0.4)",
   zIndex: 2,
   display: "none",
-  opacity: 1
-}
+  opacity: 1,
+};
 const category = ["All", "BlackPink", "Rose", "Lisa", "Jisoo", "Jennie"];
 
 function removeAccents(str) {
@@ -209,17 +213,16 @@ function getSrc(src) {
   return require("../../../images/imagePage/" + imgFileName).default;
 }
 function showBlur(data) {
-  const compareKey = data.map(item =>item.alt)
-  const chooseElement = [...document.getElementsByClassName("blur")].filter((element) =>
-  compareKey.includes(element.id)
-);
-  const unChooseElement = [...document.getElementsByClassName("blur")].filter((element) =>
-  !compareKey.includes(element.id)
-);
-  chooseElement.map((elm) => elm.style.display = "block")
-  unChooseElement.map((elm) => elm.style.display = "none")
+  const compareKey = data.map((item) => item.alt);
+  const chooseElement = [...document.getElementsByClassName("blur")].filter(
+    (element) => compareKey.includes(element.id)
+  );
+  const unChooseElement = [...document.getElementsByClassName("blur")].filter(
+    (element) => !compareKey.includes(element.id)
+  );
+  chooseElement.map((elm) => (elm.style.display = "block"));
+  unChooseElement.map((elm) => (elm.style.display = "none"));
 }
-
 
 export default function ChooseImage(props) {
   const classes = useStyles();
@@ -228,7 +231,6 @@ export default function ChooseImage(props) {
   const [image, setImage] = useState({ src: "", alt: "", id: null });
   const [choosedImageKey, setChoosedImageKey] = useState("");
   const filteredImage = filterImage(props.data, searchQuery.toLowerCase());
-
 
   const handleOpen = (e) => {
     setOpen(true);
@@ -255,20 +257,15 @@ export default function ChooseImage(props) {
   /* Get Choosed Image from Firebase */
   React.useEffect(() => {
     getChoosedImage().then((data) => {
-      const result = data
-        .map((result) => result.key);
+      const result = data.map((result) => result.key);
       setChoosedImageKey(result);
     });
   });
 
   /* Set Style Choosed Element */
   React.useEffect(() => {
-    showBlur(choosedImage)
+    showBlur(choosedImage);
   }, [choosedImage]);
-
-
-
-  
 
   return (
     <section>
@@ -312,9 +309,14 @@ export default function ChooseImage(props) {
 
       {/*Image List*/}
       <div className={classes.imageContainer}>
-        <GridList cellHeight={80} className={classes.gridList} cols={3}>
+        <GridList className={classes.gridList} cols={3}>
           {filteredImage.map((tile, index) => (
-            <GridListTile key={index} cols={1} style={{ position: "relative" }}>
+            <GridListTile
+              className={classes.gridListTile}
+              key={index}
+              cols={1}
+              style={{ position: "relative" }}
+            >
               <img
                 src={getSrc(tile.img.src)}
                 alt={tile.img.alt}
@@ -322,20 +324,19 @@ export default function ChooseImage(props) {
                 onClick={(e) => handleOpen(e)}
                 id={tile.img.id}
               />
-            
-                  <div
-                  onDoubleClick={(e) => unChoose(e)}
-                  className="blur"
-                  style ={blurStyle}
+
+              <div
+                onDoubleClick={(e) => unChoose(e)}
+                className="blur"
+                style={blurStyle}
+                id={tile.img.alt}
+              >
+                <DoneIcon
+                  className={classes.doneIcon}
                   id={tile.img.alt}
-                >
-                  <DoneIcon
-                    className={classes.doneIcon}
-                    id={tile.img.alt}
-                    onDoubleClick={(e) => unChoose(e)}
-                  />
-                </div>
-              
+                  onDoubleClick={(e) => unChoose(e)}
+                />
+              </div>
             </GridListTile>
           ))}
         </GridList>
