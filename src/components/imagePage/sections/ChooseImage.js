@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "50vh",
     position: "relative",
     [theme.breakpoints.up("md")]: {
-      height: 680,
+      maxHeight: "90vh",
     },
   },
   gridListTile: {
