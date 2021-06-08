@@ -136,13 +136,16 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     flexWrap: "wrap",
     minHeight: 90,
-    maxWidth: 327,
+    width: 327,
     border: "1px solid lightblue",
     gap: 2,
+    justifyContent: "space-around",
+    padding: "0 5px",
     [theme.breakpoints.up("sm")]: {
       minHeight: 300,
-      maxWidth: "95%",
+      width: "95%",
       margin: "auto",
+      padding: "10px",
     },
     [theme.breakpoints.up("md")]: {
       minHeight: 400,
@@ -152,8 +155,10 @@ const useStyles = makeStyles((theme) => ({
   },
   choosedImageWrapper: {
     position: "relative",
-    width: 45,
-    height: 45,
+    width: 100,
+    height: 100,
+    margin: "5px auto",
+    justifyContent: "space-around",
     [theme.breakpoints.up("sm")]: {
       width: "30%",
       height: "200px",
@@ -170,7 +175,8 @@ const useStyles = makeStyles((theme) => ({
     objectFit: "cover",
   },
   nextStepBtn: {
-    marginTop: 10,
+    display: "block",
+    margin: "30px auto",
   },
   choosedImageTitle: {
     [theme.breakpoints.up("sm")]: {
