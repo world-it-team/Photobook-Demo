@@ -17,12 +17,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize:"20px",
     fontWeight:"700",
     marginLeft:"40px",
-    color: "#1869aa",
+    color: "#303f9f",
     [theme.breakpoints.up("sm")]: 
     {
 
       margin:"30px 20px",
-      fontSize:"30px",
+      fontSize:"35px",
     },
     [theme.breakpoints.up("md")]: 
     {
@@ -85,19 +85,11 @@ const useStyles = makeStyles((theme) => ({
     width:"100%",
     "& >img":{
       width: "100%",
-      height:"300px",
+      height:"500px",
       border: "1px ",
       borderRadius: "10px",
-      objectFit: "cover",
+      objectFit: "contain",
     },
-    [theme.breakpoints.up("sm")]: 
-    {
-      // width:"50%",
-      // height:"600px"
-    },
-    [theme.breakpoints.up("md")]: {}, 
-    [theme.breakpoints.up("lg")]: {},
-    [theme.breakpoints.up("xl")]:{},
   },
   dialogContent:{
   },
@@ -123,6 +115,14 @@ const useStyles = makeStyles((theme) => ({
   button:{
     textAlign:"center",
     marginBottom:"20px",
+    [theme.breakpoints.up("sm")]: 
+    {margin:"30px"},
+
+  },
+  buttonmore:{
+    [theme.breakpoints.up("sm")]: 
+    {fontSize:"18px"},
+
   },
   action:{
     display:"flex",
@@ -140,8 +140,7 @@ const useStyles = makeStyles((theme) => ({
       width:"100%",
   }
   },
-  imgpaper:{
-  },
+
 }));
 
 function PaperComponent(props) {
@@ -262,7 +261,7 @@ const handleBack = () => {
           </Dialog> 
           {visibleSize === 3 ? (
             <div className={classes.button}>
-                <Button variant="contained" color="primary" onClick={ShowMoreItems}> もっと見る </Button>
+                <Button className={classes.buttonmore} variant="contained" color="primary" onClick={ShowMoreItems}> もっと見る </Button>
             </div>
           ) : null}
     </section>
