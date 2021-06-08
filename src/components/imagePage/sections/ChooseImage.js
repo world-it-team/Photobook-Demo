@@ -16,7 +16,7 @@ import {
 } from "../../../api/photo.service";
 import DoneIcon from "@material-ui/icons/Done";
 
-const uid = getUser().uid;
+
 
 const useStyles = makeStyles((theme) => ({
   /*Search Tag*/
@@ -81,14 +81,6 @@ const useStyles = makeStyles((theme) => ({
   },
   gridItemWrap: {
     position: "relative",
-  },
-  blur: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(1,1,1,0.4)",
-    zIndex: 2,
-    display: "none",
   },
   doneIcon: {
     width: 70,
@@ -188,6 +180,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const blurStyle ={
+  position: "absolute",
+  width: "100%",
+  height: "100%",
+  backgroundColor: "rgba(1,1,1,0.4)",
+  zIndex: 2,
+  display: "none",
+  opacity: 1
+}
 const category = ["All", "BlackPink", "Rose", "Lisa", "Jisoo", "Jennie"];
 
 function removeAccents(str) {
@@ -207,12 +208,18 @@ function getSrc(src) {
   const imgFileName = results[results.length - 1];
   return require("../../../images/imagePage/" + imgFileName).default;
 }
-function getChoosedElement(data) {
-  const parse = data.map((item) => item.alt);
-  return [...document.getElementsByTagName("div")].filter((element) =>
-    parse.includes(element.id)
-  );
+function showBlur(data) {
+  const compareKey = data.map(item =>item.alt)
+  const chooseElement = [...document.getElementsByClassName("blur")].filter((element) =>
+  compareKey.includes(element.id)
+);
+  const unChooseElement = [...document.getElementsByClassName("blur")].filter((element) =>
+  !compareKey.includes(element.id)
+);
+  chooseElement.map((elm) => elm.style.display = "block")
+  unChooseElement.map((elm) => elm.style.display = "none")
 }
+
 
 export default function ChooseImage(props) {
   const classes = useStyles();
@@ -220,8 +227,8 @@ export default function ChooseImage(props) {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState({ src: "", alt: "", id: null });
   const [choosedImageKey, setChoosedImageKey] = useState("");
-
   const filteredImage = filterImage(props.data, searchQuery.toLowerCase());
+
 
   const handleOpen = (e) => {
     setOpen(true);
@@ -239,10 +246,6 @@ export default function ChooseImage(props) {
 
   const unChoose = (e) => {
     deleteChoosedImage(e.target.id);
-    const unChooseElm = [...document.getElementsByTagName("div")].filter(
-      (elm) => elm.id === e.target.id
-    )[0];
-    unChooseElm.style.display = "none";
   };
 
   const choosedImage = props.data
@@ -253,7 +256,6 @@ export default function ChooseImage(props) {
   React.useEffect(() => {
     getChoosedImage().then((data) => {
       const result = data
-        // .filter((x) => x.uid === uid)
         .map((result) => result.key);
       setChoosedImageKey(result);
     });
@@ -261,9 +263,12 @@ export default function ChooseImage(props) {
 
   /* Set Style Choosed Element */
   React.useEffect(() => {
-    const element = getChoosedElement(choosedImage);
-    element.map((item) => (item.style.display = "block"));
+    showBlur(choosedImage)
   }, [choosedImage]);
+
+
+
+  
 
   return (
     <section>
@@ -317,17 +322,20 @@ export default function ChooseImage(props) {
                 onClick={(e) => handleOpen(e)}
                 id={tile.img.id}
               />
-              <div
-                onClick={(e) => unChoose(e)}
-                className={classes.blur}
-                id={tile.img.alt}
-              >
-                <DoneIcon
-                  className={classes.doneIcon}
+            
+                  <div
+                  onDoubleClick={(e) => unChoose(e)}
+                  className="blur"
+                  style ={blurStyle}
                   id={tile.img.alt}
-                  onClick={(e) => unChoose(e)}
-                />
-              </div>
+                >
+                  <DoneIcon
+                    className={classes.doneIcon}
+                    id={tile.img.alt}
+                    onDoubleClick={(e) => unChoose(e)}
+                  />
+                </div>
+              
             </GridListTile>
           ))}
         </GridList>
