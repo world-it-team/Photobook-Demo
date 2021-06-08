@@ -140,19 +140,19 @@ export default function Navigation() {
     >
       <List className={classes.navMenu}>
         <ListItem className={classes.appBarListItem}>
-          <Alink to="/images">
-            <Box className={classes.navItem}>ImagePrint</Box>
+        <Alink to="/">
+            <Box className={classes.navItem}>Home</Box>
           </Alink>
         </ListItem>
-        <ListItem className={classes.appBarListItem}>
+        {/* <ListItem className={classes.appBarListItem}>
           <Alink to="/photoedit">
             <Box className={classes.navItem}>PhotoBook</Box>
           </Alink>
-        </ListItem>
+        </ListItem> */}
 
         <ListItem className={classes.appBarListItem}>
-          <Alink to="/">
-            <Box className={classes.navItem}>Album</Box>
+         <Alink to="/images">
+            <Box className={classes.navItem}>ImagePrint</Box>
           </Alink>
         </ListItem>
         <ListItem className={classes.appBarListItem}>

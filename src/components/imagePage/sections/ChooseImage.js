@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
+import Typography from "@material-ui/core/Typography";
 import Image from "../../common/Image";
 import SearchIcon from "@material-ui/icons/Search";
 import Modal from "@material-ui/core/Modal";
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       justifyContent: "flex-end",
       paddingRight: "30px",
-      marginTop: "30px",
+      marginBottom:"30px"
     },
   },
   tagContainer: {
@@ -129,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
   /* Choosed Image*/
   choosedImageContainer: {
     width: "95%",
-    margin: "auto",
+    margin: "50px auto",
   },
   choosedImageBox: {
     display: "flex",
@@ -186,6 +187,43 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       fontSize: "36px",
       color: "#004EB4",
+    },
+  },
+  rank: {
+    paddingBottom: "20px",
+  },
+  title: {
+    backgroundColor: "#14AC8D",
+    color: "#ffffff",
+    padding: "6px 0px 4px 10px",
+    position: "relative",
+    fontSize: "18px",
+    "@media screen and (min-width: 768px)": {
+      fontSize: "28px",
+      padding: "3px 0px 1px 40px",
+    },
+    "&:before": {
+      content: `''`,
+      position: "absolute",
+      right: "-1px",
+      top: "-1px",
+      width: "50%",
+      borderTop: "36px solid #EAEAEA",
+      borderLeft: "36px solid transparent",
+      "@media screen and (min-width: 450px)": {
+        width: "60%",
+      },
+      "@media screen and (min-width: 525px)": {
+        width: "70%",
+      },
+      "@media screen and (min-width: 768px)": {
+        width: "60%",
+        borderTop: "46px solid #FFFFFF",
+        borderLeft: "46px solid transparent",
+      },
+      "@media screen and (min-width: 987px)": {
+        width: "67%",
+      },
     },
   },
 }));
@@ -275,8 +313,16 @@ export default function ChooseImage(props) {
 
   return (
     <section>
-      {/*Search Bar*/}
-      <div className={classes.searchInput}>
+  
+
+      {/*Tag*/}
+      <div className={classes.rank}>
+        <Typography variant="h6" component="h1" className={classes.title}>
+          Category
+        </Typography>
+      </div>
+        {/*Search Bar*/}
+        <div className={classes.searchInput}>
         <input
           style={{ width: 200, height: 28 }}
           type="string"
@@ -285,11 +331,6 @@ export default function ChooseImage(props) {
         />
         <SearchIcon style={{ color: "black" }} />
       </div>
-
-      {/*Tag*/}
-      <h3 style={{ marginLeft: "2.5%" }} className={classes.tagCategory}>
-        Category
-      </h3>
       <div className={classes.tagContainer}>
         {category.map((item, index) => (
           <li
@@ -381,7 +422,11 @@ export default function ChooseImage(props) {
 
       {/*Choosed Image Container*/}
       <div className={classes.choosedImageContainer}>
-        <h3 className={classes.choosedImageTitle}>選んだ写真</h3>
+      <div className={classes.rank}>
+        <Typography variant="h6" component="h1" className={classes.title}>
+          選んだ写真
+        </Typography>
+      </div>
         <div className={classes.choosedImageBox}>
           {choosedImage.map((tile, index) => (
             <div className={classes.choosedImageWrapper}>

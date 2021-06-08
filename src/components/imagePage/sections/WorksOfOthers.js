@@ -9,38 +9,11 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';  
+import Typography from "@material-ui/core/Typography";
 import Image from "../../common/Image";
 import MobileStepper from '@material-ui/core/MobileStepper';
 
 const useStyles = makeStyles((theme) => ({  
-  title:{
-    fontSize:"20px",
-    fontWeight:"700",
-    marginLeft:"40px",
-    color: "#1869aa",
-    [theme.breakpoints.up("sm")]: 
-    {
-
-      margin:"30px 20px",
-      fontSize:"30px",
-    },
-    [theme.breakpoints.up("md")]: 
-    {
-      margin:"30px 20px",
-      fontSize:"30px",
-    }, 
-    [theme.breakpoints.up("lg")]: 
-    {
-      margin:"30px 20px",
-      fontSize:"30px",
-    },
-    [theme.breakpoints.up("xl")]: 
-    {
-      margin:"30px 20px",
-      fontSize:"30px",
-    },
-
-  },
   root: {
     width:"80%",
     height:"300px",
@@ -142,6 +115,43 @@ const useStyles = makeStyles((theme) => ({
   },
   imgpaper:{
   },
+  title: {
+    backgroundColor: "#14AC8D",
+    color: "#ffffff",
+    padding: "6px 0px 4px 10px",
+    position: "relative",
+    fontSize: "18px",
+    "@media screen and (min-width: 768px)": {
+      fontSize: "28px",
+      padding: "3px 0px 1px 40px",
+    },
+    "&:before": {
+      content: `''`,
+      position: "absolute",
+      right: "-1px",
+      top: "-1px",
+      width: "50%",
+      borderTop: "36px solid #EAEAEA",
+      borderLeft: "36px solid transparent",
+      "@media screen and (min-width: 450px)": {
+        width: "60%",
+      },
+      "@media screen and (min-width: 525px)": {
+        width: "70%",
+      },
+      "@media screen and (min-width: 768px)": {
+        width: "60%",
+        borderTop: "46px solid #FFFFFF",
+        borderLeft: "46px solid transparent",
+      },
+      "@media screen and (min-width: 987px)": {
+        width: "67%",
+      },
+    },
+  },
+  rank: {
+    paddingBottom: "80px",
+  },
 }));
 
 function PaperComponent(props) {
@@ -189,7 +199,11 @@ const handleBack = () => {
 };
   return (
     <section className= {classes.section}>
-        <div className= {classes.title}> 他人作品</div>
+      <div className={classes.rank}>
+        <Typography variant="h6" component="h1" className={classes.title}>
+           他人作品
+        </Typography>
+      </div>
         <div className={classes.taninsahin}>
         {data.slice(First, Last).map((item,index) => {
             return(
