@@ -26,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-start",
     alignItems: "center",
     paddingLeft: 15,
+    [theme.breakpoints.up("sm")]: {
+      justifyContent: "flex-end",
+      paddingRight: "30px",
+      marginTop: "30px",
+    },
   },
   tagContainer: {
     display: "flex",
@@ -41,6 +46,16 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 4,
     padding: "5px 10px",
   },
+  tagCategory: {
+    [theme.breakpoints.up("md")]: {
+      fontSize: "36px",
+      color: "#004EB4",
+    },
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "30px",
+      color: "#004EB4",
+    },
+  },
   /*Image List Container*/
   imageContainer: {
     display: "flex",
@@ -53,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
     width: "95%",
     maxHeight: "50vh",
     position: "relative",
+    [theme.breakpoints.up("md")]: {
+      height: 680,
+    },
   },
   image: {
     position: "absolute",
@@ -103,6 +121,10 @@ const useStyles = makeStyles((theme) => ({
     width: "95%",
     height: "90%",
     objectFit: "contain",
+    [theme.breakpoints.only("sm")]: {
+      width: "80%",
+      height: "50%",
+    },
   },
   buttonWrap: {
     width: "80%",
@@ -121,11 +143,29 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 327,
     border: "1px solid lightblue",
     gap: 2,
+    [theme.breakpoints.up("sm")]: {
+      minHeight: 300,
+      maxWidth: "95%",
+      margin: "auto",
+    },
+    [theme.breakpoints.up("md")]: {
+      minHeight: 400,
+      maxWidth: "95%",
+      margin: "auto",
+    },
   },
   choosedImageWrapper: {
     position: "relative",
     width: 45,
     height: 45,
+    [theme.breakpoints.up("sm")]: {
+      width: "30%",
+      height: "200px",
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "30%",
+      height: "300px",
+    },
   },
   choosedImage: {
     position: "absolute",
@@ -135,6 +175,16 @@ const useStyles = makeStyles((theme) => ({
   },
   nextStepBtn: {
     marginTop: 10,
+  },
+  choosedImageTitle: {
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "30px",
+      color: "#004EB4",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "36px",
+      color: "#004EB4",
+    },
   },
 }));
 
@@ -229,7 +279,9 @@ export default function ChooseImage(props) {
       </div>
 
       {/*Tag*/}
-      <h3 style={{ marginLeft: "2.5%" }}>Category</h3>
+      <h3 style={{ marginLeft: "2.5%" }} className={classes.tagCategory}>
+        Category
+      </h3>
       <div className={classes.tagContainer}>
         {category.map((item, index) => (
           <li
@@ -314,7 +366,7 @@ export default function ChooseImage(props) {
 
       {/*Choosed Image Container*/}
       <div className={classes.choosedImageContainer}>
-        <h3>選んだ写真</h3>
+        <h3 className={classes.choosedImageTitle}>選んだ写真</h3>
         <div className={classes.choosedImageBox}>
           {choosedImage.map((tile, index) => (
             <div className={classes.choosedImageWrapper}>
