@@ -58,19 +58,11 @@ const useStyles = makeStyles((theme) => ({
     width:"100%",
     "& >img":{
       width: "100%",
-      height:"300px",
+      height:"500px",
       border: "1px ",
       borderRadius: "10px",
-      objectFit: "cover",
+      objectFit: "contain",
     },
-    [theme.breakpoints.up("sm")]: 
-    {
-      // width:"50%",
-      // height:"600px"
-    },
-    [theme.breakpoints.up("md")]: {}, 
-    [theme.breakpoints.up("lg")]: {},
-    [theme.breakpoints.up("xl")]:{},
   },
   dialogContent:{
   },
@@ -96,6 +88,14 @@ const useStyles = makeStyles((theme) => ({
   button:{
     textAlign:"center",
     marginBottom:"20px",
+    [theme.breakpoints.up("sm")]: 
+    {margin:"30px"},
+
+  },
+  buttonmore:{
+    [theme.breakpoints.up("sm")]: 
+    {fontSize:"18px"},
+
   },
   action:{
     display:"flex",
@@ -276,7 +276,7 @@ const handleBack = () => {
           </Dialog> 
           {visibleSize === 3 ? (
             <div className={classes.button}>
-                <Button variant="contained" color="primary" onClick={ShowMoreItems}> もっと見る </Button>
+                <Button className={classes.buttonmore} variant="contained" color="primary" onClick={ShowMoreItems}> もっと見る </Button>
             </div>
           ) : null}
     </section>
