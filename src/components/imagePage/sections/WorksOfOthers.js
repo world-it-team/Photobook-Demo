@@ -16,7 +16,30 @@ const useStyles = makeStyles((theme) => ({
   title:{
     fontSize:"20px",
     fontWeight:"700",
-    marginLeft:"40px"
+    marginLeft:"40px",
+    color: "#1869aa",
+    [theme.breakpoints.up("sm")]: 
+    {
+
+      margin:"30px 20px",
+      fontSize:"30px",
+    },
+    [theme.breakpoints.up("md")]: 
+    {
+      margin:"30px 20px",
+      fontSize:"30px",
+    }, 
+    [theme.breakpoints.up("lg")]: 
+    {
+      margin:"30px 20px",
+      fontSize:"30px",
+    },
+    [theme.breakpoints.up("xl")]: 
+    {
+      margin:"30px 20px",
+      fontSize:"30px",
+    },
+
   },
   root: {
     width:"80%",
@@ -24,7 +47,18 @@ const useStyles = makeStyles((theme) => ({
     position:"relative",
     margin:"30px auto",
     borderRadius: "10px",
-    
+    [theme.breakpoints.up("sm")]: 
+    {flexBasis:"30%",},
+    [theme.breakpoints.up("md")]: {}, 
+    [theme.breakpoints.up("lg")]: {},
+    [theme.breakpoints.up("xl")]: {},
+  },
+  taninsahin:{
+    [theme.breakpoints.up("sm")]: 
+      {
+        display:"flex",
+        flexWrap:"wrap",
+      },
   },
   rootTitle:{
     width: "100px",
@@ -36,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
     position:"absolute",
     top:"20px",
     left:"20px",
-
   },
   image:{
     width:"100%",
@@ -46,7 +79,27 @@ const useStyles = makeStyles((theme) => ({
         border: "1px ",
         borderRadius: "10px",
         objectFit: "cover",
-      }
+      },
+  },
+  imageshow:{
+    width:"100%",
+    "& >img":{
+      width: "100%",
+      height:"300px",
+      border: "1px ",
+      borderRadius: "10px",
+      objectFit: "cover",
+    },
+    [theme.breakpoints.up("sm")]: 
+    {
+      // width:"50%",
+      // height:"600px"
+    },
+    [theme.breakpoints.up("md")]: {}, 
+    [theme.breakpoints.up("lg")]: {},
+    [theme.breakpoints.up("xl")]:{},
+  },
+  dialogContent:{
   },
   icon:{
     color:"white",
@@ -84,8 +137,10 @@ const useStyles = makeStyles((theme) => ({
   },
   test:{
     "&>MuiDialog-container>MuiDialog-paper":{
-      width:"100%"
+      width:"100%",
   }
+  },
+  imgpaper:{
   },
 }));
 
@@ -93,7 +148,7 @@ function PaperComponent(props) {
   const classes = useStyles();
   return (
     <Draggable   handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-      <Paper   className= {classes.test} {...props} />
+      <Paper   className= {classes.imgpaper} {...props} />
     </Draggable>
   );
 }
@@ -135,6 +190,7 @@ const handleBack = () => {
   return (
     <section className= {classes.section}>
         <div className= {classes.title}> 他人作品</div>
+        <div className={classes.taninsahin}>
         {data.slice(First, Last).map((item,index) => {
             return(
               <div className= {classes.root } onClick={()=>handleClickOpen(index,item.img.length)} key={index}>
@@ -153,6 +209,7 @@ const handleBack = () => {
               </div>
             )  
          })}
+         </div>
           <Dialog
             open={popup}
             onClose={handleClose}
@@ -169,7 +226,7 @@ const handleBack = () => {
             <DialogContent className= {classes.dialogContent}>
               {data.map((itemList,index)=>{
                 return value === index ?(
-                      <div className= {classes.image} key={index} >
+                      <div className= {classes.imageshow} key={index} >
                          <Image {...itemList.img[activeStep]}/>
                          <MobileStepper
                             steps={itemList.img.length}
