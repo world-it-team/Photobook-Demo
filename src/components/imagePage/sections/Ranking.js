@@ -3,223 +3,162 @@ import { makeStyles } from "@material-ui/core/styles";
 import Image from "../../common/Image";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
-
+import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
+import zIndex from "@material-ui/core/styles/zIndex";
+import clsx from "clsx";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import { red } from "@material-ui/core/colors";
+import ShareIcon from "@material-ui/icons/Share";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import CommentIcon from "@material-ui/icons/Comment";
+import CardActionArea from "@material-ui/core/CardActionArea";
 const useStyles = makeStyles((theme) => ({
-  title: {
-    fontSize: "20px",
-    fontWeight: "700",
-    marginLeft: "40px",
-    [theme.breakpoints.up("sm")]: {
-      fontSize: "30px",
-      color: "#004EB4",
+  root: {},
+  img: {
+    height: 250,
+    width: "100%",
+    objectFit: "cover",
+    "@media screen and (min-width: 1300px)": {
+      height: 300,
     },
-    [theme.breakpoints.up("md")]: {
-      fontSize: "36px",
-      color: "#004EB4",
-    },
+  },
+
+  avatar: {
+    backgroundColor: red[500],
+  },
+
+  section: {
+    color: theme.palette.text.secondary,
+  },
+
+  rank: {
+    paddingBottom: "80px",
   },
   content: {
     display: "flex",
-    flexWrap: "wrap",
     flexDirection: "row",
+    flexWrap: "wrap",
+    width: "100%",
+    justifyContent: "center",
+    justifyContent: "space-around",
+    [theme.breakpoints.up("md")]: {},
+    [theme.breakpoints.up("lg")]: {},
   },
-  item: {
-    display: "flex",
-    width: "48%",
-    margin: "10px auto",
-    backgroundColor: "#fbfafe",
-    [theme.breakpoints.up("sm")]: {
-      margin: "20px auto 0 auto",
-      "&:hover": {
-        transform: " scale(1.03)",
-        transition: "all ease 0.5s",
-      },
+  root1: {
+    maxWidth: "345px",
+    marginBottom: "50px",
+    borderRadius: "3px",
+    boxShadow: "8px 8px 8px 8px #bfbfbf",
+    transition: "all .5s",
+
+    "&:hover": {
+      boxShadow: "1px 1px 1px 1px #bfbfbf",
     },
   },
-  // start:{
-  //   width: "20%",
-  //   height: "50px",
-  //   top:"10px",
-  // },
-  subitem: {
-    width: "100%",
+  title: {
+    backgroundColor: "#14AC8D",
+    color: "#ffffff",
+    padding: "6px 0px 4px 10px",
     position: "relative",
-    margin: "10px auto",
-    [theme.breakpoints.up("sm")]: {
-      margin: "0",
+    fontSize: "18px",
+    "@media screen and (min-width: 768px)": {
+      fontSize: "28px",
+      padding: "3px 0px 1px 40px",
     },
-  },
-  itemTitle: {
-    // width: "70px",
-    // height: " 20px",
-    padding: "2px 5px",
-    backgroundColor: "white",
-    border: " 1px solid ",
-    borderRadius: "5px",
-    textAlign: "center",
-    position: "absolute",
-    top: "10px",
-    left: "5px",
-    [theme.breakpoints.up("sm")]: {
-      top: "20px",
-      left: "40%",
-      fontSize: "24px",
-      padding: "5px 10px",
-    },
-    [theme.breakpoints.up("md")]: {
-      top: "20px",
-      left: "45%",
-      fontSize: "30px",
-      padding: "5px 10px",
-    },
-  },
-  image: {
-    width: "100%",
-    "& >img": {
-      width: "100%",
-      height: "150px",
-      border: "1px ",
-      objectFit: "cover",
-      [theme.breakpoints.up("sm")]: {
-        display: "block",
-        margin: "auto",
-        width: "90%",
-        height: "300px",
-        padding: "120px 0 20px 0",
-        objectFit: "cover",
+    "&:before": {
+      content: `''`,
+      position: "absolute",
+      right: "-1px",
+      top: "-1px",
+      width: "50%",
+      borderTop: "36px solid #EAEAEA",
+      borderLeft: "36px solid transparent",
+      "@media screen and (min-width: 450px)": {
+        width: "60%",
       },
-      [theme.breakpoints.up("md")]: {
-        display: "block",
-        margin: "auto",
+      "@media screen and (min-width: 525px)": {
         width: "70%",
-        height: "400px",
-        padding: "150px 0 50px 0",
-        objectFit: "cover",
       },
-    },
-  },
-  icon: {
-    color: "white",
-    position: "absolute",
-    fontSize: "25px",
-    top: "10px",
-    right: "10px",
-    [theme.breakpoints.up("sm")]: {
-      fontSize: 45,
-      color: "#f5dd89",
-      top: "13%",
-      right: "14%",
-    },
-    [theme.breakpoints.up("md")]: {
-      fontSize: 55,
-      color: "#f5dd89",
-      top: "13%",
-      right: "13%",
-    },
-  },
-  rank: {
-    position: "relative",
-    width: "50px",
-    [theme.breakpoints.up("sm")]: {
-      width: "0",
-    },
-  },
-  number: {
-    position: "absolute",
-    margin: "0 auto",
-    top: "23px",
-    left: "16px",
-    fontSize: "12px",
-    [theme.breakpoints.up("sm")]: {
-      top: "14%",
-      left: "63px",
-      fontSize: "24px",
-    },
-    [theme.breakpoints.up("md")]: {
-      top: "14%",
-      left: "87px",
-      fontSize: "24px",
-    },
-  },
-  start: {
-    // width: "40px",
-    position: "absolute",
-    top: "10px",
-    left: "0px",
-    fontSize: 40,
-    [theme.breakpoints.up("sm")]: {
-      fontSize: 60,
-      top: "10%",
-      left: "40px",
-    },
-    [theme.breakpoints.up("md")]: {
-      fontSize: 70,
-      top: "10%",
-      left: "60px",
-    },
-  },
-  likeCount: {
-    position: "absolute",
-    top: "10px",
-    right: "3px",
-    // width: "17px",
-    // height: "17px",
-    display: " table-cell",
-    textAlign: "center",
-    verticalAlign: "middle",
-    borderRadius: "50%",
-    background: "#ff834f",
-    padding: "0 5px",
-    fontSize: 15,
-    [theme.breakpoints.up("sm")]: {
-      fontSize: 25,
-      padding: "0 8px",
-      top: "14%",
-      right: "11%",
-    },
-    [theme.breakpoints.up("md")]: {
-      fontSize: 35,
-      padding: "0 10px",
-      top: "14%",
-      right: "10%",
+      "@media screen and (min-width: 768px)": {
+        width: "60%",
+        borderTop: "46px solid #FFFFFF",
+        borderLeft: "46px solid transparent",
+      },
+      "@media screen and (min-width: 987px)": {
+        width: "67%",
+      },
     },
   },
 }));
 
 export default function Ranking(props) {
-  props.data.sort(function (a, b) {
-    return b.likeCount - a.likeCount;
-  });
-  let imgRank = props.data.slice(0, 10);
-
   const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   return (
-    <section className={classes.section}>
-      <div className={classes.title}> ランキング</div>
-      <div className={classes.content}>
-        {imgRank.map((item, index) => {
-          return (
-            <div className={classes.item} key={index}>
-              <div className={classes.rank}>
-                <div className={classes.number}>{index + 1}</div>
-                <StarBorderIcon className={classes.start} />
-              </div>
-
-              <div className={classes.subitem}>
-                <div className={classes.itemTitle}>{item.category}</div>
-                <div className={classes.image}>
-                  <Image {...item.img} />
-                </div>
-                <div>
-                  <FavoriteIcon className={classes.icon} />
-                  <div className={classes.likeCount}>{item.likeCount}</div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+    <Container className={classes.root}>
+      <div className={classes.rank}>
+        <Typography variant="h6" component="h1" className={classes.title}>
+          ランキング 位置
+        </Typography>
       </div>
-    </section>
+      <div className={classes.section}>
+        <div className={classes.content}>
+          {props.data.map((item, index) => {
+            return index < 10 ? (
+              <CardActionArea className={classes.root1}>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      R
+                    </Avatar>
+                  }
+                  title="Shrimp and Chorizo Paella"
+                  subheader="September 14, 2016"
+                />
+                <CardMedia className={classes.media}>
+                  <Image {...item.img} className={classes.img} />
+                </CardMedia>
+
+                <CardContent>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    This impressive paella is a perfect party dish and a fun
+                  </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                  <IconButton aria-label="add to favorites">
+                    <FavoriteIcon />
+                  </IconButton>
+                  <IconButton aria-label="share">
+                    <ShareIcon />
+                  </IconButton>
+                  <IconButton aria-label="comment">
+                    <CommentIcon />
+                  </IconButton>
+                </CardActions>
+              </CardActionArea>
+            ) : null;
+          })}
+        </div>
+      </div>
+    </Container>
   );
 }
