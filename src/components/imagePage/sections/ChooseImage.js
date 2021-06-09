@@ -300,7 +300,7 @@ export default function ChooseImage(props) {
 
   /* Get Choosed Image from Firebase */
   React.useEffect(() => {
-    getChoosedImage().then((data) => {
+    if(isLoggedIn())getChoosedImage().then((data) => {
       const result = data.map((result) => result.key);
       setChoosedImageKey(result);
     });
